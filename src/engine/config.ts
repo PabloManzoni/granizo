@@ -40,6 +40,58 @@ export const RULES = {
 } as const;
 
 /**
+ * Grado de alerta que elige cada persona (se guarda en su teléfono). No cambia los datos ni los ingredientes:
+ * cambia cuánta señal hace falta para subir el nivel. "Equilibrado" es el motor tal cual (RULES + la regla de los dos
+ * modelos); los otros dos solo mueven perillas que ya estaban calibradas.
+ */
+export type Sensitivity = 'sensitive' | 'balanced' | 'strict';
+export const SENSITIVITIES: Sensitivity[] = ['sensitive', 'balanced', 'strict'];
+export const DEFAULT_SENSITIVITY: Sensitivity = 'balanced';
+
+export interface SensitivityRules {
+  /** WMAXSHEAR para "atento" en cada modelo (m²/s²). */
+  wmaxshearWatch: number;
+  /** WMAXSHEAR para ambiente fuerte ("protegelo" si además el modelo forma tormentas). */
+  wmaxshearProtect: number;
+  /**
+   * Cómo se juntan GFS y ECMWF:
+   * - either: alcanza con uno (vale el nivel más alto);
+   * - both: protegelo si los dos dicen protegelo; atento si alguno dice protegelo o los dos al menos atento (v0.2);
+   * - both-strict: los dos lo tienen que ver (vale el nivel más bajo).
+   */
+  combine: 'either' | 'both' | 'both-strict';
+}
+
+/**
+ * Barrido en scripts/sweep-sensitivity.ts, mismos 124 casos que el umbral de "atento" (granizo dañino o sin dato de
+ * tamaño contra días de tormenta sin granizo). Detección / falsas alarmas:
+ *
+ *                          Atento o más                   Protegelo
+ *                        entren. 21–24  prueba 25–26   entren. 21–24  prueba 25–26
+ *   Cualquier señal        88% / 63%     96% / 79%      75% / 13%     68% / 29%
+ *   Equilibrado            75% / 34%     82% / 38%      63% /  5%     43% / 15%
+ *   Solo señales fuertes   63% /  5%     46% / 18%      63% /  5%     43% / 15%
+ *
+ * "Cualquier señal" vuelve al umbral de atento de la v0.2.0 (400) y no pide que coincidan los modelos.
+ * "Solo señales fuertes" pide ambiente fuerte (1200) en los dos: atento queda para cuando los dos lo ven pero alguno
+ * no forma tormentas, y protegelo no cambia. Subir el umbral de protegelo para este grado no convenía: con 1400
+ * baja la detección de 43% a 32% y las falsas alarmas apenas de 15% a 12% (prueba).
+ * Los grados se eligieron mirando todos los años: los números de prueba no son una validación limpia.
+ */
+export const SENSITIVITY_RULES: Record<Sensitivity, SensitivityRules> = {
+  sensitive: { wmaxshearWatch: 400, wmaxshearProtect: RULES.wmaxshearProtect, combine: 'either' },
+  balanced: { wmaxshearWatch: RULES.wmaxshearWatch, wmaxshearProtect: RULES.wmaxshearProtect, combine: 'both' },
+  strict: { wmaxshearWatch: RULES.wmaxshearProtect, wmaxshearProtect: RULES.wmaxshearProtect, combine: 'both-strict' },
+};
+
+/** Fracciones de la tabla de arriba (prueba 2025–2026), para los textos de la app. */
+export const SENSITIVITY_STATS: Record<Sensitivity, { watch: { hit: number; falseAlarm: number }; protect: { hit: number; falseAlarm: number } }> = {
+  sensitive: { watch: { hit: 0.96, falseAlarm: 0.79 }, protect: { hit: 0.68, falseAlarm: 0.29 } },
+  balanced: { watch: { hit: 0.82, falseAlarm: 0.38 }, protect: { hit: 0.43, falseAlarm: 0.15 } },
+  strict: { watch: { hit: 0.46, falseAlarm: 0.18 }, protect: { hit: 0.43, falseAlarm: 0.15 } },
+};
+
+/**
  * Límites [marginal, favorable, strong] de cada ingrediente. Solo descriptivos (para explicar el "por qué");
  * la decisión usa RULES. Cizalladura recalibrada: en días de tormenta en Uruguay la mediana ronda 30 m/s.
  */

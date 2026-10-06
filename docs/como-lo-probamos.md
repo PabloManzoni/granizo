@@ -1,6 +1,6 @@
 # Cómo funciona Cubierto y cómo lo probamos
 
-Cubierto responde una pregunta concreta: **¿conviene proteger el auto del granizo esta noche, hoy o mañana?** Este documento explica qué mira el motor, cómo se decidieron sus reglas, qué tan bien funcionan y dónde fallan. Describe la versión 0.2 del motor.
+Cubierto responde una pregunta concreta: **¿conviene proteger el auto del granizo hoy o mañana?** Cada día incluye su noche: "Hoy" va desde ahora hasta las 8 de la mañana siguiente y "Mañana", de 8 a 8. Este documento explica qué mira el motor, cómo se decidieron sus reglas, qué tan bien funcionan y dónde fallan. Describe la versión 0.2 del motor.
 
 ## En pocas palabras
 
@@ -56,6 +56,26 @@ Los modelos difieren bastante entre sí caso a caso (la correlación del gradien
 ### Estado "Tormenta"
 
 Cuando el ambiente no es de granizo pero el modelo pronostica lluvia convectiva (≥ 0,5 mm/h) o precipitación total (≥ 2 mm/h) en la zona, la app muestra **Tormenta**: lluvia fuerte, rayos o viento, sin señales de piedra.
+
+### Grado de alerta
+
+Cada persona elige en la app cuánta señal hace falta para que suba el nivel. Los datos y los ingredientes son los mismos; cambian el umbral de Atento y cuántos modelos tienen que coincidir. Se guarda solo en el teléfono.
+
+| Grado | Atento | Protegelo | Modelos |
+|---|---|---|---|
+| **Cualquier señal** | WMAXSHEAR ≥ 400 | ≥ 1200 y tormentas | alcanza con uno |
+| **Equilibrado** (por defecto) | WMAXSHEAR ≥ 900 | ≥ 1200 y tormentas | la regla de arriba |
+| **Solo señales fuertes** | WMAXSHEAR ≥ 1200 | ≥ 1200 y tormentas | los dos |
+
+Medidos sobre los mismos casos (`node scripts/sweep-sensitivity.ts`), en 2025–2026 y en días de tormenta:
+
+| Grado | Atento o más: detección / falsas alarmas | Protegelo: detección / falsas alarmas |
+|---|---|---|
+| Cualquier señal | 96% / 79% | 68% / 29% |
+| Equilibrado | 82% / 38% | 43% / 15% |
+| Solo señales fuertes | 46% / 18% | 43% / 15% |
+
+Los grados se definieron mirando todos los años, así que estas cifras no son una validación limpia: sirven para comparar los grados entre sí. Con "Solo señales fuertes", si el grado equilibrado habría avisado, la app no sube el nivel pero dice "Señales débiles de granizo".
 
 ### Confianza
 

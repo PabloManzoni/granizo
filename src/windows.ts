@@ -7,12 +7,19 @@ export const WINDOW_NAMES: WindowName[] = ['tonight', 'today', 'tomorrow', 'next
 
 export const WINDOW_LABELS: Record<WindowName, string> = {
   tonight: 'Esta noche (20 a 8 h)',
-  today: 'Hoy (hasta las 20 h)',
-  tomorrow: 'Mañana (8 a 20 h)',
+  today: 'Hoy (hasta mañana a las 8 h)',
+  tomorrow: 'Mañana (8 a 8 h)',
   next12h: 'Próximas 12 horas',
 };
 
-/** Devuelve la ventana en hora local "YYYY-MM-DDTHH:MM", truncada a la hora para coincidir con datos horarios. */
+/**
+ * Devuelve la ventana en hora local "YYYY-MM-DDTHH:MM", truncada a la hora para coincidir con datos horarios.
+ * La app usa "today" y "tomorrow", y cada día incluye su noche (el auto queda afuera de noche):
+ * - today: desde ahora hasta las 8 de la mañana siguiente. De madrugada "hoy" ya es el día nuevo, así que también
+ *   va hasta las 8 del día siguiente (hasta ~30 h).
+ * - tomorrow: de 8 a 8, empezando mañana.
+ * "tonight" y "next12h" quedan para la consola.
+ */
 export function resolveWindow(name: WindowName, now: Date = nowLocal()): { from: string; to: string } {
   const hour = now.getUTCHours();
   let from: Date;
@@ -20,12 +27,12 @@ export function resolveWindow(name: WindowName, now: Date = nowLocal()): { from:
   switch (name) {
     case 'today':
       from = now;
-      to = hour >= 20 ? addHours(now, 1) : atHour(now, 20);
+      to = atHour(addHours(now, 24), 8);
       break;
     case 'tomorrow': {
       const t = addHours(now, 24);
       from = atHour(t, 8);
-      to = atHour(t, 20);
+      to = atHour(addHours(t, 24), 8);
       break;
     }
     case 'next12h':

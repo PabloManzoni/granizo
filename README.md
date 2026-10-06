@@ -27,7 +27,7 @@ Requiere Node 24+ (corre TypeScript directo, sin compilar).
 npm install
 npm run serve                                                 # compila el motor y sirve la PWA en http://localhost:8787 (en local aparece la botonera "dev")
 npm run build:site                                            # arma site/ para GitHub Pages
-npm run check -- --lat -34.80 --lon -55.90 --window tonight   # tonight | today | tomorrow | next12h
+npm run check -- --lat -34.80 --lon -55.90 --window today     # today | tomorrow | tonight | next12h
 npm run log-forecast                                          # guarda el pronóstico vigente de 16 ciudades en data/forecast-log/ (correr 1 vez por día)
 npm run log-runs                                              # guarda lo que pronosticó la corrida de las 12 UTC (Single Runs API) a 12–60 h: data/forecast-log/runs/
 npm run log-runs -- --backfill-from 2026-04-02                # reconstruye días anteriores desde abril de 2026 (retoma donde quedó; 4 ciudades)

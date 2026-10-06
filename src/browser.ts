@@ -1,10 +1,11 @@
 // Motor en el navegador: la PWA calcula todo en el teléfono y le pide los datos directo a Open-Meteo.
 // Así no hace falta servidor (GitHub Pages) y cada persona usa su propio cupo gratuito de Open-Meteo.
 // Se empaqueta con esbuild en public/engine.js (npm run build).
-import { assess } from './assess.ts';
+import { assessBySensitivity } from './assess.ts';
 import { fmtLocal, nowLocal } from './cli/args.ts';
 import { configureOpenMeteo, NetworkError, RateLimitError, type CacheStore } from './data/openMeteo.ts';
-import { present, type ResultView } from './presenter.ts';
+import type { Sensitivity } from './engine/config.ts';
+import { presentAll, type ResultView } from './presenter.ts';
 import { resolveWindow, WINDOW_LABELS, WINDOW_NAMES, type WindowName } from './windows.ts';
 
 export { DEV_SCENARIOS, devScenario } from './dev-scenarios.ts';
@@ -49,18 +50,19 @@ export class AssessError extends Error {
   }
 }
 
-export async function assessHere(latIn: number, lonIn: number, windowName: WindowName): Promise<ResultView> {
+/** El resultado con cada grado de alerta: la app muestra el que eligió la persona y cambia sin volver a consultar. */
+export async function assessHere(latIn: number, lonIn: number, windowName: WindowName): Promise<Record<Sensitivity, ResultView>> {
   // Redondeo a ~1 km: alcanza para una zona de 40 km.
   const lat = Math.round(latIn * 100) / 100;
   const lon = Math.round(lonIn * 100) / 100;
   if (lat < BOUNDS.latMin || lat > BOUNDS.latMax || lon < BOUNDS.lonMin || lon > BOUNDS.lonMax) {
     throw new AssessError('outside', 'Por ahora el motor solo funciona en Uruguay.');
   }
-  const name: WindowName = WINDOW_NAMES.includes(windowName) ? windowName : 'tonight';
+  const name: WindowName = WINDOW_NAMES.includes(windowName) ? windowName : 'today';
   const { from, to } = resolveWindow(name);
   try {
-    const r = await assess({ center: { lat, lon }, from, to, source: 'forecast' });
-    return present(r, { name, label: WINDOW_LABELS[name], from, to }, fmtLocal(nowLocal()));
+    const r = await assessBySensitivity({ center: { lat, lon }, from, to, source: 'forecast' });
+    return presentAll(r, { name, label: WINDOW_LABELS[name], from, to }, fmtLocal(nowLocal()));
   } catch (err) {
     if (err instanceof RateLimitError) throw new AssessError('limit', err.message);
     if (err instanceof NetworkError) throw new AssessError('offline', err.message);

@@ -2,10 +2,12 @@ import {
   ENGINE_VERSION,
   HIGH_FREEZING_LEVEL_M_AGL,
   RULES,
+  SENSITIVITY_RULES,
   SHIP_NOTABLE,
   THRESHOLDS,
   TRIGGER,
   WARM_SEASON_MONTHS,
+  type SensitivityRules,
 } from './config.ts';
 import type {
   Confidence,
@@ -46,16 +48,17 @@ export function classifyIngredients(i: Ingredients): IngredientLevels {
 }
 
 /**
- * Ambiente de un punto-hora (v0.2, calibrado en Uruguay):
- * - strong: gradiente 700–500 ≥ RULES.lapse700500CKm Y WMAXSHEAR ≥ RULES.wmaxshearProtect
- * - supportive: gradiente ≥ RULES.lapse700500CKm Y WMAXSHEAR ≥ RULES.wmaxshearWatch
+ * Ambiente de un punto-hora (v0.2, calibrado en Uruguay). Los umbrales de WMAXSHEAR dependen del grado de alerta
+ * (por defecto, "equilibrado" = RULES):
+ * - strong: gradiente 700–500 ≥ RULES.lapse700500CKm Y WMAXSHEAR ≥ wmaxshearProtect
+ * - supportive: gradiente ≥ RULES.lapse700500CKm Y WMAXSHEAR ≥ wmaxshearWatch
  * - weak: el resto
  */
-export function classifyEnvironment(i: Ingredients): Environment {
+export function classifyEnvironment(i: Ingredients, rules: SensitivityRules = SENSITIVITY_RULES.balanced): Environment {
   if ((i.lapse700500CKm ?? 0) < RULES.lapse700500CKm) return 'weak';
   const w = i.wmaxshearM2s2 ?? 0;
-  if (w >= RULES.wmaxshearProtect) return 'strong';
-  if (w >= RULES.wmaxshearWatch) return 'supportive';
+  if (w >= rules.wmaxshearProtect) return 'strong';
+  if (w >= rules.wmaxshearWatch) return 'supportive';
   return 'weak';
 }
 
@@ -64,6 +67,7 @@ export function assessPointHour(
   lat: number,
   lon: number,
   ingredients: Ingredients,
+  rules: SensitivityRules = SENSITIVITY_RULES.balanced,
 ): PointHourAssessment {
   return {
     time,
@@ -71,7 +75,7 @@ export function assessPointHour(
     lon,
     ingredients,
     levels: classifyIngredients(ingredients),
-    environment: classifyEnvironment(ingredients),
+    environment: classifyEnvironment(ingredients, rules),
   };
 }
 
@@ -79,15 +83,15 @@ export function seasonOfTime(time: string): Season {
   return WARM_SEASON_MONTHS.includes(Number(time.slice(5, 7))) ? 'warm' : 'cold';
 }
 
-function reasonsFor(peak: PointHourAssessment, triggerPresent: boolean, season: Season): ReasonCode[] {
+function reasonsFor(peak: PointHourAssessment, triggerPresent: boolean, season: Season, rules: SensitivityRules): ReasonCode[] {
   const r: ReasonCode[] = [];
   const i = peak.ingredients;
   r.push((i.lapse700500CKm ?? 0) >= RULES.lapse700500CKm ? 'GOOD_HAIL_GROWTH' : 'POOR_HAIL_GROWTH');
   const w = i.wmaxshearM2s2 ?? 0;
   r.push(
-    w >= RULES.wmaxshearProtect
+    w >= rules.wmaxshearProtect
       ? 'STRONG_STORM_POTENTIAL'
-      : w >= RULES.wmaxshearWatch
+      : w >= rules.wmaxshearWatch
         ? 'MODERATE_STORM_POTENTIAL'
         : 'WEAK_STORM_POTENTIAL',
   );
@@ -105,8 +109,9 @@ function reasonsFor(peak: PointHourAssessment, triggerPresent: boolean, season: 
  * - calm: el resto.
  * Aparte, `storm`: calm pero el modelo forma tormentas (tormenta sin granizo).
  * Confianza: media en la estación fría (donde el test mostró señal), baja en la cálida (donde no).
+ * `rules` tiene que ser el mismo grado con el que se armaron los punto-horas (lo usan las razones).
  */
-export function assessWindow(pointHours: PointHourAssessment[]): WindowAssessment {
+export function assessWindow(pointHours: PointHourAssessment[], rules: SensitivityRules = SENSITIVITY_RULES.balanced): WindowAssessment {
   if (pointHours.length === 0) throw new Error('No hay datos para la ventana pedida');
 
   const peak = pointHours.reduce((best, ph) => {
@@ -143,7 +148,7 @@ export function assessWindow(pointHours: PointHourAssessment[]): WindowAssessmen
     confidence,
     hourly,
     season,
-    reasons: reasonsFor(peak, triggerPresent, season),
+    reasons: reasonsFor(peak, triggerPresent, season, rules),
     peak,
     trigger: { present: triggerPresent, maxShowersMm, maxPrecipitationMm },
     counts: {
@@ -157,16 +162,21 @@ export function assessWindow(pointHours: PointHourAssessment[]): WindowAssessmen
 }
 
 const LEVEL_RANK: Record<RiskLevel, number> = { calm: 0, watch: 1, protect: 2 };
+const LEVEL_ORDER: RiskLevel[] = ['calm', 'watch', 'protect'];
 
 /**
- * Combina el veredicto de dos modelos (GFS y ECMWF), validado en 2025–2026:
+ * Combina el veredicto de dos modelos (GFS y ECMWF). Con `combine = 'both'` (equilibrado, validado en 2025–2026):
  * - protect: los DOS dicen protect ("día rojo" estricto: 43% de detección, 15% de falsas alarmas en prueba).
- * - watch: alguno dice protect, o los dos dicen al menos watch (93% / 65% en prueba).
+ * - watch: alguno dice protect, o los dos dicen al menos watch (82% / 38% en prueba).
  * - calm: el resto.
+ * Con 'either' vale el nivel más alto de los dos; con 'both-strict', el más bajo (ver SensitivityRules).
  * Tormenta sin granizo (`storm`): calm y alguno de los dos modelos forma tormentas.
  * Confianza: en la estación cálida siempre baja; en la fría, media si coinciden y baja si no.
  */
-export function combineModels(results: { model: string; assessment: WindowAssessment }[]): WindowAssessment {
+export function combineModels(
+  results: { model: string; assessment: WindowAssessment }[],
+  combine: SensitivityRules['combine'] = 'both',
+): WindowAssessment {
   if (results.length === 0) throw new Error('Sin modelos para combinar');
   const models: ModelVerdict[] = results.map((r) => ({
     model: r.model,
@@ -184,23 +194,34 @@ export function combineModels(results: { model: string; assessment: WindowAssess
 
   const [a, b] = results.map((r) => r.assessment);
   const both = (min: RiskLevel) => LEVEL_RANK[a.level] >= LEVEL_RANK[min] && LEVEL_RANK[b.level] >= LEVEL_RANK[min];
-  const level: RiskLevel = both('protect')
-    ? 'protect'
-    : a.level === 'protect' || b.level === 'protect' || both('watch')
-      ? 'watch'
-      : 'calm';
+  const ranks = [LEVEL_RANK[a.level], LEVEL_RANK[b.level]];
+  const level: RiskLevel =
+    combine === 'either'
+      ? LEVEL_ORDER[Math.max(...ranks)]
+      : combine === 'both-strict'
+        ? LEVEL_ORDER[Math.min(...ranks)]
+        : both('protect')
+          ? 'protect'
+          : a.level === 'protect' || b.level === 'protect' || both('watch')
+            ? 'watch'
+            : 'calm';
   const agree = a.level === b.level;
   // El punto-hora que se muestra sale del modelo más alarmado (a igualdad, el primero).
   const lead = LEVEL_RANK[b.level] > LEVEL_RANK[a.level] ? b : a;
   const confidence: Confidence = lead.season === 'warm' || !agree ? 'low' : 'medium';
-  // Hora por hora, con el mismo criterio que el nivel: "strong" solo si los dos modelos lo ven.
+  // Hora por hora, con el mismo criterio que el nivel: con 'both', "strong" solo si los dos modelos lo ven.
   const envOf = (x: WindowAssessment, time: string) => x.hourly.find((h) => h.time === time)?.environment ?? 'weak';
   const times = [...new Set([...a.hourly, ...b.hourly].map((h) => h.time))].sort();
   const hourly = times.map((time) => {
     const ea = envOf(a, time);
     const eb = envOf(b, time);
+    const er = [ENV_ORDER.indexOf(ea), ENV_ORDER.indexOf(eb)];
     const environment: Environment =
-      ea === 'strong' && eb === 'strong' ? 'strong' : ea !== 'weak' || eb !== 'weak' ? 'supportive' : 'weak';
+      combine === 'either'
+        ? ENV_ORDER[Math.max(...er)]
+        : combine === 'both-strict'
+          ? ENV_ORDER[Math.min(...er)]
+          : ea === 'strong' && eb === 'strong' ? 'strong' : ea !== 'weak' || eb !== 'weak' ? 'supportive' : 'weak';
     return { time, environment };
   });
 

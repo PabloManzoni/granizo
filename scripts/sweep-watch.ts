@@ -2,7 +2,7 @@
 // "Protegelo" no cambia: se fija en 1200. Uso: node scripts/sweep-watch.ts
 import '../src/data/nodeCache.ts';
 import { assessPointHour, assessWindow, combineModels } from '../src/engine/classify.ts';
-import { NEIGHBORHOOD, RULES } from '../src/engine/config.ts';
+import { NEIGHBORHOOD, SENSITIVITY_RULES } from '../src/engine/config.ts';
 import { computeIngredients } from '../src/engine/ingredients.ts';
 import { fetchProfiles } from '../src/data/openMeteo.ts';
 import { neighborhood } from '../src/geo/neighborhood.ts';
@@ -28,11 +28,11 @@ for (const e of cases) {
 }
 
 const classify = (watch: number) => {
-  (RULES as { wmaxshearWatch: number }).wmaxshearWatch = watch;
+  const rules = { ...SENSITIVITY_RULES.balanced, wmaxshearWatch: watch };
   return prof.map(({ e, ph }) => {
     const res = Object.entries(ph).filter(([, v]) => (v as any[]).length).map(([model, v]) => ({
       model,
-      assessment: { ...assessWindow((v as any[]).map(({ p, ing }) => assessPointHour(p.time, p.lat, p.lon, ing))), dataPoints: 0 },
+      assessment: { ...assessWindow((v as any[]).map(({ p, ing }) => assessPointHour(p.time, p.lat, p.lon, ing, rules)), rules), dataPoints: 0 },
     }));
     return { e, level: res.length ? combineModels(res as any).level : 'calm' };
   });

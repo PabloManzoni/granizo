@@ -38,7 +38,7 @@ async function handleAssess(url: URL, res: import('node:http').ServerResponse) {
   // Redondeo a ~1 km: alcanza para el motor (zona de 40 km) y no guardamos la ubicación exacta.
   const lat = Math.round(Number(url.searchParams.get('lat')) * 100) / 100;
   const lon = Math.round(Number(url.searchParams.get('lon')) * 100) / 100;
-  const windowName = (url.searchParams.get('window') ?? 'tonight') as WindowName;
+  const windowName = (url.searchParams.get('window') ?? 'today') as WindowName;
   if (!Number.isFinite(lat) || !Number.isFinite(lon)) return json(res, 400, { code: 'bad_request', error: 'Faltan lat y lon.' });
   if (lat < BOUNDS.latMin || lat > BOUNDS.latMax || lon < BOUNDS.lonMin || lon > BOUNDS.lonMax) {
     return json(res, 400, { code: 'outside', error: 'Por ahora el motor solo funciona en Uruguay.' });

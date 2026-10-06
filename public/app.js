@@ -21,24 +21,28 @@ const store = {
     }
   },
 };
-const K = { places: 'hg.places', useGps: 'hg.useGps', lastPlace: 'hg.lastPlace', installed: 'hg.installed' };
+const K = { places: 'hg.places', useGps: 'hg.useGps', lastPlace: 'hg.lastPlace', installed: 'hg.installed', sensitivity: 'hg.sensitivity' };
 
 // ---------- Estado ----------
+// Cada día incluye su noche: "Hoy" va hasta mañana a las 8 (ver src/windows.ts).
 const WHENS = [
   { id: 'today', label: 'Hoy' },
-  { id: 'tonight', label: 'Esta noche' },
   { id: 'tomorrow', label: 'Mañana' },
 ];
-const defaultWhen = () => {
-  const h = new Date().getHours();
-  return h >= 14 || h < 6 ? 'tonight' : 'today';
+
+// Grado de alerta: cuánta señal hace falta para avisar. El motor calcula los tres; acá se elige cuál mostrar.
+const SENSITIVITIES = ['sensitive', 'balanced', 'strict'];
+const SENSITIVITY_BARS = { sensitive: 3, balanced: 2, strict: 1 };
+const sensitivity = () => {
+  const s = store.get(K.sensitivity, 'balanced');
+  return SENSITIVITIES.includes(s) ? s : 'balanced';
 };
 
 const state = {
   view: 'loading', // result | loading | locating | error | places
   placeId: null,
-  when: defaultWhen(),
-  result: null,
+  when: 'today',
+  result: null, // { sensitive, balanced, strict }: el mismo pronóstico con cada grado
   error: null,
   techOpen: false,
   adding: null, // null | { lat, lon } mientras se nombra un lugar nuevo
@@ -105,9 +109,9 @@ export async function consult() {
   try {
     if (devFlags.offline || !navigator.onLine) throw { code: 'offline' };
     const engine = await loadEngine();
-    const view = await engine.assessHere(coords.lat, coords.lon, state.when);
+    const views = await engine.assessHere(coords.lat, coords.lon, state.when);
     if (id !== requestId) return;
-    showResult(view);
+    showResult(views);
   } catch (err) {
     if (id !== requestId) return;
     // Si ni siquiera cargó el motor, es falta de conexión.
@@ -115,13 +119,19 @@ export async function consult() {
   }
 }
 
-export function showResult(view) {
+/** `views`: el resultado con cada grado de alerta ({ sensitive, balanced, strict }). */
+export function showResult(views) {
+  // Justo después de publicar, el navegador puede tener un engine.js viejo en caché que devuelve un solo resultado
+  // (el equilibrado): se muestra ese, sin selector, en vez de romper la pantalla.
+  if (views?.level) views = { balanced: views };
   state.view = 'result';
-  state.result = view;
+  state.result = views;
   // El selector de abajo siempre refleja la ventana del resultado que se muestra.
-  if (WHENS.some((w) => w.id === view.window?.name)) state.when = view.window.name;
+  const name = views.balanced?.window?.name;
+  if (WHENS.some((w) => w.id === name)) state.when = name;
   render();
 }
+const currentResult = () => state.result?.[sensitivity()] ?? state.result?.balanced ?? null;
 export function showError(kind) {
   state.view = 'error';
   state.error = kind;
@@ -155,7 +165,8 @@ function errorCopy(kind) {
 }
 
 // ---------- Render ----------
-const WHEN_SHORT = { today: 'Hoy', tonight: 'Esta noche', tomorrow: 'Mañana' };
+const WHEN_SHORT = { today: 'Hoy', tomorrow: 'Mañana' };
+const bars = (n) => `<span class="bars" aria-hidden="true">${[1, 2, 3].map((i) => `<i class="${i <= n ? 'on' : ''}"></i>`).join('')}</span>`;
 
 function renderPlacesBar() {
   const bar = $('#places-bar');
@@ -172,8 +183,9 @@ function renderPlacesBar() {
 function renderResult(r) {
   document.body.dataset.level = r.level;
   document.title = `${r.levelName} · ${r.hailStatus} — Cubierto`;
-  const place = currentPlace();
   const days = dayLabels()[r.window.name];
+  // Con ventanas de 24 h o más, los números de hora van cada 3 para que entren.
+  const dense = r.hours.length > 16;
   const models = r.models
     .map((m) => `<span class="conf-model"><span class="mini-orb ${m.level}"></span><span class="mono">${esc(m.model)}</span> ${esc(m.levelName)}</span>`)
     .join('');
@@ -181,10 +193,13 @@ function renderResult(r) {
     <section class="hero" aria-label="Resultado">
       <div class="shield" aria-hidden="true"><car-shield level="${esc(r.level)}"></car-shield></div>
       <div class="hero-text">
-        <div class="kicker">${esc(place?.name ?? '')} · ${esc(WHEN_SHORT[r.window.name] ?? r.window.label)}${days ? ` · ${esc(days)}` : ''}</div>
+        <div class="kicker">${esc(WHEN_SHORT[r.window.name] ?? r.window.label)}${days ? ` · ${esc(days)}` : ''}</div>
         <h1 class="level">${esc(r.levelName)}</h1>
         <p class="hail">${esc(r.hailStatus)}</p>
-        ${r.note ? `<span class="note">${esc(r.note)}</span>` : ''}
+        <div class="chips">
+          ${r.note ? `<span class="note">${esc(r.note)}</span>` : ''}
+          ${r.sensitivityOptions ? `<button type="button" class="sens-pill" data-open="sensitivity" aria-haspopup="dialog" aria-label="Grado de alerta: ${esc(r.sensitivityName)}. Cambiar">${bars(SENSITIVITY_BARS[r.sensitivity])}<span>${esc(r.sensitivityName)}</span></button>` : ''}
+        </div>
       </div>
       <p class="title">${esc(r.title)}</p>
     </section>
@@ -197,8 +212,8 @@ function renderResult(r) {
 
     <section class="card">
       <h2 class="eyebrow">Horas a vigilar</h2>
-      <div class="hours" aria-hidden="true">
-        ${r.hours.map((h) => `<div class="hour l${h.level}"><i></i><span class="mono">${esc(h.label)}</span></div>`).join('')}
+      <div class="hours${dense ? ' dense' : ''}" style="--n:${r.hours.length}" aria-hidden="true">
+        ${r.hours.map((h) => `<div class="hour l${h.level}"><i></i><span class="mono">${!dense || Number(h.label) % 3 === 0 ? esc(h.label) : ''}</span></div>`).join('')}
       </div>
       ${r.watchText ? `<p class="watch-text">${esc(r.watchText)}</p>` : ''}
     </section>
@@ -319,7 +334,7 @@ function renderBottom() {
 export function render() {
   renderPlacesBar();
   const screen = $('#screen');
-  if (state.view === 'result' && state.result) screen.innerHTML = renderResult(state.result);
+  if (state.view === 'result' && state.result) screen.innerHTML = renderResult(currentResult());
   else if (state.view === 'loading') screen.innerHTML = `<div class="loading" role="status"><div class="shield pulse" aria-hidden="true"><car-shield level="calm"></car-shield></div><p>Consultando el pronóstico…</p></div>`;
   else if (state.view === 'locating') screen.innerHTML = renderError('locating');
   else if (state.view === 'error') screen.innerHTML = renderError(state.error);
@@ -414,6 +429,52 @@ export function openInstallModal() {
   dlg.showModal();
 }
 
+// ---------- Grado de alerta ----------
+// Modal con los tres grados. Elegir uno cambia el resultado al instante (el motor ya calculó los tres) y se guarda.
+export function openSensitivityModal() {
+  const r = currentResult();
+  if (!r?.sensitivityOptions) return;
+  let dlg = document.getElementById('sensitivity-dialog');
+  if (!dlg) {
+    dlg = document.createElement('dialog');
+    dlg.id = 'sensitivity-dialog';
+    dlg.className = 'modal';
+    dlg.setAttribute('aria-labelledby', 'sensitivity-title');
+    document.body.append(dlg);
+    dlg.addEventListener('click', (ev) => {
+      if (ev.target === dlg) dlg.close();
+    });
+    dlg.addEventListener('change', (ev) => {
+      if (ev.target.name !== 'sensitivity' || !SENSITIVITIES.includes(ev.target.value)) return;
+      store.set(K.sensitivity, ev.target.value);
+      render();
+    });
+    // El botón que lo abrió se volvió a dibujar: el foco vuelve al nuevo.
+    dlg.addEventListener('close', () => document.querySelector('[data-open="sensitivity"]')?.focus());
+  }
+  dlg.innerHTML = `
+    <form class="modal-body" method="dialog">
+      <h2 id="sensitivity-title">Grado de alerta</h2>
+      <div class="sens-options" role="radiogroup" aria-labelledby="sensitivity-title">
+        ${r.sensitivityOptions
+          .map(
+            (o) => `
+          <label class="sens-option">
+            <input type="radio" name="sensitivity" value="${esc(o.id)}"${o.id === r.sensitivity ? ' checked' : ''} />
+            <span class="sens-head">
+              ${bars(SENSITIVITY_BARS[o.id])}
+              <span class="sens-name">${esc(o.name)}</span>
+            </span>
+            <span class="sens-summary">${esc(o.summary)}</span>
+          </label>`,
+          )
+          .join('')}
+      </div>
+      <button type="submit" class="cta">Listo</button>
+    </form>`;
+  dlg.showModal();
+}
+
 async function install() {
   if (installPrompt) {
     installPrompt.prompt();
@@ -446,6 +507,7 @@ document.addEventListener('click', async (ev) => {
     return consult();
   }
   if (t.hasAttribute('data-install')) return install();
+  if (t.dataset.open === 'sensitivity') return openSensitivityModal();
   if (t.dataset.toggle === 'tech') {
     state.techOpen = !state.techOpen;
     return render();

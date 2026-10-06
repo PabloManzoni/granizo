@@ -1,6 +1,15 @@
 // Convierte el resultado del motor en lo que muestra la interfaz (textos de plantilla, sin IA).
 // Separado del motor: el motor decide el nivel; acá solo se redacta.
-import { RULES, TRIGGER } from './engine/config.ts';
+import {
+  DEFAULT_SENSITIVITY,
+  RULES,
+  SENSITIVITIES,
+  SENSITIVITY_RULES,
+  SENSITIVITY_STATS,
+  TRIGGER,
+  type Sensitivity,
+  type SensitivityRules,
+} from './engine/config.ts';
 import { DISCLAIMER, REASONS } from './engine/messages.ts';
 import type { RiskLevel, WindowAssessment } from './engine/types.ts';
 
@@ -22,6 +31,23 @@ export const HAIL_STATUS: Record<ViewLevel, string> = {
   protect: 'Peligro de granizo',
 };
 
+/** Grado de alerta: nombre visible y una línea de qué hace. */
+export const SENSITIVITY_NAMES: Record<Sensitivity, string> = {
+  sensitive: 'Cualquier señal',
+  balanced: 'Equilibrado',
+  strict: 'Solo señales fuertes',
+};
+const SENSITIVITY_SUMMARY: Record<Sensitivity, string> = {
+  sensitive: 'Más avisos, más falsas alarmas.',
+  balanced: 'Recomendado.',
+  strict: 'Menos avisos, alguna se escapa.',
+};
+const COMBINE_RULE: Record<SensitivityRules['combine'], string> = {
+  either: 'alcanza con que un modelo lo vea, vale el nivel más alto',
+  both: 'protegelo solo si los dos dicen protegelo; atento si alguno dice protegelo o los dos dicen al menos atento',
+  'both-strict': 'los dos modelos lo tienen que ver, vale el nivel más bajo',
+};
+
 export interface WindowInfo {
   name: string;
   label: string;
@@ -30,6 +56,16 @@ export interface WindowInfo {
 }
 
 export interface ResultView {
+  /** Grado de alerta con el que se armó este resultado. */
+  sensitivity: Sensitivity;
+  sensitivityName: string;
+  /** Los tres grados, para el selector. */
+  sensitivityOptions: {
+    id: Sensitivity;
+    name: string;
+    /** Una línea: qué se gana y qué se pierde. Los números están en `algorithm.validation`. */
+    summary: string;
+  }[];
   level: ViewLevel;
   levelName: string;
   /** "Sin señales de granizo", "Lluvia fuerte, sin piedra", "Posible granizo", "Peligro de granizo". */
@@ -74,19 +110,27 @@ const fmt = (x: number | null, digits = 0, unit = '') =>
 
 const sentence = (s: string) => (/[.!?]$/.test(s) ? s : `${s}.`);
 const hh = (time: string) => time.slice(11, 13);
+/** 0,82 → "8 de cada 10"; casi todo → "casi todas las" (o lo que se pase, para concordar con el sustantivo). */
+const outOfTen = (x: number, almostAll = 'casi todas las') => (x >= 0.95 ? almostAll : `${Math.round(x * 10)} de cada 10`);
+const approxOutOfTen = (x: number) => (x >= 0.95 ? outOfTen(x) : `~${outOfTen(x)}`);
+const pct = (x: number) => `${Math.round(x * 100)}%`;
+const viewLevelOf = (r: WindowAssessment): ViewLevel => (r.storm ? 'storm' : r.level);
+/** "Atento" sale seguido en días de tormenta sin granizo con este grado (no es una señal rara). */
+const watchIsCommon = (s: Sensitivity) => SENSITIVITY_STATS[s].watch.falseAlarm >= 0.3;
 
-function titleFor(level: ViewLevel, lowConfidence: boolean, agree: boolean): string {
+function titleFor(level: ViewLevel, lowConfidence: boolean, agree: boolean, weakSignals: boolean): string {
+  if (weakSignals) return 'Hay algo de ambiente para piedra, pero ninguna señal fuerte.';
   if (level === 'protect') return 'Chances reales de piedra en tu zona.';
   if (level === 'storm') return lowConfidence ? 'Se forman tormentas en tu zona; pocas chances de piedra.' : 'Se forman tormentas en tu zona, pero no es clima de piedra.';
   if (level === 'watch') return agree ? 'Hay ingredientes para piedra en tu zona.' : 'Los modelos no se ponen de acuerdo.';
   return lowConfidence ? 'Pocas chances de piedra en tu zona.' : 'No es clima de piedra en tu zona.';
 }
 
-function noteFor(level: ViewLevel, lowConfidence: boolean, agree: boolean, singleModel: boolean): string | null {
+function noteFor(level: ViewLevel, lowConfidence: boolean, agree: boolean, singleModel: boolean, sensitivity: Sensitivity): string | null {
   if (singleModel) return 'un solo modelo';
   if (!agree) return 'modelos divididos';
   if ((level === 'calm' || level === 'storm') && lowConfidence) return 'con reservas';
-  if (level === 'watch') return 'lo habitual con tormenta';
+  if (level === 'watch' && watchIsCommon(sensitivity)) return 'lo habitual con tormenta';
   return null;
 }
 
@@ -99,8 +143,31 @@ function watchTextFor(hours: ResultView['hours']): string | null {
   return `Entre las ${first} y las ${String(lastHour).padStart(2, '0')} h.`;
 }
 
-export function present(r: WindowAssessment, window: WindowInfo, generatedAt: string): ResultView {
-  const level: ViewLevel = r.storm ? 'storm' : r.level;
+/** Presenta el resultado de cada grado de alerta ("solo señales fuertes" mira al equilibrado para avisar señales débiles). */
+export function presentAll(
+  bySensitivity: Record<Sensitivity, WindowAssessment>,
+  window: WindowInfo,
+  generatedAt: string,
+): Record<Sensitivity, ResultView> {
+  return Object.fromEntries(
+    SENSITIVITIES.map((s) => [s, present(bySensitivity[s], window, generatedAt, s, bySensitivity)]),
+  ) as Record<Sensitivity, ResultView>;
+}
+
+export function present(
+  r: WindowAssessment,
+  window: WindowInfo,
+  generatedAt: string,
+  sensitivity: Sensitivity = DEFAULT_SENSITIVITY,
+  bySensitivity?: Partial<Record<Sensitivity, WindowAssessment>>,
+): ResultView {
+  const level = viewLevelOf(r);
+  const rules = SENSITIVITY_RULES[sensitivity];
+  const stats = SENSITIVITY_STATS[sensitivity];
+  const name = SENSITIVITY_NAMES[sensitivity];
+  // "Solo señales fuertes" dice tranquilo, pero con el grado equilibrado ya habría aviso: se dice, sin subir el nivel.
+  const balanced = bySensitivity?.balanced;
+  const weakSignals = sensitivity === 'strict' && r.level === 'calm' && !!balanced && balanced.level !== 'calm';
   // Cada modelo con el mismo criterio: tranquilo para granizo pero formando tormentas → "Tormenta".
   const models = (r.models ?? []).map((m) => {
     const lv: ViewLevel = m.level === 'calm' && m.check?.triggerPresent ? 'storm' : m.level;
@@ -113,10 +180,10 @@ export function present(r: WindowAssessment, window: WindowInfo, generatedAt: st
   const lowConfidence = r.confidence === 'low';
 
   const notices: ResultView['notices'] = [];
-  if (agree && r.level === 'watch') {
+  if (agree && r.level === 'watch' && watchIsCommon(sensitivity)) {
     notices.push({
       strong: 'Es lo habitual.',
-      text: 'Así sale en 4 de cada 10 días de tormenta. No es para correr: es para tener pensado dónde guardarlo.',
+      text: `Así sale en ${outOfTen(stats.watch.falseAlarm, 'casi todos los')} días de tormenta. No es para correr: es para tener pensado dónde guardarlo.`,
     });
   }
   if (r.level === 'protect') notices.push({ strong: 'Mirá también INUMET.', text: 'Esto no reemplaza los avisos oficiales.' });
@@ -171,11 +238,14 @@ export function present(r: WindowAssessment, window: WindowInfo, generatedAt: st
     },
     {
       rule: 'Energía × viento (WMAXSHEAR)',
-      threshold: `≥ ${fmt(RULES.wmaxshearWatch)} atento · ≥ ${fmt(RULES.wmaxshearProtect)} protegelo`,
+      threshold:
+        rules.wmaxshearWatch < rules.wmaxshearProtect
+          ? `≥ ${fmt(rules.wmaxshearWatch)} atento · ≥ ${fmt(rules.wmaxshearProtect)} protegelo`
+          : `≥ ${fmt(rules.wmaxshearProtect)} atento y protegelo`,
       values: verdicts.map((m) => {
         const w = m.check!.wmaxshearM2s2 ?? 0;
         // ✓✓ supera el umbral de "protegelo"; ✓ solo el de "atento".
-        return { model: m.model, text: n(m.check!.wmaxshearM2s2, 0), pass: w >= RULES.wmaxshearWatch, mark: w >= RULES.wmaxshearProtect ? '✓✓' : w >= RULES.wmaxshearWatch ? '✓' : '✗' };
+        return { model: m.model, text: n(m.check!.wmaxshearM2s2, 0), pass: w >= rules.wmaxshearWatch, mark: w >= rules.wmaxshearProtect ? '✓✓' : w >= rules.wmaxshearWatch ? '✓' : '✗' };
       }),
     },
     {
@@ -188,7 +258,7 @@ export function present(r: WindowAssessment, window: WindowInfo, generatedAt: st
   const stormRule = r.storm ? ' Sin ambiente de granizo, pero el modelo forma tormentas en la zona → Tormenta.' : '';
   const combination = (singleModel
     ? `Un solo modelo disponible (${perModel}): su nivel es el resultado.`
-    : `${perModel}. Regla: protegelo solo si los dos dicen protegelo; atento si alguno dice protegelo o los dos dicen al menos atento. → ${LEVEL_NAMES[r.level]}.`) + stormRule;
+    : `${perModel}. Regla de «${name}»: ${COMBINE_RULE[rules.combine]}. → ${LEVEL_NAMES[r.level]}.`) + stormRule;
   const confidenceWhy = r.season === 'warm'
     ? 'Entre octubre y marzo la confianza es siempre baja: en la prueba histórica el ambiente no distinguió granizo de lluvia.'
     : singleModel
@@ -197,20 +267,25 @@ export function present(r: WindowAssessment, window: WindowInfo, generatedAt: st
         ? 'Abril–septiembre y los modelos coinciden → media. No damos "alta": la prueba histórica no lo justifica.'
         : 'Los modelos no coinciden → baja.';
 
+  const sensitivityOptions = SENSITIVITIES.map((id) => ({ id, name: SENSITIVITY_NAMES[id], summary: SENSITIVITY_SUMMARY[id] }));
+
   return {
+    sensitivity,
+    sensitivityName: name,
+    sensitivityOptions,
     algorithm: {
       rows,
       combination,
       confidenceWhy,
       validation:
-        'Reglas calibradas con granizadas y días de tormenta de Uruguay 2021–2024 y probadas en 2025–2026: "Protegelo" avisó en ~4 de cada 10 granizadas, con ~15% de falsas alarmas en días de tormenta. Es un motor de reglas, sin IA.',
+        `Reglas calibradas con granizadas y días de tormenta de Uruguay 2021–2024 y probadas en 2025–2026. Con «${name}», "Protegelo" avisó en ${approxOutOfTen(stats.protect.hit)} granizadas, con ~${pct(stats.protect.falseAlarm)} de falsas alarmas en días de tormenta; "Atento o más", en ${approxOutOfTen(stats.watch.hit)} granizadas, con ~${pct(stats.watch.falseAlarm)}. Es un motor de reglas, sin IA.`,
       moreUrl: 'https://github.com/PabloManzoni/granizo/blob/main/docs/como-lo-probamos.md',
     },
     level,
     levelName: LEVEL_NAMES[level],
-    hailStatus: HAIL_STATUS[level],
-    note: noteFor(level, lowConfidence, agree, singleModel),
-    title: titleFor(level, lowConfidence, agree),
+    hailStatus: weakSignals ? 'Señales débiles de granizo' : HAIL_STATUS[level],
+    note: noteFor(level, lowConfidence, agree, singleModel, sensitivity),
+    title: titleFor(level, lowConfidence, agree, weakSignals),
     confidence: r.confidence,
     confidenceLabel: { low: 'Confianza baja', medium: 'Confianza media', high: 'Confianza alta' }[r.confidence],
     confidenceDots: { low: 1, medium: 2, high: 3 }[r.confidence],

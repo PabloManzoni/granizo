@@ -1,6 +1,6 @@
 // Consulta el pronóstico vigente para un lugar.
-// Uso: npm run check -- --lat -34.80 --lon -55.90 --window tonight
-//      ventanas: tonight (20–08) | today (ahora–20) | tomorrow (08–20 de mañana) | next12h
+// Uso: npm run check -- --lat -34.80 --lon -55.90 --window today
+//      ventanas: today (ahora–08 de mañana) | tomorrow (08–08) | tonight (20–08) | next12h
 import '../data/nodeCache.ts'; // caché en disco de Open-Meteo
 import { assess } from '../assess.ts';
 import { CONFIDENCE, DISCLAIMER, HEADLINES, REASONS, SEASON_NOTE } from '../engine/messages.ts';
@@ -11,10 +11,10 @@ const args = parseArgs(process.argv.slice(2));
 const lat = Number(args.lat);
 const lon = Number(args.lon);
 if (!Number.isFinite(lat) || !Number.isFinite(lon)) {
-  console.error('Uso: npm run check -- --lat -34.80 --lon -55.90 [--window tonight|today|tomorrow|next12h]');
+  console.error('Uso: npm run check -- --lat -34.80 --lon -55.90 [--window today|tomorrow|tonight|next12h]');
   process.exit(1);
 }
-const windowName = (WINDOW_NAMES.includes(args.window as WindowName) ? args.window : 'tonight') as WindowName;
+const windowName = (WINDOW_NAMES.includes(args.window as WindowName) ? args.window : 'today') as WindowName;
 const { from, to } = resolveWindow(windowName);
 const result = await assess({ center: { lat, lon }, from, to, source: 'forecast' });
 
