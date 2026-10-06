@@ -1,0 +1,60 @@
+/* Estilos mínimos y provisorios: el diseño visual se define después. */
+:root {
+  color-scheme: light dark;
+  --bg: #ffffff;
+  --fg: #111827;
+  --muted: #6b7280;
+  --border: #d1d5db;
+  --calm: #15803d;
+  --watch: #b45309;
+  --protect: #b91c1c;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #111827;
+    --fg: #f3f4f6;
+    --muted: #9ca3af;
+    --border: #374151;
+    --calm: #4ade80;
+    --watch: #fbbf24;
+    --protect: #f87171;
+  }
+}
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--fg);
+  font: 16px/1.5 system-ui, -apple-system, sans-serif;
+}
+main { max-width: 36rem; margin: 0 auto; padding: 1rem; }
+h1 { margin: 0.5rem 0 0; font-size: 1.6rem; }
+h2 { font-size: 1.05rem; margin: 1.25rem 0 0.5rem; }
+.sub, .muted { color: var(--muted); }
+.small { font-size: 0.85rem; }
+.row, .chips { display: flex; flex-wrap: wrap; gap: 0.5rem; align-items: center; }
+button, .chips label {
+  font: inherit;
+  padding: 0.55rem 0.9rem;
+  border: 1px solid var(--border);
+  border-radius: 0.5rem;
+  background: transparent;
+  color: inherit;
+  cursor: pointer;
+  min-height: 44px;
+}
+button[aria-pressed='true'], .chips label:has(input:checked) { border-color: var(--fg); font-weight: 600; }
+.chips input { margin: 0 0.35rem 0 0; }
+button.primary { width: 100%; margin-top: 1.25rem; font-weight: 600; border-color: var(--fg); }
+button:disabled { opacity: 0.5; cursor: default; }
+#result { margin-top: 1.25rem; padding: 1rem; border: 2px solid var(--border); border-radius: 0.75rem; }
+#result.level-calm { border-color: var(--calm); }
+#result.level-watch { border-color: var(--watch); }
+#result.level-protect { border-color: var(--protect); }
+#result h2 { margin-top: 0; font-size: 1.25rem; }
+.meta { color: var(--muted); margin-top: -0.25rem; }
+.season { border-left: 3px solid var(--watch); padding-left: 0.75rem; }
+.error { color: var(--protect); }
+.tech { font-size: 0.9rem; }
+footer { margin-top: 2rem; font-size: 0.85rem; }
+a { color: inherit; }

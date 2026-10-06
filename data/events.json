@@ -1,0 +1,3923 @@
+[
+  {
+    "id": "2021-07-28-aeropuerto-de-carrasco",
+    "type": "hail",
+    "date": "2021-07-28",
+    "localTime": "15:25",
+    "place": "Aeropuerto de Carrasco",
+    "department": "Canelones",
+    "lat": -34.83,
+    "lon": -56.01,
+    "hailSizeCm": null,
+    "damaging": false,
+    "damage": {
+      "vehicles": null,
+      "roofs": null,
+      "crops": null
+    },
+    "inumetAlert": {
+      "status": "none",
+      "mentionsHail": false
+    },
+    "evidence": "METAR SUMU 281825Z 20023G34KT 3000 +SHRAGS BKN020 06/02 Q1022 (15:25 local) y 281900Z -SHRAGS (16:00): chaparrones con granizo pequeño/graupel en irrupción de aire frío. El boletín de INUMET de julio 2021 lista granizo/graupel el día 28. Ese día el histórico de INUMET solo registra advertencias por viento, ninguna por tormentas.",
+    "sources": [
+      "https://mesonet.agron.iastate.edu/cgi-bin/request/asos.py?station=SUMU&data=metar&year1=2021&month1=7&day1=28&year2=2021&month2=7&day2=29&tz=America%2FMontevideo&format=onlycomma&latlon=no&missing=empty&trace=T&direct=no&report_type=3&report_type=4",
+      "https://www.inumet.gub.uy/sites/default/files/2021-08/Precipitaciones_JUL_2021.pdf",
+      "https://www.inumet.gub.uy/tiempo/historico-alertas-meteorologicas"
+    ],
+    "confidence": "high"
+  },
+  {
+    "id": "2021-07-28-aeropuerto-de-laguna-del-sauce",
+    "type": "hail",
+    "date": "2021-07-28",
+    "localTime": "09:38",
+    "place": "Aeropuerto de Laguna del Sauce",
+    "department": "Maldonado",
+    "lat": -34.86,
+    "lon": -55.09,
+    "hailSizeCm": null,
+    "damaging": false,
+    "damage": {
+      "vehicles": null,
+      "roofs": null,
+      "crops": null
+    },
+    "inumetAlert": {
+      "status": "none",
+      "mentionsHail": false
+    },
+    "evidence": "METAR SULS 281238Z ... SHGS (09:38 local), 281314Z +SHGSRA (10:14) y 281905Z SHGSRA (16:05): chaparrones de granizo pequeño (GS) con aire frío. El boletín de INUMET de julio 2021 incluye granizo/graupel el día 28. Ese día solo hubo advertencias por viento, ninguna por tormentas.",
+    "sources": [
+      "https://mesonet.agron.iastate.edu/cgi-bin/request/asos.py?station=SULS&data=metar&year1=2021&month1=7&day1=28&year2=2021&month2=7&day2=29&tz=America%2FMontevideo&format=onlycomma&latlon=no&missing=empty&trace=T&direct=no&report_type=3&report_type=4",
+      "https://www.inumet.gub.uy/sites/default/files/2021-08/Precipitaciones_JUL_2021.pdf",
+      "https://www.inumet.gub.uy/tiempo/historico-alertas-meteorologicas"
+    ],
+    "confidence": "high"
+  },
+  {
+    "id": "ctl-2021-08-08-suls",
+    "type": "control",
+    "date": "2021-08-08",
+    "localTime": "16:37",
+    "place": "Aeropuerto de Laguna del Sauce",
+    "department": "Maldonado",
+    "lat": -34.85,
+    "lon": -55.09,
+    "hailSizeCm": null,
+    "damaging": false,
+    "damage": {
+      "vehicles": null,
+      "roofs": null,
+      "crops": null
+    },
+    "inumetAlert": {
+      "status": "unknown",
+      "mentionsHail": null
+    },
+    "evidence": "METAR SULS: tormenta (TS) en 5 reportes entre 16:37 y 23:00, ráfaga máx 38 kt. Sin GR/GS en ningún aeropuerto, sin granizo en el boletín mensual de INUMET ni en la lista de eventos (día anterior, mismo día y siguiente). Hubo advertencia de INUMET por tormentas en el país ese día o el anterior (cobertura local no verificada). Control automático emparejado con 2026-08-16-nico-perez (8 días de diferencia en el año, 153 km).",
+    "sources": [
+      "https://mesonet.agron.iastate.edu/cgi-bin/request/asos.py?station=SULS&data=metar&year1=2021&month1=8&day1=8&year2=2021&month2=8&day2=9&tz=America%2FMontevideo&format=onlycomma&latlon=no&missing=empty&trace=T&direct=no&report_type=3&report_type=4",
+      "https://www.inumet.gub.uy/tiempo/historico-alertas-meteorologicas"
+    ],
+    "confidence": "medium",
+    "matchedTo": "2026-08-16-nico-perez"
+  },
+  {
+    "id": "ctl-2021-08-08-sumu",
+    "type": "control",
+    "date": "2021-08-08",
+    "localTime": "20:37",
+    "place": "Aeropuerto de Carrasco",
+    "department": "Canelones",
+    "lat": -34.83,
+    "lon": -56.01,
+    "hailSizeCm": null,
+    "damaging": false,
+    "damage": {
+      "vehicles": null,
+      "roofs": null,
+      "crops": null
+    },
+    "inumetAlert": {
+      "status": "unknown",
+      "mentionsHail": null
+    },
+    "evidence": "METAR SUMU: tormenta (TS) en 6 reportes entre 20:37 y 23:00, ráfaga máx 36 kt. Sin GR/GS en ningún aeropuerto, sin granizo en el boletín mensual de INUMET ni en la lista de eventos (día anterior, mismo día y siguiente). Hubo advertencia de INUMET por tormentas en el país ese día o el anterior (cobertura local no verificada). Control automático emparejado con 2026-08-06-mercedes (2 días de diferencia en el año, 256 km).",
+    "sources": [
+      "https://mesonet.agron.iastate.edu/cgi-bin/request/asos.py?station=SUMU&data=metar&year1=2021&month1=8&day1=8&year2=2021&month2=8&day2=9&tz=America%2FMontevideo&format=onlycomma&latlon=no&missing=empty&trace=T&direct=no&report_type=3&report_type=4",
+      "https://www.inumet.gub.uy/tiempo/historico-alertas-meteorologicas"
+    ],
+    "confidence": "medium",
+    "matchedTo": "2026-08-06-mercedes"
+  },
+  {
+    "id": "2021-08-21-aeropuerto-de-laguna-del-sauce",
+    "type": "hail",
+    "date": "2021-08-21",
+    "localTime": "23:15",
+    "place": "Aeropuerto de Laguna del Sauce",
+    "department": "Maldonado",
+    "lat": -34.86,
+    "lon": -55.09,
+    "hailSizeCm": null,
+    "damaging": false,
+    "damage": {
+      "vehicles": null,
+      "roofs": null,
+      "crops": null
+    },
+    "inumetAlert": {
+      "status": "unknown",
+      "mentionsHail": null
+    },
+    "evidence": "METAR SULS 220215Z 07011KT 6000 +TSGSRA (23:15 local del 21) y RETSGSRA a las 00:00: tormenta con granizo pequeño (GS) en el aeropuerto. El boletín de INUMET de agosto 2021 lista granizo el día 21. Hubo advertencias por tormentas en el país ese día, pero no se verificó si cubrían Maldonado.",
+    "sources": [
+      "https://mesonet.agron.iastate.edu/cgi-bin/request/asos.py?station=SULS&data=metar&year1=2021&month1=8&day1=21&year2=2021&month2=8&day2=22&tz=America%2FMontevideo&format=onlycomma&latlon=no&missing=empty&trace=T&direct=no&report_type=3&report_type=4",
+      "https://www.inumet.gub.uy/sites/default/files/2021-09/BOLETIN_PLUVIOMETRICO_AGO_2.pdf",
+      "https://www.inumet.gub.uy/tiempo/historico-alertas-meteorologicas"
+    ],
+    "confidence": "high"
+  },
+  {
+    "id": "ctl-2021-10-02-suso",
+    "type": "control",
+    "date": "2021-10-02",
+    "localTime": "16:00",
+    "place": "Aeropuerto de Salto",
+    "department": "Salto",
+    "lat": -31.44,
+    "lon": -57.98,
+    "hailSizeCm": null,
+    "damaging": false,
+    "damage": {
+      "vehicles": null,
+      "roofs": null,
+      "crops": null
+    },
+    "inumetAlert": {
+      "status": "unknown",
+      "mentionsHail": null
+    },
+    "evidence": "METAR SUSO: tormenta (TS) en 2 reportes entre 16:00 y 17:00. Sin GR/GS en ningún aeropuerto, sin granizo en el boletín mensual de INUMET ni en la lista de eventos (día anterior, mismo día y siguiente). Hubo advertencia de INUMET por tormentas en el país ese día o el anterior (cobertura local no verificada). Control automático emparejado con 2026-08-27-salto (36 días de diferencia en el año, 6 km).",
+    "sources": [
+      "https://mesonet.agron.iastate.edu/cgi-bin/request/asos.py?station=SUSO&data=metar&year1=2021&month1=10&day1=2&year2=2021&month2=10&day2=3&tz=America%2FMontevideo&format=onlycomma&latlon=no&missing=empty&trace=T&direct=no&report_type=3&report_type=4",
+      "https://www.inumet.gub.uy/tiempo/historico-alertas-meteorologicas"
+    ],
+    "confidence": "medium",
+    "matchedTo": "2026-08-27-salto"
+  },
+  {
+    "id": "ctl-2021-10-10-suso",
+    "type": "control",
+    "date": "2021-10-10",
+    "localTime": "17:00",
+    "place": "Aeropuerto de Salto",
+    "department": "Salto",
+    "lat": -31.44,
+    "lon": -57.98,
+    "hailSizeCm": null,
+    "damaging": false,
+    "damage": {
+      "vehicles": null,
+      "roofs": null,
+      "crops": null
+    },
+    "inumetAlert": {
+      "status": "unknown",
+      "mentionsHail": null
+    },
+    "evidence": "METAR SUSO: tormenta (TS) en 2 reportes entre 17:00 y 18:00, ráfaga máx 21 kt. Sin GR/GS en ningún aeropuerto, sin granizo en el boletín mensual de INUMET ni en la lista de eventos (día anterior, mismo día y siguiente). Hubo advertencia de INUMET por tormentas en el país ese día o el anterior (cobertura local no verificada). Control automático emparejado con 2024-10-17-salto-aeropuerto (8 días de diferencia en el año, 0 km).",
+    "sources": [
+      "https://mesonet.agron.iastate.edu/cgi-bin/request/asos.py?station=SUSO&data=metar&year1=2021&month1=10&day1=10&year2=2021&month2=10&day2=11&tz=America%2FMontevideo&format=onlycomma&latlon=no&missing=empty&trace=T&direct=no&report_type=3&report_type=4",
+      "https://www.inumet.gub.uy/tiempo/historico-alertas-meteorologicas"
+    ],
+    "confidence": "medium",
+    "matchedTo": "2024-10-17-salto-aeropuerto"
+  },
+  {
+    "id": "ctl-2021-10-13-suso",
+    "type": "control",
+    "date": "2021-10-13",
+    "localTime": "09:15",
+    "place": "Aeropuerto de Salto",
+    "department": "Salto",
+    "lat": -31.44,
+    "lon": -57.98,
+    "hailSizeCm": null,
+    "damaging": false,
+    "damage": {
+      "vehicles": null,
+      "roofs": null,
+      "crops": null
+    },
+    "inumetAlert": {
+      "status": "unknown",
+      "mentionsHail": null
+    },
+    "evidence": "METAR SUSO: tormenta (TS) en 5 reportes entre 09:15 y 13:00, ráfaga máx 26 kt. Sin GR/GS en ningún aeropuerto, sin granizo en el boletín mensual de INUMET ni en la lista de eventos (día anterior, mismo día y siguiente). Hubo advertencia de INUMET por tormentas en el país ese día o el anterior (cobertura local no verificada). Control automático emparejado con 2024-09-24-baltasar-brum (18 días de diferencia en el año, 101 km).",
+    "sources": [
+      "https://mesonet.agron.iastate.edu/cgi-bin/request/asos.py?station=SUSO&data=metar&year1=2021&month1=10&day1=13&year2=2021&month2=10&day2=14&tz=America%2FMontevideo&format=onlycomma&latlon=no&missing=empty&trace=T&direct=no&report_type=3&report_type=4",
+      "https://www.inumet.gub.uy/tiempo/historico-alertas-meteorologicas"
+    ],
+    "confidence": "medium",
+    "matchedTo": "2024-09-24-baltasar-brum"
+  },
+  {
+    "id": "2021-12-21-rivera",
+    "type": "hail",
+    "date": "2021-12-21",
+    "localTime": null,
+    "place": "Rivera",
+    "department": "Rivera",
+    "lat": -30.9,
+    "lon": -55.54,
+    "hailSizeCm": null,
+    "damaging": null,
+    "damage": {
+      "vehicles": null,
+      "roofs": null,
+      "crops": null
+    },
+    "inumetAlert": {
+      "status": "unknown",
+      "mentionsHail": null
+    },
+    "evidence": "Boletín pluviométrico de INUMET (diciembre 2021): las tormentas puntualmente fuertes del 21 de diciembre dejaron eventos de granizo en Rivera y en una localidad de Artigas. No informa tamaño ni daños.",
+    "sources": [
+      "https://www.inumet.gub.uy/sites/default/files/2022-01/BOLETIN_PLUVIOMETRICO_DIC2021_01.pdf"
+    ],
+    "confidence": "medium"
+  },
+  {
+    "id": "ctl-2022-01-04-sumu",
+    "type": "control",
+    "date": "2022-01-04",
+    "localTime": "13:18",
+    "place": "Aeropuerto de Carrasco",
+    "department": "Canelones",
+    "lat": -34.83,
+    "lon": -56.01,
+    "hailSizeCm": null,
+    "damaging": false,
+    "damage": {
+      "vehicles": null,
+      "roofs": null,
+      "crops": null
+    },
+    "inumetAlert": {
+      "status": "unknown",
+      "mentionsHail": null
+    },
+    "evidence": "METAR SUMU: tormenta (TS) en 6 reportes entre 13:18 y 15:00, con lluvia fuerte, ráfaga máx 33 kt. Sin GR/GS en ningún aeropuerto, sin granizo en el boletín mensual de INUMET ni en la lista de eventos (día anterior, mismo día y siguiente). Hubo advertencia de INUMET por tormentas en el país ese día o el anterior (cobertura local no verificada). Control automático emparejado con 2025-01-01-montevideo (3 días de diferencia en el año, 18 km).",
+    "sources": [
+      "https://mesonet.agron.iastate.edu/cgi-bin/request/asos.py?station=SUMU&data=metar&year1=2022&month1=1&day1=4&year2=2022&month2=1&day2=5&tz=America%2FMontevideo&format=onlycomma&latlon=no&missing=empty&trace=T&direct=no&report_type=3&report_type=4",
+      "https://www.inumet.gub.uy/tiempo/historico-alertas-meteorologicas"
+    ],
+    "confidence": "medium",
+    "matchedTo": "2025-01-01-montevideo"
+  },
+  {
+    "id": "2022-01-17-montevideo",
+    "type": "control",
+    "date": "2022-01-17",
+    "localTime": "06:00",
+    "place": "Montevideo",
+    "department": "Montevideo",
+    "lat": -34.91,
+    "lon": -56.19,
+    "hailSizeCm": null,
+    "damaging": false,
+    "damage": {
+      "vehicles": null,
+      "roofs": null,
+      "crops": null
+    },
+    "inumetAlert": {
+      "status": "orange",
+      "mentionsHail": true
+    },
+    "evidence": "Tormentas con lluvia intensa en la madrugada y mañana del 17. Calles anegadas con autos flotando y casi 200 llamados a Bomberos entre las 05:30 y las 10:30 (138 evacuaciones, 37 árboles caídos). Regía alerta naranja desde la madrugada (luego bajó a amarilla). METAR SUMU con TS/TSRA desde la 01:00 y sin GR/GS. El boletín de INUMET de enero 2022 registra granizo solo los días 1, 15 y 20. Ninguna nota menciona granizo.",
+    "sources": [
+      "https://www.montevideo.com.uy/Noticias/Bomberos-recibio-casi-200-llamados-de-emergencia-por-evacuaciones-arboles-caidos-o-danos-uc810258",
+      "https://prensamercosur.org/2022/01/18/el-calor-da-paso-a-tormentas-en-uruguay/",
+      "https://mesonet.agron.iastate.edu/cgi-bin/request/asos.py?station=SUMU&data=metar&year1=2022&month1=1&day1=17&year2=2022&month2=1&day2=18&tz=America%2FMontevideo&format=onlycomma&latlon=no&missing=empty&trace=T&direct=no&report_type=3&report_type=4",
+      "https://www.inumet.gub.uy/sites/default/files/2022-02/BOLETIN_PLUVIOMETRICO_ENE2022_03.pdf"
+    ],
+    "confidence": "high"
+  },
+  {
+    "id": "ctl-2022-01-17-suso",
+    "type": "control",
+    "date": "2022-01-17",
+    "localTime": "07:00",
+    "place": "Aeropuerto de Salto",
+    "department": "Salto",
+    "lat": -31.44,
+    "lon": -57.98,
+    "hailSizeCm": null,
+    "damaging": false,
+    "damage": {
+      "vehicles": null,
+      "roofs": null,
+      "crops": null
+    },
+    "inumetAlert": {
+      "status": "unknown",
+      "mentionsHail": null
+    },
+    "evidence": "METAR SUSO: tormenta (TS) en 6 reportes entre 07:00 y 12:15, ráfaga máx 29 kt. Sin GR/GS en ningún aeropuerto, sin granizo en el boletín mensual de INUMET ni en la lista de eventos (día anterior, mismo día y siguiente). Hubo advertencia de INUMET por tormentas en el país ese día o el anterior (cobertura local no verificada). Control automático emparejado con 2024-01-16-baltasar-brum (1 días de diferencia en el año, 101 km).",
+    "sources": [
+      "https://mesonet.agron.iastate.edu/cgi-bin/request/asos.py?station=SUSO&data=metar&year1=2022&month1=1&day1=17&year2=2022&month2=1&day2=18&tz=America%2FMontevideo&format=onlycomma&latlon=no&missing=empty&trace=T&direct=no&report_type=3&report_type=4",
+      "https://www.inumet.gub.uy/tiempo/historico-alertas-meteorologicas"
+    ],
+    "confidence": "medium",
+    "matchedTo": "2024-01-16-baltasar-brum"
+  },
+  {
+    "id": "2022-04-26-casupa",
+    "type": "hail",
+    "date": "2022-04-26",
+    "localTime": "20:00",
+    "place": "Casupá",
+    "department": "Florida",
+    "lat": -34.1,
+    "lon": -55.65,
+    "hailSizeCm": null,
+    "damaging": false,
+    "damage": {
+      "vehicles": null,
+      "roofs": null,
+      "crops": null
+    },
+    "inumetAlert": {
+      "status": "unknown",
+      "mentionsHail": null
+    },
+    "evidence": "Montevideo Portal: en la noche del martes 26 cayó granizo 'pequeño y abundante' en Casupá, con lluvia intensa y ráfagas (video de las 20 h). El informe post-evento de INUMET menciona una intensa granizada en Casupá el 26 de abril. No se informaron daños. INUMET había alertado por tormentas 'para buena parte del país'; no se verificó el color para Casupá.",
+    "sources": [
+      "https://www.montevideo.com.uy/Noticias/Cibernautas-registran-y-difunden-imagenes-del-granizo-que-cayo-este-martes-en-Casupa-uc819900",
+      "https://www.inumet.gub.uy/sites/default/files/2022-05/Informe%20Post%20evento%20%281%29.pdf",
+      "https://www.inumet.gub.uy/sites/default/files/2022-05/BOLETIN%20CLIM%C3%81TICO%20ABRIL%202022.pdf"
+    ],
+    "confidence": "high"
+  },
+  {
+    "id": "2022-07-10-san-ramon",
+    "type": "hail",
+    "date": "2022-07-10",
+    "localTime": "22:00",
+    "place": "San Ramón",
+    "department": "Canelones",
+    "lat": -34.29,
+    "lon": -55.96,
+    "hailSizeCm": 6,
+    "damaging": true,
+    "damage": {
+      "vehicles": true,
+      "roofs": true,
+      "crops": null
+    },
+    "inumetAlert": {
+      "status": "unknown",
+      "mentionsHail": null
+    },
+    "evidence": "La Mañana: granizada en San Ramón y Tala la noche del domingo 10 (primera tanda ~22 h, la peor ~23 h). Más de 30 viviendas con daños en techos y roturas en vehículos y estructuras. Montevideo Portal recoge piedras de 6 cm en San Ramón. El boletín de INUMET de julio 2022 lista granizo el día 10. Hubo advertencias por lluvias y tormentas desde las 21 h; no se verificó la zona.",
+    "sources": [
+      "https://www.xn--lamaana-7za.uy/?p=37578",
+      "https://www.montevideo.com.uy/Noticias/Temporal-en-Paysandu-derrumbe-de-casas-mas-de-100-techos-volados-y-tramo-de-ruta-cortada-uc827110",
+      "https://www.inumet.gub.uy/sites/default/files/2022-08/BOLETIN%20CLIM%C3%81TICO%20JULIO.pdf",
+      "https://www.inumet.gub.uy/tiempo/historico-alertas-meteorologicas"
+    ],
+    "confidence": "high"
+  },
+  {
+    "id": "ctl-2022-09-01-suls",
+    "type": "control",
+    "date": "2022-09-01",
+    "localTime": "09:35",
+    "place": "Aeropuerto de Laguna del Sauce",
+    "department": "Maldonado",
+    "lat": -34.85,
+    "lon": -55.09,
+    "hailSizeCm": null,
+    "damaging": false,
+    "damage": {
+      "vehicles": null,
+      "roofs": null,
+      "crops": null
+    },
+    "inumetAlert": {
+      "status": "unknown",
+      "mentionsHail": null
+    },
+    "evidence": "METAR SULS: tormenta (TS) en 3 reportes entre 09:35 y 11:00. Sin GR/GS en ningún aeropuerto, sin granizo en el boletín mensual de INUMET ni en la lista de eventos (día anterior, mismo día y siguiente). Hubo advertencia de INUMET por tormentas en el país ese día o el anterior (cobertura local no verificada). Control automático emparejado con 2026-08-17-rivera-aeropuerto (15 días de diferencia en el año, 442 km).",
+    "sources": [
+      "https://mesonet.agron.iastate.edu/cgi-bin/request/asos.py?station=SULS&data=metar&year1=2022&month1=9&day1=1&year2=2022&month2=9&day2=2&tz=America%2FMontevideo&format=onlycomma&latlon=no&missing=empty&trace=T&direct=no&report_type=3&report_type=4",
+      "https://www.inumet.gub.uy/tiempo/historico-alertas-meteorologicas"
+    ],
+    "confidence": "medium",
+    "matchedTo": "2026-08-17-rivera-aeropuerto"
+  },
+  {
+    "id": "ctl-2022-09-01-suso",
+    "type": "control",
+    "date": "2022-09-01",
+    "localTime": "07:00",
+    "place": "Aeropuerto de Salto",
+    "department": "Salto",
+    "lat": -31.44,
+    "lon": -57.98,
+    "hailSizeCm": null,
+    "damaging": false,
+    "damage": {
+      "vehicles": null,
+      "roofs": null,
+      "crops": null
+    },
+    "inumetAlert": {
+      "status": "unknown",
+      "mentionsHail": null
+    },
+    "evidence": "METAR SUSO: tormenta (TS) en 5 reportes entre 07:00 y 11:00. Sin GR/GS en ningún aeropuerto, sin granizo en el boletín mensual de INUMET ni en la lista de eventos (día anterior, mismo día y siguiente). Hubo advertencia de INUMET por tormentas en el país ese día o el anterior (cobertura local no verificada). Control automático emparejado con 2026-08-27-piedras-coloradas (5 días de diferencia en el año, 109 km).",
+    "sources": [
+      "https://mesonet.agron.iastate.edu/cgi-bin/request/asos.py?station=SUSO&data=metar&year1=2022&month1=9&day1=1&year2=2022&month2=9&day2=2&tz=America%2FMontevideo&format=onlycomma&latlon=no&missing=empty&trace=T&direct=no&report_type=3&report_type=4",
+      "https://www.inumet.gub.uy/tiempo/historico-alertas-meteorologicas"
+    ],
+    "confidence": "medium",
+    "matchedTo": "2026-08-27-piedras-coloradas"
+  },
+  {
+    "id": "ctl-2022-10-20-suso",
+    "type": "control",
+    "date": "2022-10-20",
+    "localTime": "08:15",
+    "place": "Aeropuerto de Salto",
+    "department": "Salto",
+    "lat": -31.44,
+    "lon": -57.98,
+    "hailSizeCm": null,
+    "damaging": false,
+    "damage": {
+      "vehicles": null,
+      "roofs": null,
+      "crops": null
+    },
+    "inumetAlert": {
+      "status": "unknown",
+      "mentionsHail": null
+    },
+    "evidence": "METAR SUSO: tormenta (TS) en 3 reportes entre 08:15 y 10:00. Sin GR/GS en ningún aeropuerto, sin granizo en el boletín mensual de INUMET ni en la lista de eventos (día anterior, mismo día y siguiente). Hubo advertencia de INUMET por tormentas en el país ese día o el anterior (cobertura local no verificada). Control automático emparejado con 2026-09-27-rivera (23 días de diferencia en el año, 240 km).",
+    "sources": [
+      "https://mesonet.agron.iastate.edu/cgi-bin/request/asos.py?station=SUSO&data=metar&year1=2022&month1=10&day1=20&year2=2022&month2=10&day2=21&tz=America%2FMontevideo&format=onlycomma&latlon=no&missing=empty&trace=T&direct=no&report_type=3&report_type=4",
+      "https://www.inumet.gub.uy/tiempo/historico-alertas-meteorologicas"
+    ],
+    "confidence": "medium",
+    "matchedTo": "2026-09-27-rivera"
+  },
+  {
+    "id": "ctl-2022-10-29-suaa",
+    "type": "control",
+    "date": "2022-10-29",
+    "localTime": "12:02",
+    "place": "Aeropuerto Ángel Adami (Melilla)",
+    "department": "Montevideo",
+    "lat": -34.79,
+    "lon": -56.26,
+    "hailSizeCm": null,
+    "damaging": false,
+    "damage": {
+      "vehicles": null,
+      "roofs": null,
+      "crops": null
+    },
+    "inumetAlert": {
+      "status": "unknown",
+      "mentionsHail": null
+    },
+    "evidence": "METAR SUAA: tormenta (TS) en 5 reportes entre 12:02 y 13:20, con lluvia fuerte, ráfaga máx 33 kt. Sin GR/GS en ningún aeropuerto, sin granizo en el boletín mensual de INUMET ni en la lista de eventos (día anterior, mismo día y siguiente). Hubo advertencia de INUMET por tormentas en el país ese día o el anterior (cobertura local no verificada). Control automático emparejado con 2026-09-27-young (32 días de diferencia en el año, 264 km).",
+    "sources": [
+      "https://mesonet.agron.iastate.edu/cgi-bin/request/asos.py?station=SUAA&data=metar&year1=2022&month1=10&day1=29&year2=2022&month2=10&day2=30&tz=America%2FMontevideo&format=onlycomma&latlon=no&missing=empty&trace=T&direct=no&report_type=3&report_type=4",
+      "https://www.inumet.gub.uy/tiempo/historico-alertas-meteorologicas"
+    ],
+    "confidence": "medium",
+    "matchedTo": "2026-09-27-young"
+  },
+  {
+    "id": "2022-10-31-aeropuerto-de-carrasco",
+    "type": "hail",
+    "date": "2022-10-31",
+    "localTime": "12:00",
+    "place": "Aeropuerto de Carrasco",
+    "department": "Canelones",
+    "lat": -34.83,
+    "lon": -56.01,
+    "hailSizeCm": null,
+    "damaging": false,
+    "damage": {
+      "vehicles": null,
+      "roofs": null,
+      "crops": null
+    },
+    "inumetAlert": {
+      "status": "none",
+      "mentionsHail": false
+    },
+    "evidence": "METAR SUMU 311500Z ... SHRAGS FEW030TCU (12:00 local): chaparrón con granizo pequeño/graupel. El boletín de INUMET de octubre 2022 informa eventos de graupel el día 31. El histórico de INUMET no registra advertencias ese día.",
+    "sources": [
+      "https://mesonet.agron.iastate.edu/cgi-bin/request/asos.py?station=SUMU&data=metar&year1=2022&month1=10&day1=31&year2=2022&month2=11&day2=1&tz=America%2FMontevideo&format=onlycomma&latlon=no&missing=empty&trace=T&direct=no&report_type=3&report_type=4",
+      "https://www.inumet.gub.uy/sites/default/files/2022-11/BOLETIN%20CLIM%C3%81TICO%20OCTUBRE.pdf",
+      "https://www.inumet.gub.uy/tiempo/historico-alertas-meteorologicas"
+    ],
+    "confidence": "high"
+  },
+  {
+    "id": "2022-12-10-durazno",
+    "type": "control",
+    "date": "2022-12-10",
+    "localTime": null,
+    "place": "Durazno",
+    "department": "Durazno",
+    "lat": -33.38,
+    "lon": -56.52,
+    "hailSizeCm": null,
+    "damaging": false,
+    "damage": {
+      "vehicles": null,
+      "roofs": null,
+      "crops": null
+    },
+    "inumetAlert": {
+      "status": "orange",
+      "mentionsHail": null
+    },
+    "evidence": "Madrugada del sábado 10: fuertes vientos en la ciudad de Durazno con voladura de chapas y paneles, cables caídos y personas lesionadas leves. El departamento estaba bajo alerta naranja (noche del viernes y madrugada del sábado). El boletín de INUMET de diciembre 2022 registra granizo solo los días 11 (Maldonado y Rocha) y 28 (Salto).",
+    "sources": [
+      "https://www.montevideo.com.uy/Noticias/Voladura-de-chapas-y-personas-lesionadas-los-fuertes-vientos-que-afectaron-a-Durazno-uc840281",
+      "https://www.inumet.gub.uy/sites/default/files/2023-01/BOLETIN%20CLIM%C3%81TICO%20DICIEMBRE%20%282%29.pdf",
+      "https://www.inumet.gub.uy/tiempo/historico-alertas-meteorologicas"
+    ],
+    "confidence": "high"
+  },
+  {
+    "id": "2022-12-28-salto",
+    "type": "hail",
+    "date": "2022-12-28",
+    "localTime": null,
+    "place": "Salto",
+    "department": "Salto",
+    "lat": -31.39,
+    "lon": -57.96,
+    "hailSizeCm": null,
+    "damaging": null,
+    "damage": {
+      "vehicles": null,
+      "roofs": null,
+      "crops": null
+    },
+    "inumetAlert": {
+      "status": "unknown",
+      "mentionsHail": null
+    },
+    "evidence": "Boletín climático de INUMET (diciembre 2022): el 28/12 se reportó un evento de granizo en la ciudad de Salto. Sin datos de tamaño ni daños.",
+    "sources": [
+      "https://www.inumet.gub.uy/sites/default/files/2023-01/BOLETIN%20CLIM%C3%81TICO%20DICIEMBRE%20%282%29.pdf"
+    ],
+    "confidence": "medium"
+  },
+  {
+    "id": "2023-01-01-montevideo",
+    "type": "control",
+    "date": "2023-01-01",
+    "localTime": "15:00",
+    "place": "Montevideo",
+    "department": "Montevideo",
+    "lat": -34.91,
+    "lon": -56.19,
+    "hailSizeCm": null,
+    "damaging": false,
+    "damage": {
+      "vehicles": null,
+      "roofs": null,
+      "crops": null
+    },
+    "inumetAlert": {
+      "status": "yellow",
+      "mentionsHail": true
+    },
+    "evidence": "Temporal del domingo 1 de enero en Montevideo: unos 3.000 usuarios de UTE afectados por árboles sobre el tendido, 2 techos levantados y 8 árboles caídos atendidos por Bomberos. Regía alerta amarilla por tormentas fuertes para el área metropolitana. METAR SUMU con TSRA a las 15:00 y sin GR/GS. Los boletines de INUMET registran granizo los días 11 y 28 de diciembre y 10-11 de enero, no el 1.",
+    "sources": [
+      "https://www.montevideo.com.uy/Noticias/Aproximadamente-3-000-usuarios-de-UTE-fueron-afectados-en-Montevideo-por-el-temporal-uc842064",
+      "https://www.montevideo.com.uy/Noticias/Alerta-amarilla-por-tormentas-fuertes-en-Artigas-Salto-y-el-area-metropolitana-uc841984",
+      "https://mesonet.agron.iastate.edu/cgi-bin/request/asos.py?station=SUMU&data=metar&year1=2023&month1=1&day1=1&year2=2023&month2=1&day2=2&tz=America%2FMontevideo&format=onlycomma&latlon=no&missing=empty&trace=T&direct=no&report_type=3&report_type=4",
+      "https://www.inumet.gub.uy/sites/default/files/2023-02/BOLETIN%20CLIM%C3%81TICO%20ENERO.pdf"
+    ],
+    "confidence": "high"
+  },
+  {
+    "id": "2023-03-29-paysandu",
+    "type": "control",
+    "date": "2023-03-29",
+    "localTime": null,
+    "place": "Paysandú",
+    "department": "Paysandú",
+    "lat": -32.32,
+    "lon": -58.09,
+    "hailSizeCm": null,
+    "damaging": false,
+    "damage": {
+      "vehicles": null,
+      "roofs": null,
+      "crops": null
+    },
+    "inumetAlert": {
+      "status": "orange",
+      "mentionsHail": true
+    },
+    "evidence": "Tarde-noche del miércoles 29: lluvias intensas y tormentas en el noroeste. En Paysandú, calles inundadas (autos arrastrados en calle Charrúa) y una casa con el techo volado. Paysandú estaba en alerta naranja por tormentas fuertes y lluvias intensas. El boletín de INUMET de marzo 2023 registra granizo solo los días 4 y 19.",
+    "sources": [
+      "https://www.montevideo.com.uy/Noticias/Inundaciones-y-voladura-de-techo-en-Paysandu-lo-que-dejaron-las-tormentas-del-miercoles-uc849735",
+      "https://www.montevideo.com.uy/Noticias/Alertas-por-tormentas-y-lluvias-intensas-en-noroeste-se-extiende-al-suroeste-y-centro-uc849619",
+      "https://www.inumet.gub.uy/sites/default/files/2023-04/BOLETIN%20CLIM%C3%81TICO%20MARZO.pdf"
+    ],
+    "confidence": "high"
+  },
+  {
+    "id": "ctl-2023-05-26-sudu",
+    "type": "control",
+    "date": "2023-05-26",
+    "localTime": "10:00",
+    "place": "Aeropuerto de Durazno",
+    "department": "Durazno",
+    "lat": -33.35,
+    "lon": -56.5,
+    "hailSizeCm": null,
+    "damaging": false,
+    "damage": {
+      "vehicles": null,
+      "roofs": null,
+      "crops": null
+    },
+    "inumetAlert": {
+      "status": "unknown",
+      "mentionsHail": null
+    },
+    "evidence": "METAR SUDU: tormenta (TS) en 8 reportes entre 10:00 y 12:27, con lluvia fuerte. Sin GR/GS en ningún aeropuerto, sin granizo en el boletín mensual de INUMET ni en la lista de eventos (día anterior, mismo día y siguiente). Hubo advertencia de INUMET por tormentas en el país ese día o el anterior (cobertura local no verificada). Control automático emparejado con 2024-06-22-trinidad (28 días de diferencia en el año, 42 km).",
+    "sources": [
+      "https://mesonet.agron.iastate.edu/cgi-bin/request/asos.py?station=SUDU&data=metar&year1=2023&month1=5&day1=26&year2=2023&month2=5&day2=27&tz=America%2FMontevideo&format=onlycomma&latlon=no&missing=empty&trace=T&direct=no&report_type=3&report_type=4",
+      "https://www.inumet.gub.uy/tiempo/historico-alertas-meteorologicas"
+    ],
+    "confidence": "medium",
+    "matchedTo": "2024-06-22-trinidad"
+  },
+  {
+    "id": "ctl-2023-05-26-suls",
+    "type": "control",
+    "date": "2023-05-26",
+    "localTime": "10:12",
+    "place": "Aeropuerto de Laguna del Sauce",
+    "department": "Maldonado",
+    "lat": -34.85,
+    "lon": -55.09,
+    "hailSizeCm": null,
+    "damaging": false,
+    "damage": {
+      "vehicles": null,
+      "roofs": null,
+      "crops": null
+    },
+    "inumetAlert": {
+      "status": "unknown",
+      "mentionsHail": null
+    },
+    "evidence": "METAR SULS: tormenta (TS) en 7 reportes entre 10:12 y 13:19, con lluvia fuerte, ráfaga máx 26 kt. Sin GR/GS en ningún aeropuerto, sin granizo en el boletín mensual de INUMET ni en la lista de eventos (día anterior, mismo día y siguiente). Hubo advertencia de INUMET por tormentas en el país ese día o el anterior (cobertura local no verificada). Control automático emparejado con 2024-06-14-florida (20 días de diferencia en el año, 132 km).",
+    "sources": [
+      "https://mesonet.agron.iastate.edu/cgi-bin/request/asos.py?station=SULS&data=metar&year1=2023&month1=5&day1=26&year2=2023&month2=5&day2=27&tz=America%2FMontevideo&format=onlycomma&latlon=no&missing=empty&trace=T&direct=no&report_type=3&report_type=4",
+      "https://www.inumet.gub.uy/tiempo/historico-alertas-meteorologicas"
+    ],
+    "confidence": "medium",
+    "matchedTo": "2024-06-14-florida"
+  },
+  {
+    "id": "2023-07-06-mercedes",
+    "type": "hail",
+    "date": "2023-07-06",
+    "localTime": null,
+    "place": "Mercedes",
+    "department": "Soriano",
+    "lat": -33.25,
+    "lon": -58.03,
+    "hailSizeCm": null,
+    "damaging": false,
+    "damage": {
+      "vehicles": null,
+      "roofs": null,
+      "crops": null
+    },
+    "inumetAlert": {
+      "status": "yellow",
+      "mentionsHail": true
+    },
+    "evidence": "Montevideo Portal: en la madrugada del jueves 6 cayó granizo pequeño en Mercedes (vecinos juntándolo con baldes) y en José Enrique Rodó, sin daños. INUMET lo había advertido en una alerta de la noche del miércoles. La advertencia vigente era amarilla por tormentas, con 'ocasional caída de granizo', y cubría todo Soriano en la emisión de las 01:15 del día 5. El boletín de INUMET lista granizo los días 5 y 6.",
+    "sources": [
+      "https://www.montevideo.com.uy/Noticias/Registraron-caida-de-granizo-en-Soriano-y-Canelones-tras-tormentas-de-las-ultimas-horas-uc858985",
+      "https://www.montevideo.com.uy/Noticias/Rayos-y-truenos-hay-alerta-amarilla-por-lluvias-y-tormentas-en-cinco-departamentos-uc858783",
+      "https://web.archive.org/web/20231218190420/https://www.inumet.gub.uy/reportes/riesgo/pdf/adv1688530392183.pdf",
+      "https://www.inumet.gub.uy/sites/default/files/2023-08/BOLETIN%20CLIM%C3%81TICO%20JULIO.pdf"
+    ],
+    "confidence": "high"
+  },
+  {
+    "id": "2023-09-17-balneario-buenos-aires-la-barrajose-ignacio",
+    "type": "hail",
+    "date": "2023-09-17",
+    "localTime": "14:40",
+    "place": "Balneario Buenos Aires (La Barra–José Ignacio)",
+    "department": "Maldonado",
+    "lat": -34.89,
+    "lon": -54.79,
+    "hailSizeCm": null,
+    "damaging": null,
+    "damage": {
+      "vehicles": null,
+      "roofs": null,
+      "crops": null
+    },
+    "inumetAlert": {
+      "status": "yellow",
+      "mentionsHail": true
+    },
+    "evidence": "METAR SULS 171740Z 1500 +TSRA GS (14:40 local). Montevideo Portal difunde granizo grande y abundante en Maldonado (entre La Barra y José Ignacio, balneario Buenos Aires) y habla de daños materiales en algunos lugares, sin precisar cuáles. MetSul menciona piedras del tamaño de la palma de una mano en el país. La advertencia amarilla de las 16:00 incluía el balneario Buenos Aires. El boletín de INUMET lista granizo el día 17.",
+    "sources": [
+      "https://mesonet.agron.iastate.edu/cgi-bin/request/asos.py?station=SULS&data=metar&year1=2023&month1=9&day1=17&year2=2023&month2=9&day2=18&tz=America%2FMontevideo&format=onlycomma&latlon=no&missing=empty&trace=T&direct=no&report_type=3&report_type=4",
+      "https://www.montevideo.com.uy/Noticias/Cayo-granizo-en-varios-puntos-del-pais-y-usuarios-en-redes-sociales-compartieron-videos-uc865762",
+      "https://www.montevideo.com.uy/Noticias/El-analisis-de-Metsul-sobre-el-granizo-que-cayo-el-fin-de-semana-en-varios-departamentos-uc865786",
+      "https://web.archive.org/web/20231218190452/https://www.inumet.gub.uy/reportes/riesgo/pdf/adv1694976971067.pdf",
+      "https://www.inumet.gub.uy/sites/default/files/2023-10/BOLETIN%20CLIM%C3%81TICO%20SETIEMBRE.pdf"
+    ],
+    "confidence": "high"
+  },
+  {
+    "id": "2023-09-17-barros-blancos",
+    "type": "hail",
+    "date": "2023-09-17",
+    "localTime": null,
+    "place": "Barros Blancos",
+    "department": "Canelones",
+    "lat": -34.75,
+    "lon": -56.0,
+    "hailSizeCm": null,
+    "damaging": null,
+    "damage": {
+      "vehicles": null,
+      "roofs": null,
+      "crops": null
+    },
+    "inumetAlert": {
+      "status": "unknown",
+      "mentionsHail": null
+    },
+    "evidence": "Montevideo Portal: gran cantidad de granizo pequeño/mediano y abundante en Barros Blancos. También reportan mucho granizo en Pando, Empalme Olmos y Sauce. MetSul señala a Canelones como el departamento con más acumulación de granizo. Sin daños precisados.",
+    "sources": [
+      "https://www.montevideo.com.uy/Noticias/Cayo-granizo-en-varios-puntos-del-pais-y-usuarios-en-redes-sociales-compartieron-videos-uc865762",
+      "https://www.montevideo.com.uy/Noticias/El-analisis-de-Metsul-sobre-el-granizo-que-cayo-el-fin-de-semana-en-varios-departamentos-uc865786",
+      "https://www.inumet.gub.uy/sites/default/files/2023-10/BOLETIN%20CLIM%C3%81TICO%20SETIEMBRE.pdf"
+    ],
+    "confidence": "high"
+  },
+  {
+    "id": "2023-10-03-artigas",
+    "type": "hail",
+    "date": "2023-10-03",
+    "localTime": null,
+    "place": "Artigas",
+    "department": "Artigas",
+    "lat": -30.4,
+    "lon": -56.46,
+    "hailSizeCm": 6,
+    "damaging": true,
+    "damage": {
+      "vehicles": null,
+      "roofs": true,
+      "crops": null
+    },
+    "inumetAlert": {
+      "status": "orange",
+      "mentionsHail": true
+    },
+    "evidence": "Montevideo Portal: intensa granizada nocturna en el departamento de Artigas. En la ciudad se midieron piedras de 3 cm y en algunos casos llegaron a 6 cm. La Intendencia relevó viviendas dañadas, y en Colonia Rivera se reportaron daños en vidrios y chapas. Había alerta naranja para la ciudad de Artigas (emitida la tarde del 3, vigente hasta ~06:00 del 4). El boletín de INUMET de octubre 2023 confirma granizo el día 3.",
+    "sources": [
+      "https://www.montevideo.com.uy/Noticias/Cayo-piedra-intensa-y-voluminosa-granizada-se-abatio-sobre-Artigas-y-causo-danos-uc867285",
+      "https://www.montevideo.com.uy/Noticias/Inumet-emitio-alertas-amarilla-y-naranja-por-tormentas-fuertes-para-gran-parte-del-pais-uc867267",
+      "https://web.archive.org/web/20231218190404/https://www.inumet.gub.uy/reportes/riesgo/pdf/adv1696388328420.pdf",
+      "https://www.inumet.gub.uy/sites/default/files/2023-11/BOLETIN%20CLIM%C3%81TICO%20DE%20OCTUBRE.pdf"
+    ],
+    "confidence": "high"
+  },
+  {
+    "id": "ctl-2023-10-11-suls",
+    "type": "control",
+    "date": "2023-10-11",
+    "localTime": "02:49",
+    "place": "Aeropuerto de Laguna del Sauce",
+    "department": "Maldonado",
+    "lat": -34.85,
+    "lon": -55.09,
+    "hailSizeCm": null,
+    "damaging": false,
+    "damage": {
+      "vehicles": null,
+      "roofs": null,
+      "crops": null
+    },
+    "inumetAlert": {
+      "status": "unknown",
+      "mentionsHail": null
+    },
+    "evidence": "METAR SULS: tormenta (TS) en 3 reportes entre 02:49 y 03:41, con lluvia fuerte, ráfaga máx 33 kt. Sin GR/GS en ningún aeropuerto, sin granizo en el boletín mensual de INUMET ni en la lista de eventos (día anterior, mismo día y siguiente). Hubo advertencia de INUMET por tormentas en el país ese día o el anterior (cobertura local no verificada). Control automático emparejado con 2024-09-09-barra-del-chuy (31 días de diferencia en el año, 198 km).",
+    "sources": [
+      "https://mesonet.agron.iastate.edu/cgi-bin/request/asos.py?station=SULS&data=metar&year1=2023&month1=10&day1=11&year2=2023&month2=10&day2=12&tz=America%2FMontevideo&format=onlycomma&latlon=no&missing=empty&trace=T&direct=no&report_type=3&report_type=4",
+      "https://www.inumet.gub.uy/tiempo/historico-alertas-meteorologicas"
+    ],
+    "confidence": "medium",
+    "matchedTo": "2024-09-09-barra-del-chuy"
+  },
+  {
+    "id": "ctl-2023-10-11-sumu",
+    "type": "control",
+    "date": "2023-10-11",
+    "localTime": "01:30",
+    "place": "Aeropuerto de Carrasco",
+    "department": "Canelones",
+    "lat": -34.83,
+    "lon": -56.01,
+    "hailSizeCm": null,
+    "damaging": false,
+    "damage": {
+      "vehicles": null,
+      "roofs": null,
+      "crops": null
+    },
+    "inumetAlert": {
+      "status": "unknown",
+      "mentionsHail": null
+    },
+    "evidence": "METAR SUMU: tormenta (TS) en 6 reportes entre 01:30 y 04:00, ráfaga máx 28 kt. Sin GR/GS en ningún aeropuerto, sin granizo en el boletín mensual de INUMET ni en la lista de eventos (día anterior, mismo día y siguiente). Hubo advertencia de INUMET por tormentas en el país ese día o el anterior (cobertura local no verificada). Control automático emparejado con 2026-08-27-treinta-y-tres (45 días de diferencia en el año, 233 km).",
+    "sources": [
+      "https://mesonet.agron.iastate.edu/cgi-bin/request/asos.py?station=SUMU&data=metar&year1=2023&month1=10&day1=11&year2=2023&month2=10&day2=12&tz=America%2FMontevideo&format=onlycomma&latlon=no&missing=empty&trace=T&direct=no&report_type=3&report_type=4",
+      "https://www.inumet.gub.uy/tiempo/historico-alertas-meteorologicas"
+    ],
+    "confidence": "medium",
+    "matchedTo": "2026-08-27-treinta-y-tres"
+  },
+  {
+    "id": "2023-10-30-aeropuerto-de-carrasco",
+    "type": "hail",
+    "date": "2023-10-30",
+    "localTime": "06:00",
+    "place": "Aeropuerto de Carrasco",
+    "department": "Canelones",
+    "lat": -34.83,
+    "lon": -56.01,
+    "hailSizeCm": null,
+    "damaging": false,
+    "damage": {
+      "vehicles": null,
+      "roofs": null,
+      "crops": null
+    },
+    "inumetAlert": {
+      "status": "unknown",
+      "mentionsHail": null
+    },
+    "evidence": "METAR SUMU 300900Z 17029G42KT 2000 TSRAGS (06:00 local) y REGS a las 07:00: tormenta con granizo pequeño en el aeropuerto. El boletín de INUMET de octubre 2023 lista granizo los días 29 y 30. Había alerta amarilla por tormentas en trece departamentos; no se verificó si incluía Canelones.",
+    "sources": [
+      "https://mesonet.agron.iastate.edu/cgi-bin/request/asos.py?station=SUMU&data=metar&year1=2023&month1=10&day1=30&year2=2023&month2=10&day2=31&tz=America%2FMontevideo&format=onlycomma&latlon=no&missing=empty&trace=T&direct=no&report_type=3&report_type=4",
+      "https://www.inumet.gub.uy/sites/default/files/2023-11/BOLETIN%20CLIM%C3%81TICO%20DE%20OCTUBRE.pdf",
+      "https://www.montevideo.com.uy/Noticias/Primavera-mojada-alerta-amarilla-por-tormentas-en-trece-departamentos-uc869670"
+    ],
+    "confidence": "high"
+  },
+  {
+    "id": "2023-11-08-salto",
+    "type": "hail",
+    "date": "2023-11-08",
+    "localTime": null,
+    "place": "Salto",
+    "department": "Salto",
+    "lat": -31.39,
+    "lon": -57.96,
+    "hailSizeCm": null,
+    "damaging": null,
+    "damage": {
+      "vehicles": null,
+      "roofs": null,
+      "crops": null
+    },
+    "inumetAlert": {
+      "status": "yellow",
+      "mentionsHail": true
+    },
+    "evidence": "Montevideo Portal (con datos del Cecoed de Salto): el miércoles 8, una turbonada con lluvia, rayos y 'granizo de gran tamaño' dejó voladuras y roturas de techos, árboles y columnas caídos e invernáculos dañados en Salto, Nueva Hespérides, Villa Constitución y Colonia Itapebí. Los daños se atribuyen a la turbonada en conjunto y no se separa el efecto del granizo, por eso damage queda en null. Ese día rigió alerta amarilla para todo Salto. Discrepancia: el boletín de INUMET de noviembre 2023 lista granizo los días 7, 15, 17 y 21, no el 8.",
+    "sources": [
+      "https://www.montevideo.com.uy/Noticias/Turbonada-con-granizo-genero-voladuras-de-techos-arboles-caidos-y-cortes-de-luz-en-Salto-uc870722",
+      "https://www.montevideo.com.uy/Noticias/Inumet-emitio-una-nueva-alerta-amarilla-por-tormentas-fuertes-mira-que-localidades-afecta-uc870648",
+      "https://www.inumet.gub.uy/sites/default/files/2023-12/BOLETIN%20CLIM%C3%81TICO%20NOVIEMBRE.pdf"
+    ],
+    "confidence": "medium"
+  },
+  {
+    "id": "ctl-2023-11-10-suca",
+    "type": "control",
+    "date": "2023-11-10",
+    "localTime": "11:00",
+    "place": "Aeropuerto de Colonia",
+    "department": "Colonia",
+    "lat": -34.45,
+    "lon": -57.77,
+    "hailSizeCm": null,
+    "damaging": false,
+    "damage": {
+      "vehicles": null,
+      "roofs": null,
+      "crops": null
+    },
+    "inumetAlert": {
+      "status": "unknown",
+      "mentionsHail": null
+    },
+    "evidence": "METAR SUCA: tormenta (TS) en 10 reportes entre 11:00 y 19:00, con lluvia fuerte, ráfaga máx 25 kt. Sin GR/GS en ningún aeropuerto, sin granizo en el boletín mensual de INUMET ni en la lista de eventos (día anterior, mismo día y siguiente). Hubo advertencia de INUMET por tormentas en el país ese día o el anterior (cobertura local no verificada). Control automático emparejado con 2026-09-27-paysandu (44 días de diferencia en el año, 239 km).",
+    "sources": [
+      "https://mesonet.agron.iastate.edu/cgi-bin/request/asos.py?station=SUCA&data=metar&year1=2023&month1=11&day1=10&year2=2023&month2=11&day2=11&tz=America%2FMontevideo&format=onlycomma&latlon=no&missing=empty&trace=T&direct=no&report_type=3&report_type=4",
+      "https://www.inumet.gub.uy/tiempo/historico-alertas-meteorologicas"
+    ],
+    "confidence": "medium",
+    "matchedTo": "2026-09-27-paysandu"
+  },
+  {
+    "id": "2023-12-01-colonia-del-sacramento-aeropuerto",
+    "type": "hail",
+    "date": "2023-12-01",
+    "localTime": "11:28",
+    "place": "Colonia del Sacramento (aeropuerto)",
+    "department": "Colonia",
+    "lat": -34.45,
+    "lon": -57.77,
+    "hailSizeCm": null,
+    "damaging": false,
+    "damage": {
+      "vehicles": null,
+      "roofs": null,
+      "crops": null
+    },
+    "inumetAlert": {
+      "status": "orange",
+      "mentionsHail": true
+    },
+    "evidence": "METAR SUCA 011428Z 0500 +TSGSRA (11:28 local) y REGSRA a las 11:45: tormenta con granizo pequeño en el aeropuerto de Colonia. La advertencia naranja de las 14:45 cubría todo el departamento; la vigente a la hora del granizo no se verificó. El boletín de INUMET de diciembre 2023 solo lista granizo el día 5.",
+    "sources": [
+      "https://mesonet.agron.iastate.edu/cgi-bin/request/asos.py?station=SUCA&data=metar&year1=2023&month1=12&day1=1&year2=2023&month2=12&day2=2&tz=America%2FMontevideo&format=onlycomma&latlon=no&missing=empty&trace=T&direct=no&report_type=3&report_type=4",
+      "https://web.archive.org/web/20231201234247/https://www.inumet.gub.uy/reportes/riesgo/pdf/adv1701452801915.pdf",
+      "https://www.gub.uy/sistema-nacional-emergencias/comunicacion/noticias/informe-situacion-tormentas-011223-2015-h"
+    ],
+    "confidence": "high"
+  },
+  {
+    "id": "2023-12-17-colonia-del-sacramento",
+    "type": "control",
+    "date": "2023-12-17",
+    "localTime": "04:30",
+    "place": "Colonia del Sacramento",
+    "department": "Colonia",
+    "lat": -34.47,
+    "lon": -57.84,
+    "hailSizeCm": null,
+    "damaging": false,
+    "damage": {
+      "vehicles": null,
+      "roofs": null,
+      "crops": null
+    },
+    "inumetAlert": {
+      "status": "orange",
+      "mentionsHail": true
+    },
+    "evidence": "Línea de inestabilidad de la madrugada del domingo 17: racha de 167 km/h en Colonia a las 04:30, innumerables caídas de árboles y voladuras de techos, y dos fallecidos en el departamento (Colonia Valdense y Rosario). La advertencia naranja de las 04:40 cubría todo Colonia (la primera alerta se emitió a las 23:30 del 16). METAR SUCA -TSRA, sin GR/GS. El boletín de INUMET de diciembre 2023 registra granizo solo el día 5.",
+    "sources": [
+      "https://www.montevideo.com.uy/Noticias/Colonia-el-departamento-mas-afectado-por-temporal-rachas-de-viento-alcanzaron-167-km-h-uc874260",
+      "https://www.montevideo.com.uy/Noticias/Dos-personas-murieron-en-Colonia-a-causa-de-un-fuerte-temporal-una-es-menor-de-edad-uc874239",
+      "https://www.montevideo.com.uy/Noticias/-Hay-que-tener-mas-en-cuenta-y-estar-mas-alerta-a-los-avisos--dice-director-del-Sinae-uc874326",
+      "https://web.archive.org/web/20231218190450/https://www.inumet.gub.uy/reportes/riesgo/pdf/adv1702798829023.pdf",
+      "https://mesonet.agron.iastate.edu/cgi-bin/request/asos.py?station=SUCA&data=metar&year1=2023&month1=12&day1=17&year2=2023&month2=12&day2=18&tz=America%2FMontevideo&format=onlycomma&latlon=no&missing=empty&trace=T&direct=no&report_type=3&report_type=4",
+      "https://www.inumet.gub.uy/sites/default/files/2024-01/BOLETIN%20CLIM%C3%81TICO%20DICIEMBRE_1.pdf"
+    ],
+    "confidence": "high"
+  },
+  {
+    "id": "2023-12-17-mercedes",
+    "type": "control",
+    "date": "2023-12-17",
+    "localTime": null,
+    "place": "Mercedes",
+    "department": "Soriano",
+    "lat": -33.25,
+    "lon": -58.03,
+    "hailSizeCm": null,
+    "damaging": false,
+    "damage": {
+      "vehicles": null,
+      "roofs": null,
+      "crops": null
+    },
+    "inumetAlert": {
+      "status": "orange",
+      "mentionsHail": true
+    },
+    "evidence": "Temporal del domingo 17: racha de 105 km/h en Mercedes. Soriano fue uno de los departamentos con más servicios de UTE caídos (>10 %). La advertencia naranja de las 04:40 cubría todo Soriano. Ninguna nota menciona granizo, y el boletín de INUMET de diciembre 2023 solo lo registra el día 5.",
+    "sources": [
+      "https://www.montevideo.com.uy/Noticias/Colonia-el-departamento-mas-afectado-por-temporal-rachas-de-viento-alcanzaron-167-km-h-uc874260",
+      "https://www.montevideo.com.uy/Noticias/Tras-temporal-lineas-de-UTE-se-vieron-afectadas-trabajan-para-recomponerlas-uc874242",
+      "https://web.archive.org/web/20231218190450/https://www.inumet.gub.uy/reportes/riesgo/pdf/adv1702798829023.pdf",
+      "https://www.inumet.gub.uy/sites/default/files/2024-01/BOLETIN%20CLIM%C3%81TICO%20DICIEMBRE_1.pdf"
+    ],
+    "confidence": "medium"
+  },
+  {
+    "id": "2023-12-17-montevideo",
+    "type": "control",
+    "date": "2023-12-17",
+    "localTime": "06:00",
+    "place": "Montevideo",
+    "department": "Montevideo",
+    "lat": -34.91,
+    "lon": -56.19,
+    "hailSizeCm": null,
+    "damaging": false,
+    "damage": {
+      "vehicles": null,
+      "roofs": null,
+      "crops": null
+    },
+    "inumetAlert": {
+      "status": "orange",
+      "mentionsHail": true
+    },
+    "evidence": "Mismo temporal: rachas de 99 km/h en Melilla, 57 intervenciones de Bomberos en el área metropolitana (44 por árboles), 201 denuncias a la Intendencia y cortes de UTE. La advertencia naranja de las 04:40 cubría todo Montevideo. METAR SUMU +TSRA hacia las 06:00, sin GR/GS. El boletín de INUMET de diciembre 2023 registra granizo solo el día 5.",
+    "sources": [
+      "https://www.montevideo.com.uy/Noticias/Intendencia-de-Montevideo-atendio-140-denuncias-tras-temporal-restan-61-solicitudes-uc874346",
+      "https://www.montevideo.com.uy/Noticias/Dos-personas-murieron-en-Colonia-a-causa-de-un-fuerte-temporal-una-es-menor-de-edad-uc874239",
+      "https://www.montevideo.com.uy/Noticias/Colonia-el-departamento-mas-afectado-por-temporal-rachas-de-viento-alcanzaron-167-km-h-uc874260",
+      "https://web.archive.org/web/20231218190450/https://www.inumet.gub.uy/reportes/riesgo/pdf/adv1702798829023.pdf",
+      "https://mesonet.agron.iastate.edu/cgi-bin/request/asos.py?station=SUMU&data=metar&year1=2023&month1=12&day1=17&year2=2023&month2=12&day2=18&tz=America%2FMontevideo&format=onlycomma&latlon=no&missing=empty&trace=T&direct=no&report_type=3&report_type=4",
+      "https://www.inumet.gub.uy/sites/default/files/2024-01/BOLETIN%20CLIM%C3%81TICO%20DICIEMBRE_1.pdf"
+    ],
+    "confidence": "high"
+  },
+  {
+    "id": "2023-12-17-san-jose-de-mayo",
+    "type": "control",
+    "date": "2023-12-17",
+    "localTime": null,
+    "place": "San José de Mayo",
+    "department": "San José",
+    "lat": -34.34,
+    "lon": -56.71,
+    "hailSizeCm": null,
+    "damaging": false,
+    "damage": {
+      "vehicles": null,
+      "roofs": null,
+      "crops": null
+    },
+    "inumetAlert": {
+      "status": "orange",
+      "mentionsHail": true
+    },
+    "evidence": "Mismo temporal: racha de 102 km/h en San José de Mayo. San José fue uno de los departamentos con más servicios de UTE caídos (>10 %). La advertencia naranja de las 04:40 cubría todo San José. Ninguna nota menciona granizo, y el boletín de INUMET de diciembre 2023 solo lo registra el día 5.",
+    "sources": [
+      "https://www.montevideo.com.uy/Noticias/Colonia-el-departamento-mas-afectado-por-temporal-rachas-de-viento-alcanzaron-167-km-h-uc874260",
+      "https://www.montevideo.com.uy/Noticias/Tras-temporal-lineas-de-UTE-se-vieron-afectadas-trabajan-para-recomponerlas-uc874242",
+      "https://web.archive.org/web/20231218190450/https://www.inumet.gub.uy/reportes/riesgo/pdf/adv1702798829023.pdf",
+      "https://www.inumet.gub.uy/sites/default/files/2024-01/BOLETIN%20CLIM%C3%81TICO%20DICIEMBRE_1.pdf"
+    ],
+    "confidence": "medium"
+  },
+  {
+    "id": "2024-01-16-baltasar-brum",
+    "type": "hail",
+    "date": "2024-01-16",
+    "localTime": null,
+    "place": "Baltasar Brum",
+    "department": "Artigas",
+    "lat": -30.72,
+    "lon": -57.33,
+    "hailSizeCm": null,
+    "damaging": null,
+    "damage": {
+      "vehicles": null,
+      "roofs": null,
+      "crops": null
+    },
+    "inumetAlert": {
+      "status": "orange",
+      "mentionsHail": true
+    },
+    "evidence": "Montevideo Portal: tormenta severa con granizo 'de gran tamaño' en Baltasar Brum (otro reporte habla de granizo mediano). La advertencia amarilla de las 08:15 incluía Baltasar Brum y desde las 10:50 hubo naranja para todo Artigas. El boletín de INUMET de enero 2024 lista granizo el día 16.",
+    "sources": [
+      "https://www.montevideo.com.uy/Noticias/Calles-como-rios-granizo-y-vientos-fuertes-imagenes-del-temporal-en-varios-departamentos-uc876872",
+      "https://web.archive.org/web/20240204054738/https://www.inumet.gub.uy/reportes/riesgo/pdf/adv1705413031333.pdf",
+      "https://www.inumet.gub.uy/sites/default/files/2024-02/Boletin%20Climatico_Enero2024_2.pdf"
+    ],
+    "confidence": "high"
+  },
+  {
+    "id": "2024-02-04-rivera",
+    "type": "hail",
+    "date": "2024-02-04",
+    "localTime": null,
+    "place": "Rivera",
+    "department": "Rivera",
+    "lat": -30.9,
+    "lon": -55.54,
+    "hailSizeCm": null,
+    "damaging": null,
+    "damage": {
+      "vehicles": null,
+      "roofs": null,
+      "crops": null
+    },
+    "inumetAlert": {
+      "status": "unknown",
+      "mentionsHail": null
+    },
+    "evidence": "Boletín climático de INUMET (febrero 2024): uno de los dos eventos de granizo del mes se reportó en la ciudad de Rivera el día 4. Sin tamaño ni daños.",
+    "sources": [
+      "https://www.inumet.gub.uy/sites/default/files/2025-01/BOLETIN%20CLIM%C3%81TICO%20FEBRERO%202024.pdf"
+    ],
+    "confidence": "medium"
+  },
+  {
+    "id": "2024-02-23-lascano",
+    "type": "hail",
+    "date": "2024-02-23",
+    "localTime": null,
+    "place": "Lascano",
+    "department": "Rocha",
+    "lat": -33.67,
+    "lon": -54.21,
+    "hailSizeCm": null,
+    "damaging": null,
+    "damage": {
+      "vehicles": null,
+      "roofs": null,
+      "crops": null
+    },
+    "inumetAlert": {
+      "status": "unknown",
+      "mentionsHail": null
+    },
+    "evidence": "Montevideo Portal: una 'impresionante tormenta' dejó granizo mediano en Lascano. Regían alertas amarilla y naranja en buena parte del país (no se verificó cuál cubría Lascano). El boletín de INUMET de febrero 2024 confirma granizo en Lascano el día 23.",
+    "sources": [
+      "https://www.montevideo.com.uy/Noticias/Alerta-se-registraron-fuertes-rafagas-de-viento-y-caida-de-granizo-en-Rocha-y-Rivera-uc880600",
+      "https://www.montevideo.com.uy/Noticias/Inumet-ceso-alerta-naranja-pero-persiste-la-amarilla-en-el-este-del-pais-uc880551",
+      "https://www.inumet.gub.uy/sites/default/files/2025-01/BOLETIN%20CLIM%C3%81TICO%20FEBRERO%202024.pdf"
+    ],
+    "confidence": "high"
+  },
+  {
+    "id": "2024-02-23-tranqueras",
+    "type": "hail",
+    "date": "2024-02-23",
+    "localTime": null,
+    "place": "Tranqueras",
+    "department": "Rivera",
+    "lat": -31.19,
+    "lon": -55.76,
+    "hailSizeCm": null,
+    "damaging": null,
+    "damage": {
+      "vehicles": null,
+      "roofs": null,
+      "crops": null
+    },
+    "inumetAlert": {
+      "status": "unknown",
+      "mentionsHail": null
+    },
+    "evidence": "Montevideo Portal (cuenta Estación BCP): intensa tormenta con granizo y fuertes ráfagas en Tranqueras. Los daños reportados se atribuyen al viento. No figura en el boletín de INUMET.",
+    "sources": [
+      "https://www.montevideo.com.uy/Noticias/Alerta-se-registraron-fuertes-rafagas-de-viento-y-caida-de-granizo-en-Rocha-y-Rivera-uc880600"
+    ],
+    "confidence": "medium"
+  },
+  {
+    "id": "2024-03-02-montevideo",
+    "type": "control",
+    "date": "2024-03-02",
+    "localTime": "13:00",
+    "place": "Montevideo",
+    "department": "Montevideo",
+    "lat": -34.91,
+    "lon": -56.19,
+    "hailSizeCm": null,
+    "damaging": false,
+    "damage": {
+      "vehicles": null,
+      "roofs": null,
+      "crops": null
+    },
+    "inumetAlert": {
+      "status": "yellow",
+      "mentionsHail": true
+    },
+    "evidence": "Frente frío del sábado 2: fuertes lluvias y tormentas, calles y viviendas inundadas (Primero de Mayo, Casabó, Casavalle) y unas 95 solicitudes a la Intendencia. Regía alerta amarilla por tormentas para todo Montevideo. METAR SUMU +TSRA a las 13:00, sin GR/GS. El boletín de INUMET de marzo 2024 registra granizo solo los días 11 y 19.",
+    "sources": [
+      "https://www.montevideo.com.uy/Noticias/IM-recibio-casi-cien-solicitudes-de-emergencia-ante-temporal-y-dijo-que-tanta-agua-cayo-uc881403",
+      "https://www.montevideo.com.uy/Noticias/Lluvias-fuertes-granizo-y-viento-Inumet-emitio-una-alerta-naranjas-y-otra-amarilla-uc881345",
+      "https://mesonet.agron.iastate.edu/cgi-bin/request/asos.py?station=SUMU&data=metar&year1=2024&month1=3&day1=2&year2=2024&month2=3&day2=3&tz=America%2FMontevideo&format=onlycomma&latlon=no&missing=empty&trace=T&direct=no&report_type=3&report_type=4",
+      "https://www.inumet.gub.uy/sites/default/files/2024-05/BOLETIN%20CLIM%C3%81TICO%20MARZO%20%285%29.pdf"
+    ],
+    "confidence": "high"
+  },
+  {
+    "id": "2024-03-09-fray-bentos",
+    "type": "control",
+    "date": "2024-03-09",
+    "localTime": "00:30",
+    "place": "Fray Bentos",
+    "department": "Río Negro",
+    "lat": -33.12,
+    "lon": -58.31,
+    "hailSizeCm": null,
+    "damaging": false,
+    "damage": {
+      "vehicles": null,
+      "roofs": null,
+      "crops": null
+    },
+    "inumetAlert": {
+      "status": "orange",
+      "mentionsHail": true
+    },
+    "evidence": "Madrugada del sábado 9 (hacia las 00:30, según el intendente): tormenta severa en Fray Bentos durante el Festival de las Barrancas, con vientos de más de 125 km/h según el intendente, casi 30 voladuras de techos, árboles y columnas caídos y heridos. En Mercedes hubo calles inundadas y autos arrastrados. Fray Bentos estaba en la lista naranja de la advertencia del 8/3 (21:22) y todo Soriano en naranja. El boletín de INUMET de marzo 2024 registra granizo solo los días 11 y 19.",
+    "sources": [
+      "https://www.montevideo.com.uy/Noticias/Fuerte-lluvia-y-rafagas-intensas-de-viento-en-imagenes-el-temporal-que-paso-por-Uruguay-uc882053",
+      "https://www.montevideo.com.uy/Noticias/Inumet-emitio-alertas-amarilla-y-naranja-por-tormentas-y-lluvias-intensas-para-el-suroeste-uc882017",
+      "https://www.montevideo.com.uy/Noticias/Expoactiva-Nacional-se-postergo-una-semana-debido-al-fuerte-temporal-que-afecto-a-Soriano-uc882063",
+      "https://www.inumet.gub.uy/sites/default/files/2024-05/BOLETIN%20CLIM%C3%81TICO%20MARZO%20%285%29.pdf"
+    ],
+    "confidence": "high"
+  },
+  {
+    "id": "2024-04-26-solis-de-mataojo",
+    "type": "hail",
+    "date": "2024-04-26",
+    "localTime": null,
+    "place": "Solís de Mataojo",
+    "department": "Lavalleja",
+    "lat": -34.6,
+    "lon": -55.47,
+    "hailSizeCm": 8,
+    "damaging": true,
+    "damage": {
+      "vehicles": null,
+      "roofs": true,
+      "crops": null
+    },
+    "inumetAlert": {
+      "status": "orange",
+      "mentionsHail": true
+    },
+    "evidence": "Montevideo Portal: intensa granizada en Solís de Mataojo, con piedras de hasta 8 cm. Los vecinos reportaron roturas de techos y vidrios en viviendas. Ese día también hubo granizo fuerte en Pando (Canelones) por la mañana. La advertencia naranja de las 09:50 incluía Solís de Mataojo.",
+    "sources": [
+      "https://www.montevideo.com.uy/Noticias/Del-tamano-de-un-huevo-o-de-un-encendedor-el-impactante-granizo-que-cayo-en-Solis-uc886603",
+      "https://www.montevideo.com.uy/Noticias/Granizo-en-Pando-y-calles-inundadas-en-Montevideo-asi-transcurre-el-temporal-uc886585",
+      "https://web.archive.org/web/20240723123232/https://www.inumet.gub.uy/reportes/riesgo/pdf/adv1714135831799.pdf",
+      "https://www.montevideo.com.uy/Noticias/Viento-y-granizo-alerta-naranja-y-amarilla-por-mal-tiempo-para-varios-departamentos-uc886577"
+    ],
+    "confidence": "high"
+  },
+  {
+    "id": "2024-05-10-salto-aeropuerto",
+    "type": "hail",
+    "date": "2024-05-10",
+    "localTime": "08:15",
+    "place": "Salto (aeropuerto)",
+    "department": "Salto",
+    "lat": -31.44,
+    "lon": -57.98,
+    "hailSizeCm": null,
+    "damaging": false,
+    "damage": {
+      "vehicles": null,
+      "roofs": null,
+      "crops": null
+    },
+    "inumetAlert": {
+      "status": "yellow",
+      "mentionsHail": true
+    },
+    "evidence": "METAR SUSO 101115Z 8000 TSRAGS (08:15 local) y REGS a las 09:00: tormenta con granizo pequeño en el aeropuerto de Salto. Montevideo Portal informa que regía alerta amarilla por tormentas fuertes que cubría todo el departamento de Salto, y que cesó al mediodía.",
+    "sources": [
+      "https://mesonet.agron.iastate.edu/cgi-bin/request/asos.py?station=SUSO&data=metar&year1=2024&month1=5&day1=10&year2=2024&month2=5&day2=11&tz=America%2FMontevideo&format=onlycomma&latlon=no&missing=empty&trace=T&direct=no&report_type=3&report_type=4",
+      "https://www.montevideo.com.uy/Noticias/Inumet-ceso-la-alerta-amarilla-por-tormentas-fuertes-para-el-norte-del-pais-uc887914"
+    ],
+    "confidence": "high"
+  },
+  {
+    "id": "2024-06-14-florida",
+    "type": "hail",
+    "date": "2024-06-14",
+    "localTime": null,
+    "place": "Florida",
+    "department": "Florida",
+    "lat": -34.1,
+    "lon": -56.21,
+    "hailSizeCm": null,
+    "damaging": null,
+    "damage": {
+      "vehicles": null,
+      "roofs": null,
+      "crops": null
+    },
+    "inumetAlert": {
+      "status": "unknown",
+      "mentionsHail": null
+    },
+    "evidence": "Montevideo Portal: fuerte caída de granizo en la ciudad de Florida, con gran acumulación que podía dañar plantas y cultivos e incluso hundió una red protectora; además hubo calles inundadas. INUMET había emitido alertas amarilla y naranja que afectaban a localidades de Florida y Flores. El boletín de INUMET de junio 2024 lista granizo el día 14.",
+    "sources": [
+      "https://www.montevideo.com.uy/Noticias/Lluvias-azotaron-Flores-y-Florida-calles-inundadas-y-granizo-en-cantidades-industriales-uc891225",
+      "https://www.inumet.gub.uy/sites/default/files/2024-07/BOLETIN%20CLIM%C3%81TICO%20junio%206.pdf"
+    ],
+    "confidence": "high"
+  },
+  {
+    "id": "2024-06-14-ismael-cortinas",
+    "type": "hail",
+    "date": "2024-06-14",
+    "localTime": null,
+    "place": "Ismael Cortinas",
+    "department": "Flores",
+    "lat": -33.96,
+    "lon": -57.09,
+    "hailSizeCm": null,
+    "damaging": null,
+    "damage": {
+      "vehicles": null,
+      "roofs": null,
+      "crops": null
+    },
+    "inumetAlert": {
+      "status": "yellow",
+      "mentionsHail": true
+    },
+    "evidence": "Montevideo Portal: granizada abundante y de tamaño mediano en Ismael Cortinas, donde regía la alerta amarilla. El boletín de INUMET de junio 2024 lista granizo el día 14.",
+    "sources": [
+      "https://www.montevideo.com.uy/Noticias/Lluvias-azotaron-Flores-y-Florida-calles-inundadas-y-granizo-en-cantidades-industriales-uc891225",
+      "https://www.inumet.gub.uy/sites/default/files/2024-07/BOLETIN%20CLIM%C3%81TICO%20junio%206.pdf"
+    ],
+    "confidence": "high"
+  },
+  {
+    "id": "2024-06-22-trinidad",
+    "type": "hail",
+    "date": "2024-06-22",
+    "localTime": "13:45",
+    "place": "Trinidad",
+    "department": "Flores",
+    "lat": -33.52,
+    "lon": -56.9,
+    "hailSizeCm": 5,
+    "damaging": true,
+    "damage": {
+      "vehicles": null,
+      "roofs": null,
+      "crops": null
+    },
+    "inumetAlert": {
+      "status": "orange",
+      "mentionsHail": true
+    },
+    "evidence": "Montevideo Portal: en la tarde del sábado (13:45) cayó granizo de varios tamaños en Trinidad, algunos de 5 cm, capaz de dañar cultivos y techos de chapa. No se informaron daños concretos. Flores estaba bajo alerta naranja desde el mediodía. El boletín de INUMET lista granizo el día 22.",
+    "sources": [
+      "https://www.montevideo.com.uy/Noticias/Clasico-de-tormenta-granizo-en-Flores-y-se-alerta-por-posibles-danos-a-cultivos-y-techos-uc891945",
+      "https://www.inumet.gub.uy/sites/default/files/2024-07/BOLETIN%20CLIM%C3%81TICO%20junio%206.pdf"
+    ],
+    "confidence": "high"
+  },
+  {
+    "id": "2024-07-24-carmelo",
+    "type": "hail",
+    "date": "2024-07-24",
+    "localTime": null,
+    "place": "Carmelo",
+    "department": "Colonia",
+    "lat": -34.0,
+    "lon": -58.28,
+    "hailSizeCm": null,
+    "damaging": null,
+    "damage": {
+      "vehicles": null,
+      "roofs": null,
+      "crops": null
+    },
+    "inumetAlert": {
+      "status": "unknown",
+      "mentionsHail": null
+    },
+    "evidence": "Boletín climático de INUMET (julio 2024): el 24 de julio, el pasaje de tormentas dejó granizo en Conchillas, Carmelo y La Estanzuela. Sin tamaño ni daños.",
+    "sources": [
+      "https://www.inumet.gub.uy/sites/default/files/2024-08/BOLETIN%20CLIM%C3%81TICO%20JULIO%202024.pdf"
+    ],
+    "confidence": "medium"
+  },
+  {
+    "id": "ctl-2024-08-03-suaa",
+    "type": "control",
+    "date": "2024-08-03",
+    "localTime": "06:18",
+    "place": "Aeropuerto Ángel Adami (Melilla)",
+    "department": "Montevideo",
+    "lat": -34.79,
+    "lon": -56.26,
+    "hailSizeCm": null,
+    "damaging": false,
+    "damage": {
+      "vehicles": null,
+      "roofs": null,
+      "crops": null
+    },
+    "inumetAlert": {
+      "status": "unknown",
+      "mentionsHail": null
+    },
+    "evidence": "METAR SUAA: tormenta (TS) en 9 reportes entre 06:18 y 11:00, con lluvia fuerte, ráfaga máx 35 kt. Sin GR/GS en ningún aeropuerto, sin granizo en el boletín mensual de INUMET ni en la lista de eventos (día anterior, mismo día y siguiente). Hubo advertencia de INUMET por tormentas en el país ese día o el anterior (cobertura local no verificada). Control automático emparejado con 2024-08-05-las-flores (2 días de diferencia en el año, 349 km).",
+    "sources": [
+      "https://mesonet.agron.iastate.edu/cgi-bin/request/asos.py?station=SUAA&data=metar&year1=2024&month1=8&day1=3&year2=2024&month2=8&day2=4&tz=America%2FMontevideo&format=onlycomma&latlon=no&missing=empty&trace=T&direct=no&report_type=3&report_type=4",
+      "https://www.inumet.gub.uy/tiempo/historico-alertas-meteorologicas"
+    ],
+    "confidence": "medium",
+    "matchedTo": "2024-08-05-las-flores"
+  },
+  {
+    "id": "ctl-2024-08-03-suca",
+    "type": "control",
+    "date": "2024-08-03",
+    "localTime": "07:00",
+    "place": "Aeropuerto de Colonia",
+    "department": "Colonia",
+    "lat": -34.45,
+    "lon": -57.77,
+    "hailSizeCm": null,
+    "damaging": false,
+    "damage": {
+      "vehicles": null,
+      "roofs": null,
+      "crops": null
+    },
+    "inumetAlert": {
+      "status": "unknown",
+      "mentionsHail": null
+    },
+    "evidence": "METAR SUCA: tormenta (TS) en 10 reportes entre 07:00 y 11:00, ráfaga máx 36 kt. Sin GR/GS en ningún aeropuerto, sin granizo en el boletín mensual de INUMET ni en la lista de eventos (día anterior, mismo día y siguiente). Hubo advertencia de INUMET por tormentas en el país ese día o el anterior (cobertura local no verificada). Control automático emparejado con 2024-07-24-carmelo (10 días de diferencia en el año, 69 km).",
+    "sources": [
+      "https://mesonet.agron.iastate.edu/cgi-bin/request/asos.py?station=SUCA&data=metar&year1=2024&month1=8&day1=3&year2=2024&month2=8&day2=4&tz=America%2FMontevideo&format=onlycomma&latlon=no&missing=empty&trace=T&direct=no&report_type=3&report_type=4",
+      "https://www.inumet.gub.uy/tiempo/historico-alertas-meteorologicas"
+    ],
+    "confidence": "medium",
+    "matchedTo": "2024-07-24-carmelo"
+  },
+  {
+    "id": "2024-08-05-las-flores",
+    "type": "hail",
+    "date": "2024-08-05",
+    "localTime": null,
+    "place": "Las Flores",
+    "department": "Rivera",
+    "lat": -31.78,
+    "lon": -55.2,
+    "hailSizeCm": null,
+    "damaging": null,
+    "damage": {
+      "vehicles": null,
+      "roofs": null,
+      "crops": null
+    },
+    "inumetAlert": {
+      "status": "unknown",
+      "mentionsHail": null
+    },
+    "evidence": "Montevideo Portal: en la noche del lunes 5, una intensa y abundante granizada cayó en la zona de Las Flores, en el sur de Rivera. En la mañana del 6 regía una doble advertencia naranja y amarilla para el norte y noreste (a las 15:08 del 6, amarilla para todo Rivera). La cobertura de la noche del 5 no se verificó. El boletín de INUMET de agosto 2024 lista granizo los días 5 y 6.",
+    "sources": [
+      "https://www.montevideo.com.uy/Noticias/Cayo-piedra-intensa-granizada-se-abatio-sobre-el-norte-del-pais-uc896267",
+      "https://www.montevideo.com.uy/Noticias/Inumet-ceso-la-alerta-naranja-pero-persiste-la-amarilla-mira-a-que-departamentos-afecta-uc896265",
+      "https://www.inumet.gub.uy/sites/default/files/2024-09/Boletin%20Agosto%202024.pdf"
+    ],
+    "confidence": "high"
+  },
+  {
+    "id": "2024-08-06-salto-aeropuerto",
+    "type": "hail",
+    "date": "2024-08-06",
+    "localTime": "09:00",
+    "place": "Salto (aeropuerto)",
+    "department": "Salto",
+    "lat": -31.44,
+    "lon": -57.98,
+    "hailSizeCm": null,
+    "damaging": null,
+    "damage": {
+      "vehicles": null,
+      "roofs": null,
+      "crops": null
+    },
+    "inumetAlert": {
+      "status": "unknown",
+      "mentionsHail": null
+    },
+    "evidence": "METAR SUSO 061200Z ... -TSRA ... REGR (09:00 local): granizo en la hora previa en el aeropuerto de Salto. El boletín de INUMET de agosto 2024 lista granizo el día 6.",
+    "sources": [
+      "https://mesonet.agron.iastate.edu/cgi-bin/request/asos.py?station=SUSO&data=metar&year1=2024&month1=8&day1=6&year2=2024&month2=8&day2=7&tz=America%2FMontevideo&format=onlycomma&latlon=no&missing=empty&trace=T&direct=no&report_type=3&report_type=4",
+      "https://www.inumet.gub.uy/sites/default/files/2024-09/Boletin%20Agosto%202024.pdf"
+    ],
+    "confidence": "high"
+  },
+  {
+    "id": "2024-08-20-rio-branco",
+    "type": "hail",
+    "date": "2024-08-20",
+    "localTime": null,
+    "place": "Río Branco",
+    "department": "Cerro Largo",
+    "lat": -32.59,
+    "lon": -53.38,
+    "hailSizeCm": null,
+    "damaging": false,
+    "damage": {
+      "vehicles": null,
+      "roofs": null,
+      "crops": null
+    },
+    "inumetAlert": {
+      "status": "yellow",
+      "mentionsHail": true
+    },
+    "evidence": "Montevideo Portal: gran cantidad de granizo (pequeñas bolas de hielo) en Río Branco, Aceguá, Cruz de Piedra y en la ruta 26 entre Melo y Río Branco. No se informaron daños. Regía alerta amarilla por tormentas fuertes para todo Cerro Largo. El boletín de INUMET lista granizo el día 20.",
+    "sources": [
+      "https://www.montevideo.com.uy/Noticias/Agua-va-asi-fue-la-caida-de-granizo-en-localidades-de-Cerro-Largo-por-tormentas-fuertes-uc897718",
+      "https://www.montevideo.com.uy/Noticias/Inumet-emitio-alerta-amarilla-por-lluvias-granizo-y-viento-a-que-departamentos-afecta-uc897660",
+      "https://www.inumet.gub.uy/sites/default/files/2024-09/Boletin%20Agosto%202024.pdf"
+    ],
+    "confidence": "high"
+  },
+  {
+    "id": "ctl-2024-08-31-suls",
+    "type": "control",
+    "date": "2024-08-31",
+    "localTime": "02:00",
+    "place": "Aeropuerto de Laguna del Sauce",
+    "department": "Maldonado",
+    "lat": -34.85,
+    "lon": -55.09,
+    "hailSizeCm": null,
+    "damaging": false,
+    "damage": {
+      "vehicles": null,
+      "roofs": null,
+      "crops": null
+    },
+    "inumetAlert": {
+      "status": "unknown",
+      "mentionsHail": null
+    },
+    "evidence": "METAR SULS: tormenta (TS) en 10 reportes entre 02:00 y 11:00, ráfaga máx 32 kt. Sin GR/GS en ningún aeropuerto, sin granizo en el boletín mensual de INUMET ni en la lista de eventos (día anterior, mismo día y siguiente). Hubo advertencia de INUMET por tormentas en el país ese día o el anterior (cobertura local no verificada). Control automático emparejado con 2023-09-17-balneario-buenos-aires-la-barrajose-ignacio (16 días de diferencia en el año, 28 km).",
+    "sources": [
+      "https://mesonet.agron.iastate.edu/cgi-bin/request/asos.py?station=SULS&data=metar&year1=2024&month1=8&day1=31&year2=2024&month2=9&day2=1&tz=America%2FMontevideo&format=onlycomma&latlon=no&missing=empty&trace=T&direct=no&report_type=3&report_type=4",
+      "https://www.inumet.gub.uy/tiempo/historico-alertas-meteorologicas"
+    ],
+    "confidence": "medium",
+    "matchedTo": "2023-09-17-balneario-buenos-aires-la-barrajose-ignacio"
+  },
+  {
+    "id": "ctl-2024-08-31-sumu",
+    "type": "control",
+    "date": "2024-08-31",
+    "localTime": "01:30",
+    "place": "Aeropuerto de Carrasco",
+    "department": "Canelones",
+    "lat": -34.83,
+    "lon": -56.01,
+    "hailSizeCm": null,
+    "damaging": false,
+    "damage": {
+      "vehicles": null,
+      "roofs": null,
+      "crops": null
+    },
+    "inumetAlert": {
+      "status": "unknown",
+      "mentionsHail": null
+    },
+    "evidence": "METAR SUMU: tormenta (TS) en 10 reportes entre 01:30 y 09:25, con lluvia fuerte, ráfaga máx 29 kt. Sin GR/GS en ningún aeropuerto, sin granizo en el boletín mensual de INUMET ni en la lista de eventos (día anterior, mismo día y siguiente). Hubo advertencia de INUMET por tormentas en el país ese día o el anterior (cobertura local no verificada). Control automático emparejado con 2024-09-09-el-pinar-ciudad-de-la-costa (9 días de diferencia en el año, 10 km).",
+    "sources": [
+      "https://mesonet.agron.iastate.edu/cgi-bin/request/asos.py?station=SUMU&data=metar&year1=2024&month1=8&day1=31&year2=2024&month2=9&day2=1&tz=America%2FMontevideo&format=onlycomma&latlon=no&missing=empty&trace=T&direct=no&report_type=3&report_type=4",
+      "https://www.inumet.gub.uy/tiempo/historico-alertas-meteorologicas"
+    ],
+    "confidence": "medium",
+    "matchedTo": "2024-09-09-el-pinar-ciudad-de-la-costa"
+  },
+  {
+    "id": "2024-09-09-barra-del-chuy",
+    "type": "hail",
+    "date": "2024-09-09",
+    "localTime": null,
+    "place": "Barra del Chuy",
+    "department": "Rocha",
+    "lat": -33.76,
+    "lon": -53.39,
+    "hailSizeCm": null,
+    "damaging": null,
+    "damage": {
+      "vehicles": null,
+      "roofs": null,
+      "crops": null
+    },
+    "inumetAlert": {
+      "status": "unknown",
+      "mentionsHail": null
+    },
+    "evidence": "Montevideo Portal difunde un video de una granizada en Barra del Chuy. El boletín de INUMET indica que el día 9 el granizo se registró básicamente al sur del río Negro.",
+    "sources": [
+      "https://www.montevideo.com.uy/Noticias/De-Las-Piedras-a-El-Pinar-los-videos-de-la-caida-de-granizo-en-Canelones-uc899697",
+      "https://www.inumet.gub.uy/sites/default/files/2024-10/Boletin%20Climatico_Setiembre2024.pdf"
+    ],
+    "confidence": "medium"
+  },
+  {
+    "id": "2024-09-09-el-pinar-ciudad-de-la-costa",
+    "type": "hail",
+    "date": "2024-09-09",
+    "localTime": "16:24",
+    "place": "El Pinar (Ciudad de la Costa)",
+    "department": "Canelones",
+    "lat": -34.8,
+    "lon": -55.91,
+    "hailSizeCm": null,
+    "damaging": true,
+    "damage": {
+      "vehicles": null,
+      "roofs": true,
+      "crops": null
+    },
+    "inumetAlert": {
+      "status": "orange",
+      "mentionsHail": true
+    },
+    "evidence": "Montevideo Portal: granizo 'de gran tamaño' en El Pinar, con daños en techos. También granizó en Las Piedras, El Colorado, Ciudad de la Costa y Montevideo (Zonamerica), bajo alerta naranja para Canelones. METAR SUMU 091924Z +TSRAGR (16:24), 091931Z +TSRAGR (16:31) y 092011Z +TSRAGR (17:11), y SUAA (Melilla) 091905Z TSGRRA (16:05). El boletín de INUMET de setiembre 2024 lista granizo el día 9.",
+    "sources": [
+      "https://www.montevideo.com.uy/Noticias/De-Las-Piedras-a-El-Pinar-los-videos-de-la-caida-de-granizo-en-Canelones-uc899697",
+      "https://www.subrayado.com.uy/cayo-granizo-varias-localidades-canelones-y-asi-quedo-registrado-videos-n956682",
+      "https://mesonet.agron.iastate.edu/cgi-bin/request/asos.py?station=SUMU&data=metar&year1=2024&month1=9&day1=9&year2=2024&month2=9&day2=10&tz=America%2FMontevideo&format=onlycomma&latlon=no&missing=empty&trace=T&direct=no&report_type=3&report_type=4",
+      "https://mesonet.agron.iastate.edu/cgi-bin/request/asos.py?station=SUAA&data=metar&year1=2024&month1=9&day1=9&year2=2024&month2=9&day2=10&tz=America%2FMontevideo&format=onlycomma&latlon=no&missing=empty&trace=T&direct=no&report_type=3&report_type=4",
+      "https://www.inumet.gub.uy/sites/default/files/2024-10/Boletin%20Climatico_Setiembre2024.pdf"
+    ],
+    "confidence": "high"
+  },
+  {
+    "id": "2024-09-19-salto",
+    "type": "hail",
+    "date": "2024-09-19",
+    "localTime": "11:00",
+    "place": "Salto",
+    "department": "Salto",
+    "lat": -31.39,
+    "lon": -57.96,
+    "hailSizeCm": null,
+    "damaging": null,
+    "damage": {
+      "vehicles": null,
+      "roofs": null,
+      "crops": null
+    },
+    "inumetAlert": {
+      "status": "yellow",
+      "mentionsHail": true
+    },
+    "evidence": "Montevideo Portal: intensa granizada en la ciudad de Salto entre las 10:00 y las 11:30, con piedras de varios tamaños y fuertes lluvias. METAR SUSO 191400Z 0600 TSGR (11:00 local). La advertencia amarilla de las 13:05 incluía Salto; más tarde se sumó una naranja en el país. El boletín de INUMET lista granizo el día 19, en el norte.",
+    "sources": [
+      "https://www.montevideo.com.uy/Noticias/Cayo-piedra-intensa-granizada-afecto-a-la-ciudad-de-Salto-y-quedo-filmada-por-vecinos-uc900707",
+      "https://www.montevideo.com.uy/Noticias/Puntual-llegaron-las-tormentas-vaticinadas-y-rigen-alertas-naranja-y-amarilla-uc900657",
+      "https://mesonet.agron.iastate.edu/cgi-bin/request/asos.py?station=SUSO&data=metar&year1=2024&month1=9&day1=19&year2=2024&month2=9&day2=20&tz=America%2FMontevideo&format=onlycomma&latlon=no&missing=empty&trace=T&direct=no&report_type=3&report_type=4",
+      "https://web.archive.org/web/20241208195816/https://www.inumet.gub.uy/reportes/riesgo/pdf/adv1726761974823.pdf",
+      "https://www.inumet.gub.uy/sites/default/files/2024-10/Boletin%20Climatico_Setiembre2024.pdf"
+    ],
+    "confidence": "high"
+  },
+  {
+    "id": "2024-09-24-baltasar-brum",
+    "type": "hail",
+    "date": "2024-09-24",
+    "localTime": null,
+    "place": "Baltasar Brum",
+    "department": "Artigas",
+    "lat": -30.72,
+    "lon": -57.33,
+    "hailSizeCm": 8,
+    "damaging": true,
+    "damage": {
+      "vehicles": null,
+      "roofs": null,
+      "crops": null
+    },
+    "inumetAlert": {
+      "status": "orange",
+      "mentionsHail": true
+    },
+    "evidence": "Montevideo Portal: fuerte granizo en la madrugada/mañana del martes 24 en Baltasar Brum, calificado como 'destructivo', con piedras que llegaron a 8 cm. También se reportó una supercelda en Bella Unión. La advertencia naranja de ese día cubría todo Artigas. El boletín de INUMET lista granizo el día 24, en el norte.",
+    "sources": [
+      "https://www.montevideo.com.uy/Noticias/Granizo-destructivo-y-una-supercelula--el-paso-de-una-poderosa-tormenta-por-Artigas-uc901182",
+      "https://www.montevideo.com.uy/Noticias/Inumet-emitio-una-alerta-naranja-y-otra-amarilla-mira-que-departamentos-estan-afectados-uc901146",
+      "https://www.inumet.gub.uy/sites/default/files/2024-10/Boletin%20Climatico_Setiembre2024.pdf"
+    ],
+    "confidence": "high"
+  },
+  {
+    "id": "2024-09-30-fray-marcos",
+    "type": "hail",
+    "date": "2024-09-30",
+    "localTime": null,
+    "place": "Fray Marcos",
+    "department": "Florida",
+    "lat": -34.2,
+    "lon": -55.74,
+    "hailSizeCm": null,
+    "damaging": false,
+    "damage": {
+      "vehicles": null,
+      "roofs": null,
+      "crops": null
+    },
+    "inumetAlert": {
+      "status": "unknown",
+      "mentionsHail": null
+    },
+    "evidence": "Montevideo Portal (Estación BCP): video de granizo 'chiquito' en Fray Marcos durante las tormentas del lunes 30, con alertas amarilla y naranja vigentes en el país. El boletín de INUMET lista granizo el día 30, al sur del río Negro.",
+    "sources": [
+      "https://www.montevideo.com.uy/Noticias/Arboles-y-techos-caidos-granizo-y-rayos-las-imagenes-de-la-tormenta-en-varias-zonas-uc901853",
+      "https://www.montevideo.com.uy/Noticias/Inumet-emitio-dos-alertas-amarillas-y-una-naranja-mira-a-que-departamentos-afecta-uc901797",
+      "https://www.inumet.gub.uy/sites/default/files/2024-10/Boletin%20Climatico_Setiembre2024.pdf"
+    ],
+    "confidence": "high"
+  },
+  {
+    "id": "ctl-2024-10-07-suso",
+    "type": "control",
+    "date": "2024-10-07",
+    "localTime": "08:25",
+    "place": "Aeropuerto de Salto",
+    "department": "Salto",
+    "lat": -31.44,
+    "lon": -57.98,
+    "hailSizeCm": null,
+    "damaging": false,
+    "damage": {
+      "vehicles": null,
+      "roofs": null,
+      "crops": null
+    },
+    "inumetAlert": {
+      "status": "unknown",
+      "mentionsHail": null
+    },
+    "evidence": "METAR SUSO: tormenta (TS) en 6 reportes entre 08:25 y 15:00. Sin GR/GS en ningún aeropuerto, sin granizo en el boletín mensual de INUMET ni en la lista de eventos (día anterior, mismo día y siguiente). Hubo advertencia de INUMET por tormentas en el país ese día o el anterior (cobertura local no verificada). Control automático emparejado con 2024-09-19-salto (18 días de diferencia en el año, 6 km).",
+    "sources": [
+      "https://mesonet.agron.iastate.edu/cgi-bin/request/asos.py?station=SUSO&data=metar&year1=2024&month1=10&day1=7&year2=2024&month2=10&day2=8&tz=America%2FMontevideo&format=onlycomma&latlon=no&missing=empty&trace=T&direct=no&report_type=3&report_type=4",
+      "https://www.inumet.gub.uy/tiempo/historico-alertas-meteorologicas"
+    ],
+    "confidence": "medium",
+    "matchedTo": "2024-09-19-salto"
+  },
+  {
+    "id": "2024-10-17-salto-aeropuerto",
+    "type": "hail",
+    "date": "2024-10-17",
+    "localTime": "14:00",
+    "place": "Salto (aeropuerto)",
+    "department": "Salto",
+    "lat": -31.44,
+    "lon": -57.98,
+    "hailSizeCm": null,
+    "damaging": null,
+    "damage": {
+      "vehicles": null,
+      "roofs": null,
+      "crops": null
+    },
+    "inumetAlert": {
+      "status": "none",
+      "mentionsHail": false
+    },
+    "evidence": "METAR SUSO 171700Z ... TS ... RERAGS (14:00 local): granizo pequeño en la hora previa. El boletín de INUMET de octubre 2024 confirma un evento de granizo en la estación meteorológica de Salto el día 17. Ese día rigió una alerta amarilla por tormentas para todo Artigas y localidades rurales de Salto (Montevideo Portal), pero la ciudad de Salto no figuraba en la lista: por eso status none, aunque había localidades vecinas en amarilla.",
+    "sources": [
+      "https://mesonet.agron.iastate.edu/cgi-bin/request/asos.py?station=SUSO&data=metar&year1=2024&month1=10&day1=17&year2=2024&month2=10&day2=18&tz=America%2FMontevideo&format=onlycomma&latlon=no&missing=empty&trace=T&direct=no&report_type=3&report_type=4",
+      "https://www.inumet.gub.uy/sites/default/files/2024-11/Boletin%20octubre%202024%20%281%29.pdf",
+      "https://www.montevideo.com.uy/Noticias/Inumet-emitio-alerta-por-tormentas-y-lluvias-fuertes-mira-a-que-departamentos-afecta-uc903589"
+    ],
+    "confidence": "high"
+  },
+  {
+    "id": "ctl-2024-10-23-suca",
+    "type": "control",
+    "date": "2024-10-23",
+    "localTime": "13:37",
+    "place": "Aeropuerto de Colonia",
+    "department": "Colonia",
+    "lat": -34.45,
+    "lon": -57.77,
+    "hailSizeCm": null,
+    "damaging": false,
+    "damage": {
+      "vehicles": null,
+      "roofs": null,
+      "crops": null
+    },
+    "inumetAlert": {
+      "status": "unknown",
+      "mentionsHail": null
+    },
+    "evidence": "METAR SUCA: tormenta (TS) en 8 reportes entre 13:37 y 16:24, con lluvia fuerte. Sin GR/GS en ningún aeropuerto, sin granizo en el boletín mensual de INUMET ni en la lista de eventos (día anterior, mismo día y siguiente). Hubo advertencia de INUMET por tormentas en el país ese día o el anterior (cobertura local no verificada). Control automático emparejado con 2026-09-27-la-vibora-rutas-2-y-24-cerca-de-fray-bentos (27 días de diferencia en el año, 156 km).",
+    "sources": [
+      "https://mesonet.agron.iastate.edu/cgi-bin/request/asos.py?station=SUCA&data=metar&year1=2024&month1=10&day1=23&year2=2024&month2=10&day2=24&tz=America%2FMontevideo&format=onlycomma&latlon=no&missing=empty&trace=T&direct=no&report_type=3&report_type=4",
+      "https://www.inumet.gub.uy/tiempo/historico-alertas-meteorologicas"
+    ],
+    "confidence": "medium",
+    "matchedTo": "2026-09-27-la-vibora-rutas-2-y-24-cerca-de-fray-bentos"
+  },
+  {
+    "id": "ctl-2024-10-23-sumu",
+    "type": "control",
+    "date": "2024-10-23",
+    "localTime": "16:40",
+    "place": "Aeropuerto de Carrasco",
+    "department": "Canelones",
+    "lat": -34.83,
+    "lon": -56.01,
+    "hailSizeCm": null,
+    "damaging": false,
+    "damage": {
+      "vehicles": null,
+      "roofs": null,
+      "crops": null
+    },
+    "inumetAlert": {
+      "status": "unknown",
+      "mentionsHail": null
+    },
+    "evidence": "METAR SUMU: tormenta (TS) en 7 reportes entre 16:40 y 18:00, con lluvia fuerte. Sin GR/GS en ningún aeropuerto, sin granizo en el boletín mensual de INUMET ni en la lista de eventos (día anterior, mismo día y siguiente). Hubo advertencia de INUMET por tormentas en el país ese día o el anterior (cobertura local no verificada). Control automático emparejado con 2023-09-17-barros-blancos (37 días de diferencia en el año, 9 km).",
+    "sources": [
+      "https://mesonet.agron.iastate.edu/cgi-bin/request/asos.py?station=SUMU&data=metar&year1=2024&month1=10&day1=23&year2=2024&month2=10&day2=24&tz=America%2FMontevideo&format=onlycomma&latlon=no&missing=empty&trace=T&direct=no&report_type=3&report_type=4",
+      "https://www.inumet.gub.uy/tiempo/historico-alertas-meteorologicas"
+    ],
+    "confidence": "medium",
+    "matchedTo": "2023-09-17-barros-blancos"
+  },
+  {
+    "id": "ctl-2024-10-24-suls",
+    "type": "control",
+    "date": "2024-10-24",
+    "localTime": "17:20",
+    "place": "Aeropuerto de Laguna del Sauce",
+    "department": "Maldonado",
+    "lat": -34.85,
+    "lon": -55.09,
+    "hailSizeCm": null,
+    "damaging": false,
+    "damage": {
+      "vehicles": null,
+      "roofs": null,
+      "crops": null
+    },
+    "inumetAlert": {
+      "status": "unknown",
+      "mentionsHail": null
+    },
+    "evidence": "METAR SULS: tormenta (TS) en 5 reportes entre 17:20 y 19:00, con lluvia fuerte, ráfaga máx 31 kt. Sin GR/GS en ningún aeropuerto, sin granizo en el boletín mensual de INUMET ni en la lista de eventos (día anterior, mismo día y siguiente). Hubo advertencia de INUMET por tormentas en el país ese día o el anterior (cobertura local no verificada). Control automático emparejado con 2025-09-22-minas (33 días de diferencia en el año, 54 km).",
+    "sources": [
+      "https://mesonet.agron.iastate.edu/cgi-bin/request/asos.py?station=SULS&data=metar&year1=2024&month1=10&day1=24&year2=2024&month2=10&day2=25&tz=America%2FMontevideo&format=onlycomma&latlon=no&missing=empty&trace=T&direct=no&report_type=3&report_type=4",
+      "https://www.inumet.gub.uy/tiempo/historico-alertas-meteorologicas"
+    ],
+    "confidence": "medium",
+    "matchedTo": "2025-09-22-minas"
+  },
+  {
+    "id": "2024-11-27-durazno",
+    "type": "control",
+    "date": "2024-11-27",
+    "localTime": "13:00",
+    "place": "Durazno",
+    "department": "Durazno",
+    "lat": -33.38,
+    "lon": -56.52,
+    "hailSizeCm": null,
+    "damaging": false,
+    "damage": {
+      "vehicles": null,
+      "roofs": null,
+      "crops": null
+    },
+    "inumetAlert": {
+      "status": "yellow",
+      "mentionsHail": true
+    },
+    "evidence": "Turbonada del miércoles 27 hacia las 13 h: ráfagas de 70 km/h en Durazno asociadas a celdas de tormenta, con árboles caídos y algunas casas dañadas. La advertencia amarilla de las 09:40 incluía la ciudad. METAR SUDU +TSRA a las 12:32, sin GR/GS. El boletín de INUMET de noviembre 2024 informa que no hubo reportes de granizo en el mes.",
+    "sources": [
+      "https://www.montevideo.com.uy/Noticias/Paso-una-turbonada-por-Uruguay-y-causo-estragos--cuando-se-preve-que-vuelva-a-ocurrir--uc907877",
+      "https://web.archive.org/web/20241210141407/https://www.inumet.gub.uy/reportes/riesgo/pdf/adv1732711245008.pdf",
+      "https://mesonet.agron.iastate.edu/cgi-bin/request/asos.py?station=SUDU&data=metar&year1=2024&month1=11&day1=27&year2=2024&month2=11&day2=28&tz=America%2FMontevideo&format=onlycomma&latlon=no&missing=empty&trace=T&direct=no&report_type=3&report_type=4",
+      "https://www.inumet.gub.uy/sites/default/files/2024-12/Boletin%20noviembre%202024.pdf"
+    ],
+    "confidence": "high"
+  },
+  {
+    "id": "2024-11-27-trinidad",
+    "type": "control",
+    "date": "2024-11-27",
+    "localTime": null,
+    "place": "Trinidad",
+    "department": "Flores",
+    "lat": -33.52,
+    "lon": -56.9,
+    "hailSizeCm": null,
+    "damaging": false,
+    "damage": {
+      "vehicles": null,
+      "roofs": null,
+      "crops": null
+    },
+    "inumetAlert": {
+      "status": "yellow",
+      "mentionsHail": true
+    },
+    "evidence": "Mismo sistema del miércoles 27: fuertes vientos con árboles caídos en la ciudad de Trinidad y en la ruta 23 (también en La Casilla). La advertencia amarilla de las 09:40 cubría todo Flores. El boletín de INUMET de noviembre 2024 informa que no hubo reportes de granizo en el mes.",
+    "sources": [
+      "https://www.montevideo.com.uy/Noticias/Paso-una-turbonada-por-Uruguay-y-causo-estragos--cuando-se-preve-que-vuelva-a-ocurrir--uc907877",
+      "https://web.archive.org/web/20241210141407/https://www.inumet.gub.uy/reportes/riesgo/pdf/adv1732711245008.pdf",
+      "https://www.inumet.gub.uy/sites/default/files/2024-12/Boletin%20noviembre%202024.pdf"
+    ],
+    "confidence": "medium"
+  },
+  {
+    "id": "ctl-2024-11-27-sudu",
+    "type": "control",
+    "date": "2024-11-27",
+    "localTime": "09:00",
+    "place": "Aeropuerto de Durazno",
+    "department": "Durazno",
+    "lat": -33.35,
+    "lon": -56.5,
+    "hailSizeCm": null,
+    "damaging": false,
+    "damage": {
+      "vehicles": null,
+      "roofs": null,
+      "crops": null
+    },
+    "inumetAlert": {
+      "status": "unknown",
+      "mentionsHail": null
+    },
+    "evidence": "METAR SUDU: tormenta (TS) en 4 reportes entre 09:00 y 12:32, con lluvia fuerte, ráfaga máx 38 kt. Sin GR/GS en ningún aeropuerto, sin granizo en el boletín mensual de INUMET ni en la lista de eventos (día anterior, mismo día y siguiente). Hubo advertencia de INUMET por tormentas en el país ese día o el anterior (cobertura local no verificada). Control automático emparejado con 2025-11-20-trinidad (8 días de diferencia en el año, 42 km).",
+    "sources": [
+      "https://mesonet.agron.iastate.edu/cgi-bin/request/asos.py?station=SUDU&data=metar&year1=2024&month1=11&day1=27&year2=2024&month2=11&day2=28&tz=America%2FMontevideo&format=onlycomma&latlon=no&missing=empty&trace=T&direct=no&report_type=3&report_type=4",
+      "https://www.inumet.gub.uy/tiempo/historico-alertas-meteorologicas"
+    ],
+    "confidence": "medium",
+    "matchedTo": "2025-11-20-trinidad"
+  },
+  {
+    "id": "2024-12-01-isidoro-noblia",
+    "type": "hail",
+    "date": "2024-12-01",
+    "localTime": null,
+    "place": "Isidoro Noblía",
+    "department": "Cerro Largo",
+    "lat": -31.96,
+    "lon": -54.12,
+    "hailSizeCm": null,
+    "damaging": true,
+    "damage": {
+      "vehicles": null,
+      "roofs": null,
+      "crops": null
+    },
+    "inumetAlert": {
+      "status": "red",
+      "mentionsHail": true
+    },
+    "evidence": "Línea de inestabilidad del 1 de diciembre con alerta roja en el norte. Montevideo Portal: en Noblía 'según reportan las autoridades' cayó granizo. El director del Sinae dijo que algunos granizos fueron 'un poco más grandes que una manzana' (El Observador: 'particularmente en Cerro Largo'). El boletín de INUMET de diciembre 2024 registra granizo el día 1 en Isidoro Noblía. damaging=true por el tamaño (>2 cm). Las voladuras de techos (Quebracho) se reportan para el temporal en general, con vientos de hasta 120 km/h, no específicamente por granizo. Hora no precisada (tarde).",
+    "sources": [
+      "https://www.montevideo.com.uy/Noticias/Granizo-mas-grande-que-una-manzana-y-vientos-de-hasta-120-km-h-lo-que-dejo-la-tormenta-uc908239",
+      "https://www.elobservador.com.uy/nacional/fuertes-tormentas-granizo-y-vientos-120-kmh-asi-fue-el-temporal-que-motivo-una-alerta-roja-uruguay-n5972999",
+      "https://www.inumet.gub.uy/sites/default/files/2024-12/Post%20evento%2002%20de%20diciembre%20de%202024.pdf",
+      "https://www.inumet.gub.uy/sites/default/files/2025-01/Boletin%20diciembre%20%283%29.pdf"
+    ],
+    "confidence": "medium"
+  },
+  {
+    "id": "2024-12-01-montevideo",
+    "type": "control",
+    "date": "2024-12-01",
+    "localTime": "11:30",
+    "place": "Montevideo",
+    "department": "Montevideo",
+    "lat": -34.91,
+    "lon": -56.19,
+    "hailSizeCm": null,
+    "damaging": false,
+    "damage": {
+      "vehicles": null,
+      "roofs": null,
+      "crops": null
+    },
+    "inumetAlert": {
+      "status": "orange",
+      "mentionsHail": true
+    },
+    "evidence": "Domingo 1: tormentas con lluvias intensas en el área metropolitana por la mañana y al mediodía. Calles inundadas con autos sumergidos en Aguada (Rondeau y La Paz). La Intendencia difundió avisos 'ante la alerta naranja por tormentas fuertes y lluvias intensas'. METAR SUAA TSRA/+TSRA entre 10 y 12:30, sin GR/GS. El informe post-evento de INUMET ubica el granizo en el norte, y el boletín de diciembre 2024 solo lo registra en Isidoro Noblía (a ~400 km).",
+    "sources": [
+      "https://www.montevideo.com.uy/Noticias/Vehiculos-sumergidos-y-objetos-flotando-las-imagenes-de-las-inundaciones-en-Montevideo-uc908199",
+      "https://www.inumet.gub.uy/sites/default/files/2024-12/Post%20evento%2002%20de%20diciembre%20de%202024.pdf",
+      "https://mesonet.agron.iastate.edu/cgi-bin/request/asos.py?station=SUAA&data=metar&year1=2024&month1=12&day1=1&year2=2024&month2=12&day2=2&tz=America%2FMontevideo&format=onlycomma&latlon=no&missing=empty&trace=T&direct=no&report_type=3&report_type=4",
+      "https://www.inumet.gub.uy/sites/default/files/2025-01/Boletin%20diciembre%20%283%29.pdf"
+    ],
+    "confidence": "high"
+  },
+  {
+    "id": "2025-01-01-montevideo",
+    "type": "hail",
+    "date": "2025-01-01",
+    "localTime": "16:50",
+    "place": "Montevideo",
+    "department": "Montevideo",
+    "lat": -34.91,
+    "lon": -56.19,
+    "hailSizeCm": null,
+    "damaging": null,
+    "damage": {
+      "vehicles": null,
+      "roofs": null,
+      "crops": null
+    },
+    "inumetAlert": {
+      "status": "yellow",
+      "mentionsHail": true
+    },
+    "evidence": "Subrayado: antes de las 17:00 del 1 de enero cayó granizo en varios barrios de Montevideo (Jacinto Vera, Centro, Ciudad Vieja), bajo alerta amarilla por tormentas fuertes que advertía posible granizo. La capital se mantuvo en amarillo cuando otras zonas pasaron a naranja. El boletín de INUMET de enero 2025 registra eventos de granizo el 01/01, la mayoría en Montevideo. No se informaron daños.",
+    "sources": [
+      "https://www.subrayado.com.uy/granizo-montevideo-el-2025-comenzo-tormenta-y-lluvia-la-capital-del-pais-n965849",
+      "https://web.archive.org/web/20250115173541/https://www.inumet.gub.uy/reportes/riesgo/pdf/adv1735760362033.pdf",
+      "https://www.inumet.gub.uy/sites/default/files/2025-02/Boletin%20enero%202025_0.pdf"
+    ],
+    "confidence": "high"
+  },
+  {
+    "id": "2025-02-11-carmelo",
+    "type": "control",
+    "date": "2025-02-11",
+    "localTime": null,
+    "place": "Carmelo",
+    "department": "Colonia",
+    "lat": -34.0,
+    "lon": -58.28,
+    "hailSizeCm": null,
+    "damaging": false,
+    "damage": {
+      "vehicles": null,
+      "roofs": null,
+      "crops": null
+    },
+    "inumetAlert": {
+      "status": "yellow",
+      "mentionsHail": true
+    },
+    "evidence": "Madrugada del martes 11: un frente frío entró por el litoral oeste con lluvias copiosas y vientos fuertes. Carmelo fue de los puntos más castigados: unos 50 árboles caídos, voladuras de techos y más de 10.000 clientes de UTE sin servicio en Colonia. La advertencia amarilla de las 11:00 cubría todo Colonia (las previas no se verificaron). METAR SUCA TS/TSRA, sin GR/GS. El boletín de INUMET de febrero 2025 registra granizo los días 4, 14 y 22.",
+    "sources": [
+      "https://www.montevideo.com.uy/Noticias/Colonia-tormenta-causo-danos-y-provoco-cortes-de-suministro-electrico-uc914635",
+      "https://prensamercosur.org/2025/02/12/108173-temporal-en-carmelo-derriba-unos-50-arboles-y-causa-voladuras-de-techos/",
+      "https://web.archive.org/web/20250212081734/https://www.inumet.gub.uy/reportes/riesgo/pdf/adv1739282358410.pdf",
+      "https://mesonet.agron.iastate.edu/cgi-bin/request/asos.py?station=SUCA&data=metar&year1=2025&month1=2&day1=11&year2=2025&month2=2&day2=12&tz=America%2FMontevideo&format=onlycomma&latlon=no&missing=empty&trace=T&direct=no&report_type=3&report_type=4",
+      "https://www.inumet.gub.uy/sites/default/files/2025-03/Boletin%20Febrero%202025_0.pdf"
+    ],
+    "confidence": "medium"
+  },
+  {
+    "id": "ctl-2025-02-11-suca",
+    "type": "control",
+    "date": "2025-02-11",
+    "localTime": "08:37",
+    "place": "Aeropuerto de Colonia",
+    "department": "Colonia",
+    "lat": -34.45,
+    "lon": -57.77,
+    "hailSizeCm": null,
+    "damaging": false,
+    "damage": {
+      "vehicles": null,
+      "roofs": null,
+      "crops": null
+    },
+    "inumetAlert": {
+      "status": "unknown",
+      "mentionsHail": null
+    },
+    "evidence": "METAR SUCA: tormenta (TS) en 9 reportes entre 08:37 y 19:00, ráfaga máx 46 kt. Sin GR/GS en ningún aeropuerto, sin granizo en el boletín mensual de INUMET ni en la lista de eventos (día anterior, mismo día y siguiente). Hubo advertencia de INUMET por tormentas en el país ese día o el anterior (cobertura local no verificada). Control automático emparejado con 2025-02-22-juan-lacaze (11 días de diferencia en el año, 30 km).",
+    "sources": [
+      "https://mesonet.agron.iastate.edu/cgi-bin/request/asos.py?station=SUCA&data=metar&year1=2025&month1=2&day1=11&year2=2025&month2=2&day2=12&tz=America%2FMontevideo&format=onlycomma&latlon=no&missing=empty&trace=T&direct=no&report_type=3&report_type=4",
+      "https://www.inumet.gub.uy/tiempo/historico-alertas-meteorologicas"
+    ],
+    "confidence": "medium",
+    "matchedTo": "2025-02-22-juan-lacaze"
+  },
+  {
+    "id": "ctl-2025-02-11-suls",
+    "type": "control",
+    "date": "2025-02-11",
+    "localTime": "08:21",
+    "place": "Aeropuerto de Laguna del Sauce",
+    "department": "Maldonado",
+    "lat": -34.85,
+    "lon": -55.09,
+    "hailSizeCm": null,
+    "damaging": false,
+    "damage": {
+      "vehicles": null,
+      "roofs": null,
+      "crops": null
+    },
+    "inumetAlert": {
+      "status": "unknown",
+      "mentionsHail": null
+    },
+    "evidence": "METAR SULS: tormenta (TS) en 3 reportes entre 08:21 y 09:00, con lluvia fuerte, ráfaga máx 36 kt. Sin GR/GS en ningún aeropuerto, sin granizo en el boletín mensual de INUMET ni en la lista de eventos (día anterior, mismo día y siguiente). Hubo advertencia de INUMET por tormentas en el país ese día o el anterior (cobertura local no verificada). Control automático emparejado con 2026-02-11-cebollati (0 días de diferencia en el año, 213 km).",
+    "sources": [
+      "https://mesonet.agron.iastate.edu/cgi-bin/request/asos.py?station=SULS&data=metar&year1=2025&month1=2&day1=11&year2=2025&month2=2&day2=12&tz=America%2FMontevideo&format=onlycomma&latlon=no&missing=empty&trace=T&direct=no&report_type=3&report_type=4",
+      "https://www.inumet.gub.uy/tiempo/historico-alertas-meteorologicas"
+    ],
+    "confidence": "medium",
+    "matchedTo": "2026-02-11-cebollati"
+  },
+  {
+    "id": "2025-02-14-young-zona-rural-rio-negro",
+    "type": "hail",
+    "date": "2025-02-14",
+    "localTime": null,
+    "place": "Young (zona rural, Río Negro)",
+    "department": "Río Negro",
+    "lat": -32.7,
+    "lon": -57.63,
+    "hailSizeCm": 8,
+    "damaging": true,
+    "damage": {
+      "vehicles": true,
+      "roofs": null,
+      "crops": null
+    },
+    "inumetAlert": {
+      "status": "unknown",
+      "mentionsHail": null
+    },
+    "evidence": "Montevideo Portal: el viernes 14, el cazador de tormentas Matías Mederos registró en Río Negro una supercelda con granizo grande (hasta 8 cm) y ráfagas violentas que dañaron su camioneta. Hubo daños importantes muy cerca de Young. Desde las 19:20, INUMET emitió advertencias amarilla y naranja por tormentas fuertes para el oeste, con la naranja para localidades de Río Negro, entre otros departamentos. No se verificó la cobertura de Young. Ubicación aproximada en la zona de Young. El boletín de INUMET lista granizo el día 14.",
+    "sources": [
+      "https://www.montevideo.com.uy/Tiempo-libre/Granizo-y-arboles-caidos-el-registro-de-las-fuertes-tormentas-en-el-interior-uc915062",
+      "https://www.montevideo.com.uy/Noticias/-Tormentas-fuertes-y-lluvias-intensas--rigen-advertencia-amarilla-y-naranja-de-Inumet-uc915018",
+      "https://www.inumet.gub.uy/sites/default/files/2025-03/Boletin%20Febrero%202025_0.pdf"
+    ],
+    "confidence": "medium"
+  },
+  {
+    "id": "ctl-2025-02-16-suso",
+    "type": "control",
+    "date": "2025-02-16",
+    "localTime": "07:00",
+    "place": "Aeropuerto de Salto",
+    "department": "Salto",
+    "lat": -31.44,
+    "lon": -57.98,
+    "hailSizeCm": null,
+    "damaging": false,
+    "damage": {
+      "vehicles": null,
+      "roofs": null,
+      "crops": null
+    },
+    "inumetAlert": {
+      "status": "unknown",
+      "mentionsHail": null
+    },
+    "evidence": "METAR SUSO: tormenta (TS) en 12 reportes entre 07:00 y 18:00, con lluvia fuerte. Sin GR/GS en ningún aeropuerto, sin granizo en el boletín mensual de INUMET ni en la lista de eventos (día anterior, mismo día y siguiente). Hubo advertencia de INUMET por tormentas en el país ese día o el anterior (cobertura local no verificada). Control automático emparejado con 2025-02-14-young-zona-rural-rio-negro (2 días de diferencia en el año, 144 km).",
+    "sources": [
+      "https://mesonet.agron.iastate.edu/cgi-bin/request/asos.py?station=SUSO&data=metar&year1=2025&month1=2&day1=16&year2=2025&month2=2&day2=17&tz=America%2FMontevideo&format=onlycomma&latlon=no&missing=empty&trace=T&direct=no&report_type=3&report_type=4",
+      "https://www.inumet.gub.uy/tiempo/historico-alertas-meteorologicas"
+    ],
+    "confidence": "medium",
+    "matchedTo": "2025-02-14-young-zona-rural-rio-negro"
+  },
+  {
+    "id": "2025-02-22-juan-lacaze",
+    "type": "hail",
+    "date": "2025-02-22",
+    "localTime": null,
+    "place": "Juan Lacaze",
+    "department": "Colonia",
+    "lat": -34.43,
+    "lon": -57.44,
+    "hailSizeCm": 6,
+    "damaging": true,
+    "damage": {
+      "vehicles": null,
+      "roofs": null,
+      "crops": null
+    },
+    "inumetAlert": {
+      "status": "unknown",
+      "mentionsHail": null
+    },
+    "evidence": "Montevideo Portal: en el marco de alertas naranja y amarillas, cayó granizo de más de 6 cm en Juan Lacaze (videos de Estación BCP y Matías Mederos). Colonia fue el departamento con más clientes de UTE afectados ese sábado. No se verificó qué color cubría Juan Lacaze. El boletín de INUMET lista granizo el día 22.",
+    "sources": [
+      "https://www.montevideo.com.uy/Noticias/Granizo-e-impresionante-actividad-electrica--el-registro-de-las-tormentas-uc915777",
+      "https://www.montevideo.com.uy/Noticias/Miles-de-clientes-de-UTE-afectados-por-las-fuertes-tormentas-de-este-sabado-uc915789",
+      "https://www.inumet.gub.uy/sites/default/files/2025-03/Boletin%20Febrero%202025_0.pdf"
+    ],
+    "confidence": "high"
+  },
+  {
+    "id": "2025-03-03-clara",
+    "type": "hail",
+    "date": "2025-03-03",
+    "localTime": null,
+    "place": "Clara",
+    "department": "Tacuarembó",
+    "lat": -32.22,
+    "lon": -55.74,
+    "hailSizeCm": null,
+    "damaging": null,
+    "damage": {
+      "vehicles": null,
+      "roofs": null,
+      "crops": null
+    },
+    "inumetAlert": {
+      "status": "unknown",
+      "mentionsHail": null
+    },
+    "evidence": "Boletín de INUMET (marzo 2025): el 3 de marzo, cerca de Clara, una tormenta supercelular dejó intensas rachas, granizo pequeño y mediano y un tornado que derribó árboles.",
+    "sources": [
+      "https://www.inumet.gub.uy/sites/default/files/2025-04/Boletin%20MARZO.pdf"
+    ],
+    "confidence": "medium"
+  },
+  {
+    "id": "2025-03-28-piriapolis",
+    "type": "hail",
+    "date": "2025-03-28",
+    "localTime": null,
+    "place": "Piriápolis",
+    "department": "Maldonado",
+    "lat": -34.87,
+    "lon": -55.27,
+    "hailSizeCm": null,
+    "damaging": null,
+    "damage": {
+      "vehicles": null,
+      "roofs": null,
+      "crops": null
+    },
+    "inumetAlert": {
+      "status": "unknown",
+      "mentionsHail": null
+    },
+    "evidence": "Boletín de INUMET (marzo 2025): el 28 de marzo, en Piriápolis, una tormenta con caída de granizo causó destrozos y caída de árboles. No se precisa qué parte del daño se debió al granizo.",
+    "sources": [
+      "https://www.inumet.gub.uy/sites/default/files/2025-04/Boletin%20MARZO.pdf"
+    ],
+    "confidence": "medium"
+  },
+  {
+    "id": "2025-04-17-villa-25-de-agosto",
+    "type": "hail",
+    "date": "2025-04-17",
+    "localTime": null,
+    "place": "Villa 25 de Agosto",
+    "department": "Florida",
+    "lat": -34.41,
+    "lon": -56.4,
+    "hailSizeCm": null,
+    "damaging": true,
+    "damage": {
+      "vehicles": null,
+      "roofs": true,
+      "crops": true
+    },
+    "inumetAlert": {
+      "status": "orange",
+      "mentionsHail": true
+    },
+    "evidence": "Subrayado: la tormenta del jueves 17 (llegó desde Buenos Aires por el suroeste a las 17 h y al área metropolitana hacia las 19 h) traía abundante granizo. En Villa 25 de Agosto las piedras 'agujerearon' chapas y hubo afectaciones en plantíos y quintas. También hubo granizo violento en Santa Lucía y Castellanos (Canelones), donde se reportaron paredes y vidrios destrozados. 25 de Agosto estaba en amarillo a las 16:45 y en naranja a las 18:45. El boletín de INUMET lista granizo el día 17.",
+    "sources": [
+      "https://www.subrayado.com.uy/una-tormenta-intensa-abundante-granizo-afecto-varias-localidades-del-pais-los-videos-n974790",
+      "https://web.archive.org/web/20250419142618/https://www.inumet.gub.uy/reportes/riesgo/pdf/adv1744926135846.pdf",
+      "https://www.montevideo.com.uy/Noticias/Inumet-emitio-alertas-naranja-y-amarilla-por-lluvias-y-tormentas-en-donde-afectan-uc921103",
+      "https://www.inumet.gub.uy/sites/default/files/2026-02/Boletin%20Abril_2025.pdf"
+    ],
+    "confidence": "high"
+  },
+  {
+    "id": "ctl-2025-05-07-suls",
+    "type": "control",
+    "date": "2025-05-07",
+    "localTime": "03:47",
+    "place": "Aeropuerto de Laguna del Sauce",
+    "department": "Maldonado",
+    "lat": -34.85,
+    "lon": -55.09,
+    "hailSizeCm": null,
+    "damaging": false,
+    "damage": {
+      "vehicles": null,
+      "roofs": null,
+      "crops": null
+    },
+    "inumetAlert": {
+      "status": "unknown",
+      "mentionsHail": null
+    },
+    "evidence": "METAR SULS: tormenta (TS) en 10 reportes entre 03:47 y 23:33, con lluvia fuerte, ráfaga máx 34 kt. Sin GR/GS en ningún aeropuerto, sin granizo en el boletín mensual de INUMET ni en la lista de eventos (día anterior, mismo día y siguiente). Hubo advertencia de INUMET por tormentas en el país ese día o el anterior (cobertura local no verificada). Control automático emparejado con 2024-04-26-solis-de-mataojo (10 días de diferencia en el año, 45 km).",
+    "sources": [
+      "https://mesonet.agron.iastate.edu/cgi-bin/request/asos.py?station=SULS&data=metar&year1=2025&month1=5&day1=7&year2=2025&month2=5&day2=8&tz=America%2FMontevideo&format=onlycomma&latlon=no&missing=empty&trace=T&direct=no&report_type=3&report_type=4",
+      "https://www.inumet.gub.uy/tiempo/historico-alertas-meteorologicas"
+    ],
+    "confidence": "medium",
+    "matchedTo": "2024-04-26-solis-de-mataojo"
+  },
+  {
+    "id": "ctl-2025-05-08-sumu",
+    "type": "control",
+    "date": "2025-05-08",
+    "localTime": "00:04",
+    "place": "Aeropuerto de Carrasco",
+    "department": "Canelones",
+    "lat": -34.83,
+    "lon": -56.01,
+    "hailSizeCm": null,
+    "damaging": false,
+    "damage": {
+      "vehicles": null,
+      "roofs": null,
+      "crops": null
+    },
+    "inumetAlert": {
+      "status": "unknown",
+      "mentionsHail": null
+    },
+    "evidence": "METAR SUMU: tormenta (TS) en 14 reportes entre 00:04 y 06:00, con lluvia fuerte. Sin GR/GS en ningún aeropuerto, sin granizo en el boletín mensual de INUMET ni en la lista de eventos (día anterior, mismo día y siguiente). Hubo advertencia de INUMET por tormentas en el país ese día o el anterior (cobertura local no verificada). Control automático emparejado con 2024-06-14-ismael-cortinas (38 días de diferencia en el año, 139 km).",
+    "sources": [
+      "https://mesonet.agron.iastate.edu/cgi-bin/request/asos.py?station=SUMU&data=metar&year1=2025&month1=5&day1=8&year2=2025&month2=5&day2=9&tz=America%2FMontevideo&format=onlycomma&latlon=no&missing=empty&trace=T&direct=no&report_type=3&report_type=4",
+      "https://www.inumet.gub.uy/tiempo/historico-alertas-meteorologicas"
+    ],
+    "confidence": "medium",
+    "matchedTo": "2024-06-14-ismael-cortinas"
+  },
+  {
+    "id": "2025-05-17-paysandu",
+    "type": "hail",
+    "date": "2025-05-17",
+    "localTime": null,
+    "place": "Paysandú",
+    "department": "Paysandú",
+    "lat": -32.32,
+    "lon": -58.09,
+    "hailSizeCm": null,
+    "damaging": null,
+    "damage": {
+      "vehicles": null,
+      "roofs": null,
+      "crops": null
+    },
+    "inumetAlert": {
+      "status": "unknown",
+      "mentionsHail": null
+    },
+    "evidence": "Boletín de INUMET (mayo 2025): un evento de granizo reportado el día 17 en la ciudad de Paysandú. Esa noche hubo alertas amarilla y naranja por tormentas en casi todo el país, sin verificación de la zona.",
+    "sources": [
+      "https://www.inumet.gub.uy/sites/default/files/2025-06/Boletin%20Mayo_2025_0.pdf",
+      "https://www.montevideo.com.uy/Noticias/Inumet-emitio-alertas-amarilla-y-naranja-por-tormentas-fuertes-las-localidades-afectadas-uc924115"
+    ],
+    "confidence": "medium"
+  },
+  {
+    "id": "ctl-2025-05-26-surv",
+    "type": "control",
+    "date": "2025-05-26",
+    "localTime": "07:35",
+    "place": "Aeropuerto de Rivera",
+    "department": "Rivera",
+    "lat": -30.9,
+    "lon": -55.54,
+    "hailSizeCm": null,
+    "damaging": false,
+    "damage": {
+      "vehicles": null,
+      "roofs": null,
+      "crops": null
+    },
+    "inumetAlert": {
+      "status": "unknown",
+      "mentionsHail": null
+    },
+    "evidence": "METAR SURV: tormenta (TS) en 14 reportes entre 07:35 y 22:00. Sin GR/GS en ningún aeropuerto, sin granizo en el boletín mensual de INUMET ni en la lista de eventos (día anterior, mismo día y siguiente). Hubo advertencia de INUMET por tormentas en el país ese día o el anterior (cobertura local no verificada). Control automático emparejado con 2025-06-16-rivera (21 días de diferencia en el año, 0 km).",
+    "sources": [
+      "https://mesonet.agron.iastate.edu/cgi-bin/request/asos.py?station=SURV&data=metar&year1=2025&month1=5&day1=26&year2=2025&month2=5&day2=27&tz=America%2FMontevideo&format=onlycomma&latlon=no&missing=empty&trace=T&direct=no&report_type=3&report_type=4",
+      "https://www.inumet.gub.uy/tiempo/historico-alertas-meteorologicas"
+    ],
+    "confidence": "medium",
+    "matchedTo": "2025-06-16-rivera"
+  },
+  {
+    "id": "ctl-2025-05-26-suso",
+    "type": "control",
+    "date": "2025-05-26",
+    "localTime": "08:00",
+    "place": "Aeropuerto de Salto",
+    "department": "Salto",
+    "lat": -31.44,
+    "lon": -57.98,
+    "hailSizeCm": null,
+    "damaging": false,
+    "damage": {
+      "vehicles": null,
+      "roofs": null,
+      "crops": null
+    },
+    "inumetAlert": {
+      "status": "unknown",
+      "mentionsHail": null
+    },
+    "evidence": "METAR SUSO: tormenta (TS) en 11 reportes entre 08:00 y 19:00, con lluvia fuerte, ráfaga máx 19 kt. Sin GR/GS en ningún aeropuerto, sin granizo en el boletín mensual de INUMET ni en la lista de eventos (día anterior, mismo día y siguiente). Hubo advertencia de INUMET por tormentas en el país ese día o el anterior (cobertura local no verificada). Control automático emparejado con 2025-05-17-paysandu (9 días de diferencia en el año, 99 km).",
+    "sources": [
+      "https://mesonet.agron.iastate.edu/cgi-bin/request/asos.py?station=SUSO&data=metar&year1=2025&month1=5&day1=26&year2=2025&month2=5&day2=27&tz=America%2FMontevideo&format=onlycomma&latlon=no&missing=empty&trace=T&direct=no&report_type=3&report_type=4",
+      "https://www.inumet.gub.uy/tiempo/historico-alertas-meteorologicas"
+    ],
+    "confidence": "medium",
+    "matchedTo": "2025-05-17-paysandu"
+  },
+  {
+    "id": "2025-06-16-rivera",
+    "type": "hail",
+    "date": "2025-06-16",
+    "localTime": "19:00",
+    "place": "Rivera",
+    "department": "Rivera",
+    "lat": -30.9,
+    "lon": -55.54,
+    "hailSizeCm": null,
+    "damaging": true,
+    "damage": {
+      "vehicles": null,
+      "roofs": true,
+      "crops": null
+    },
+    "inumetAlert": {
+      "status": "unknown",
+      "mentionsHail": null
+    },
+    "evidence": "Montevideo Portal: intensa granizada al comienzo de la noche del lunes 16 en la frontera Rivera–Livramento, con calles cubiertas de blanco. La Intendencia de Rivera informó daños en varios techos y entregó lonas. METAR SURV 162200Z ... TS ... REGR (19:00 local). El boletín de INUMET de junio 2025 registra granizo en la ciudad de Rivera. Hubo advertencias por tormentas desde las 17:55 (zona no verificada).",
+    "sources": [
+      "https://www.montevideo.com.uy/Noticias/Manto-blanco-intensa-granizada-modifico-subitamente-el-paisaje-en-Rivera-uc927198",
+      "https://mesonet.agron.iastate.edu/cgi-bin/request/asos.py?station=SURV&data=metar&year1=2025&month1=6&day1=16&year2=2025&month2=6&day2=17&tz=America%2FMontevideo&format=onlycomma&latlon=no&missing=empty&trace=T&direct=no&report_type=3&report_type=4",
+      "https://www.inumet.gub.uy/sites/default/files/2025-08/Boletin%20Junio_2025.pdf",
+      "https://www.inumet.gub.uy/tiempo/historico-alertas-meteorologicas"
+    ],
+    "confidence": "high"
+  },
+  {
+    "id": "ctl-2025-06-18-suso",
+    "type": "control",
+    "date": "2025-06-18",
+    "localTime": "07:40",
+    "place": "Aeropuerto de Salto",
+    "department": "Salto",
+    "lat": -31.44,
+    "lon": -57.98,
+    "hailSizeCm": null,
+    "damaging": false,
+    "damage": {
+      "vehicles": null,
+      "roofs": null,
+      "crops": null
+    },
+    "inumetAlert": {
+      "status": "unknown",
+      "mentionsHail": null
+    },
+    "evidence": "METAR SUSO: tormenta (TS) en 3 reportes entre 07:40 y 09:00, ráfaga máx 18 kt. Sin GR/GS en ningún aeropuerto, sin granizo en el boletín mensual de INUMET ni en la lista de eventos (día anterior, mismo día y siguiente). Hubo advertencia de INUMET por tormentas en el país ese día o el anterior (cobertura local no verificada). Control automático emparejado con 2025-07-26-termas-del-arapey (38 días de diferencia en el año, 70 km).",
+    "sources": [
+      "https://mesonet.agron.iastate.edu/cgi-bin/request/asos.py?station=SUSO&data=metar&year1=2025&month1=6&day1=18&year2=2025&month2=6&day2=19&tz=America%2FMontevideo&format=onlycomma&latlon=no&missing=empty&trace=T&direct=no&report_type=3&report_type=4",
+      "https://www.inumet.gub.uy/tiempo/historico-alertas-meteorologicas"
+    ],
+    "confidence": "medium",
+    "matchedTo": "2025-07-26-termas-del-arapey"
+  },
+  {
+    "id": "ctl-2025-07-16-sumu",
+    "type": "control",
+    "date": "2025-07-16",
+    "localTime": "08:14",
+    "place": "Aeropuerto de Carrasco",
+    "department": "Canelones",
+    "lat": -34.83,
+    "lon": -56.01,
+    "hailSizeCm": null,
+    "damaging": false,
+    "damage": {
+      "vehicles": null,
+      "roofs": null,
+      "crops": null
+    },
+    "inumetAlert": {
+      "status": "unknown",
+      "mentionsHail": null
+    },
+    "evidence": "METAR SUMU: tormenta (TS) en 6 reportes entre 08:14 y 11:00, con lluvia fuerte. Sin GR/GS en ningún aeropuerto, sin granizo en el boletín mensual de INUMET ni en la lista de eventos (día anterior, mismo día y siguiente). Hubo advertencia de INUMET por tormentas en el país ese día o el anterior (cobertura local no verificada). Control automático emparejado con 2022-07-10-san-ramon (6 días de diferencia en el año, 61 km).",
+    "sources": [
+      "https://mesonet.agron.iastate.edu/cgi-bin/request/asos.py?station=SUMU&data=metar&year1=2025&month1=7&day1=16&year2=2025&month2=7&day2=17&tz=America%2FMontevideo&format=onlycomma&latlon=no&missing=empty&trace=T&direct=no&report_type=3&report_type=4",
+      "https://www.inumet.gub.uy/tiempo/historico-alertas-meteorologicas"
+    ],
+    "confidence": "medium",
+    "matchedTo": "2022-07-10-san-ramon"
+  },
+  {
+    "id": "ctl-2025-07-16-suso",
+    "type": "control",
+    "date": "2025-07-16",
+    "localTime": "08:00",
+    "place": "Aeropuerto de Salto",
+    "department": "Salto",
+    "lat": -31.44,
+    "lon": -57.98,
+    "hailSizeCm": null,
+    "damaging": false,
+    "damage": {
+      "vehicles": null,
+      "roofs": null,
+      "crops": null
+    },
+    "inumetAlert": {
+      "status": "unknown",
+      "mentionsHail": null
+    },
+    "evidence": "METAR SUSO: tormenta (TS) en 6 reportes entre 08:00 y 16:00, ráfaga máx 25 kt. Sin GR/GS en ningún aeropuerto, sin granizo en el boletín mensual de INUMET ni en la lista de eventos (día anterior, mismo día y siguiente). Hubo advertencia de INUMET por tormentas en el país ese día o el anterior (cobertura local no verificada). Control automático emparejado con 2026-07-27-tomas-gomensoro (11 días de diferencia en el año, 123 km).",
+    "sources": [
+      "https://mesonet.agron.iastate.edu/cgi-bin/request/asos.py?station=SUSO&data=metar&year1=2025&month1=7&day1=16&year2=2025&month2=7&day2=17&tz=America%2FMontevideo&format=onlycomma&latlon=no&missing=empty&trace=T&direct=no&report_type=3&report_type=4",
+      "https://www.inumet.gub.uy/tiempo/historico-alertas-meteorologicas"
+    ],
+    "confidence": "medium",
+    "matchedTo": "2026-07-27-tomas-gomensoro"
+  },
+  {
+    "id": "2025-07-26-termas-del-arapey",
+    "type": "hail",
+    "date": "2025-07-26",
+    "localTime": null,
+    "place": "Termas del Arapey",
+    "department": "Salto",
+    "lat": -30.95,
+    "lon": -57.52,
+    "hailSizeCm": null,
+    "damaging": null,
+    "damage": {
+      "vehicles": null,
+      "roofs": null,
+      "crops": null
+    },
+    "inumetAlert": {
+      "status": "yellow",
+      "mentionsHail": true
+    },
+    "evidence": "Montevideo Portal: en la mañana del sábado 26, fuerte granizada en la zona de Termas del Arapey, con el suelo cubierto de blanco. El boletín de INUMET registra granizo ese día en Quintana, Sarandí de Arapey y Termas de Arapey. Montevideo Portal informa que esa mañana hubo una alerta naranja, luego cesada, sin verificar si incluía Arapey. La amarilla que siguió vigente cubría todo Salto.",
+    "sources": [
+      "https://www.montevideo.com.uy/Noticias/Tapado-de-blanco-internautas-reportaron-fuerte-caida-de-granizo-en-las-Termas-del-Arapey-uc931288",
+      "https://www.montevideo.com.uy/Noticias/Inumet-ceso-alerta-naranja-por-tormentas-fuertes-pero-mantiene-la-amarilla-uc931273",
+      "https://www.inumet.gub.uy/sites/default/files/2025-08/Boletin%20Julio_2025.pdf"
+    ],
+    "confidence": "high"
+  },
+  {
+    "id": "2025-08-01-colonia-del-sacramento-aeropuerto",
+    "type": "hail",
+    "date": "2025-08-01",
+    "localTime": "18:00",
+    "place": "Colonia del Sacramento (aeropuerto)",
+    "department": "Colonia",
+    "lat": -34.45,
+    "lon": -57.77,
+    "hailSizeCm": null,
+    "damaging": false,
+    "damage": {
+      "vehicles": null,
+      "roofs": null,
+      "crops": null
+    },
+    "inumetAlert": {
+      "status": "unknown",
+      "mentionsHail": null
+    },
+    "evidence": "METAR SUCA 012100Z 2000 TSSHGS (18:00 local) y RETSSHGS a las 18:21: granizo pequeño en el aeropuerto de Colonia. El boletín de INUMET de agosto 2025 registra granizo el 1 de agosto en la estación meteorológica de Colonia (también en Aiguá, Colonia Itapebí y Goñi).",
+    "sources": [
+      "https://mesonet.agron.iastate.edu/cgi-bin/request/asos.py?station=SUCA&data=metar&year1=2025&month1=8&day1=1&year2=2025&month2=8&day2=2&tz=America%2FMontevideo&format=onlycomma&latlon=no&missing=empty&trace=T&direct=no&report_type=3&report_type=4",
+      "https://www.inumet.gub.uy/sites/default/files/2025-09/Boletin%20agosto.pdf"
+    ],
+    "confidence": "high"
+  },
+  {
+    "id": "ctl-2025-08-18-surv",
+    "type": "control",
+    "date": "2025-08-18",
+    "localTime": "22:00",
+    "place": "Aeropuerto de Rivera",
+    "department": "Rivera",
+    "lat": -30.9,
+    "lon": -55.54,
+    "hailSizeCm": null,
+    "damaging": false,
+    "damage": {
+      "vehicles": null,
+      "roofs": null,
+      "crops": null
+    },
+    "inumetAlert": {
+      "status": "unknown",
+      "mentionsHail": null
+    },
+    "evidence": "METAR SURV: tormenta (TS) en 2 reportes entre 22:00 y 23:00. Sin GR/GS en ningún aeropuerto, sin granizo en el boletín mensual de INUMET ni en la lista de eventos (día anterior, mismo día y siguiente). Hubo advertencia de INUMET por tormentas en el país ese día o el anterior (cobertura local no verificada). Control automático emparejado con 2026-07-28-artigas (21 días de diferencia en el año, 104 km).",
+    "sources": [
+      "https://mesonet.agron.iastate.edu/cgi-bin/request/asos.py?station=SURV&data=metar&year1=2025&month1=8&day1=18&year2=2025&month2=8&day2=19&tz=America%2FMontevideo&format=onlycomma&latlon=no&missing=empty&trace=T&direct=no&report_type=3&report_type=4",
+      "https://www.inumet.gub.uy/tiempo/historico-alertas-meteorologicas"
+    ],
+    "confidence": "medium",
+    "matchedTo": "2026-07-28-artigas"
+  },
+  {
+    "id": "ctl-2025-08-18-suso",
+    "type": "control",
+    "date": "2025-08-18",
+    "localTime": "13:30",
+    "place": "Aeropuerto de Salto",
+    "department": "Salto",
+    "lat": -31.44,
+    "lon": -57.98,
+    "hailSizeCm": null,
+    "damaging": false,
+    "damage": {
+      "vehicles": null,
+      "roofs": null,
+      "crops": null
+    },
+    "inumetAlert": {
+      "status": "unknown",
+      "mentionsHail": null
+    },
+    "evidence": "METAR SUSO: tormenta (TS) en 4 reportes entre 13:30 y 19:00. Sin GR/GS en ningún aeropuerto, sin granizo en el boletín mensual de INUMET ni en la lista de eventos (día anterior, mismo día y siguiente). Hubo advertencia de INUMET por tormentas en el país ese día o el anterior (cobertura local no verificada). Control automático emparejado con 2024-08-06-salto-aeropuerto (11 días de diferencia en el año, 0 km).",
+    "sources": [
+      "https://mesonet.agron.iastate.edu/cgi-bin/request/asos.py?station=SUSO&data=metar&year1=2025&month1=8&day1=18&year2=2025&month2=8&day2=19&tz=America%2FMontevideo&format=onlycomma&latlon=no&missing=empty&trace=T&direct=no&report_type=3&report_type=4",
+      "https://www.inumet.gub.uy/tiempo/historico-alertas-meteorologicas"
+    ],
+    "confidence": "medium",
+    "matchedTo": "2024-08-06-salto-aeropuerto"
+  },
+  {
+    "id": "ctl-2025-08-19-surv",
+    "type": "control",
+    "date": "2025-08-19",
+    "localTime": "10:10",
+    "place": "Aeropuerto de Rivera",
+    "department": "Rivera",
+    "lat": -30.9,
+    "lon": -55.54,
+    "hailSizeCm": null,
+    "damaging": false,
+    "damage": {
+      "vehicles": null,
+      "roofs": null,
+      "crops": null
+    },
+    "inumetAlert": {
+      "status": "unknown",
+      "mentionsHail": null
+    },
+    "evidence": "METAR SURV: tormenta (TS) en 4 reportes entre 10:10 y 12:00, ráfaga máx 27 kt. Sin GR/GS en ningún aeropuerto, sin granizo en el boletín mensual de INUMET ni en la lista de eventos (día anterior, mismo día y siguiente). Hubo advertencia de INUMET por tormentas en el país ese día o el anterior (cobertura local no verificada). Control automático emparejado con 2026-08-27-vichadero (8 días de diferencia en el año, 127 km).",
+    "sources": [
+      "https://mesonet.agron.iastate.edu/cgi-bin/request/asos.py?station=SURV&data=metar&year1=2025&month1=8&day1=19&year2=2025&month2=8&day2=20&tz=America%2FMontevideo&format=onlycomma&latlon=no&missing=empty&trace=T&direct=no&report_type=3&report_type=4",
+      "https://www.inumet.gub.uy/tiempo/historico-alertas-meteorologicas"
+    ],
+    "confidence": "medium",
+    "matchedTo": "2026-08-27-vichadero"
+  },
+  {
+    "id": "2025-08-31-salto-aeropuerto",
+    "type": "hail",
+    "date": "2025-08-31",
+    "localTime": "17:00",
+    "place": "Salto (aeropuerto)",
+    "department": "Salto",
+    "lat": -31.44,
+    "lon": -57.98,
+    "hailSizeCm": null,
+    "damaging": false,
+    "damage": {
+      "vehicles": null,
+      "roofs": null,
+      "crops": null
+    },
+    "inumetAlert": {
+      "status": "unknown",
+      "mentionsHail": null
+    },
+    "evidence": "METAR SUSO 312000Z 5000 TSRAGS (17:00 y 17:10 local) y REGS a las 18:00: granizo pequeño en el aeropuerto de Salto. El boletín de INUMET de agosto 2025 registra granizo el día 31 en la estación de Salto y en Belén.",
+    "sources": [
+      "https://mesonet.agron.iastate.edu/cgi-bin/request/asos.py?station=SUSO&data=metar&year1=2025&month1=8&day1=31&year2=2025&month2=9&day2=1&tz=America%2FMontevideo&format=onlycomma&latlon=no&missing=empty&trace=T&direct=no&report_type=3&report_type=4",
+      "https://www.inumet.gub.uy/sites/default/files/2025-09/Boletin%20agosto.pdf"
+    ],
+    "confidence": "high"
+  },
+  {
+    "id": "2025-09-22-minas",
+    "type": "hail",
+    "date": "2025-09-22",
+    "localTime": "13:30",
+    "place": "Minas",
+    "department": "Lavalleja",
+    "lat": -34.38,
+    "lon": -55.24,
+    "hailSizeCm": null,
+    "damaging": null,
+    "damage": {
+      "vehicles": null,
+      "roofs": null,
+      "crops": null
+    },
+    "inumetAlert": {
+      "status": "none",
+      "mentionsHail": false
+    },
+    "evidence": "Montevideo Portal: fuerte granizada en Minas hacia las 13:30 del lunes 22, que dejó la ciudad 'toda blanca', en un descenso de temperatura. No se informaron daños. El histórico de INUMET no registra advertencias ese día. El boletín de setiembre 2025 informa granizo en la segunda quincena.",
+    "sources": [
+      "https://www.montevideo.com.uy/Noticias/-Todo-blanco-en-la-ciudad--imagenes-de-la-fuerte-granizada-que-azoto-a-Minas-uc937380",
+      "https://www.inumet.gub.uy/tiempo/historico-alertas-meteorologicas",
+      "https://www.inumet.gub.uy/sites/default/files/2025-10/Boletin%20setiembre_2025.pdf"
+    ],
+    "confidence": "high"
+  },
+  {
+    "id": "2025-10-05-carmelo",
+    "type": "control",
+    "date": "2025-10-05",
+    "localTime": null,
+    "place": "Carmelo",
+    "department": "Colonia",
+    "lat": -34.0,
+    "lon": -58.28,
+    "hailSizeCm": null,
+    "damaging": false,
+    "damage": {
+      "vehicles": null,
+      "roofs": null,
+      "crops": null
+    },
+    "inumetAlert": {
+      "status": "orange",
+      "mentionsHail": true
+    },
+    "evidence": "Mismo frente del domingo 5: el Sinae informa afectaciones en Carmelo y Nueva Palmira (10 personas y 2 viviendas afectadas en Colonia; a nivel país, la mayoría de las viviendas dañadas fue por voladuras de techos). Todo Colonia estaba en naranja en la emisión de las 07:45. No se encontraron menciones de granizo observado.",
+    "sources": [
+      "https://www.gub.uy/sistema-nacional-emergencias/comunicacion/noticias/informe-situacion-recientes-eventos-adversos-06102025",
+      "https://www.montevideo.com.uy/Noticias/Temporal-y-destrozos-en-Paysandu-y-Colonia-hubo-cientos-de-afectados-este-fin-de-semana-uc938966",
+      "https://web.archive.org/web/20251006100145/https://www.inumet.gub.uy/reportes/riesgo/pdf/adv1759661060572.pdf"
+    ],
+    "confidence": "medium"
+  },
+  {
+    "id": "2025-10-05-paysandu",
+    "type": "control",
+    "date": "2025-10-05",
+    "localTime": "06:10",
+    "place": "Paysandú",
+    "department": "Paysandú",
+    "lat": -32.32,
+    "lon": -58.09,
+    "hailSizeCm": null,
+    "damaging": false,
+    "damage": {
+      "vehicles": null,
+      "roofs": null,
+      "crops": null
+    },
+    "inumetAlert": {
+      "status": "orange",
+      "mentionsHail": true
+    },
+    "evidence": "Frente frío del domingo 5: racha de 152 km/h en Paysandú a las 06:10 (corriente descendente según INUMET), con 120 personas afectadas y 22 voladuras de techos (San Félix, arroyo Sacra, Porvenir). Paysandú estaba en advertencia naranja (todo el departamento en la emisión de las 07:45). El informe post-evento y el Sinae solo mencionan el granizo como fenómeno previsto, no observado.",
+    "sources": [
+      "https://inumet.gub.uy/sites/default/files/2025-10/INFORME%20POSEVENTO%20N%C2%BA1_5%20%20DE%20OCTUBRE%202025_0.pdf",
+      "https://www.gub.uy/sistema-nacional-emergencias/comunicacion/noticias/informe-situacion-recientes-eventos-adversos-06102025",
+      "https://www.montevideo.com.uy/Noticias/Temporal-y-destrozos-en-Paysandu-y-Colonia-hubo-cientos-de-afectados-este-fin-de-semana-uc938966",
+      "https://web.archive.org/web/20251006100145/https://www.inumet.gub.uy/reportes/riesgo/pdf/adv1759661060572.pdf"
+    ],
+    "confidence": "high"
+  },
+  {
+    "id": "ctl-2025-11-04-surv",
+    "type": "control",
+    "date": "2025-11-04",
+    "localTime": "18:35",
+    "place": "Aeropuerto de Rivera",
+    "department": "Rivera",
+    "lat": -30.9,
+    "lon": -55.54,
+    "hailSizeCm": null,
+    "damaging": false,
+    "damage": {
+      "vehicles": null,
+      "roofs": null,
+      "crops": null
+    },
+    "inumetAlert": {
+      "status": "unknown",
+      "mentionsHail": null
+    },
+    "evidence": "METAR SURV: tormenta (TS) en 2 reportes entre 18:35 y 19:00, ráfaga máx 28 kt. Sin GR/GS en ningún aeropuerto, sin granizo en el boletín mensual de INUMET ni en la lista de eventos (día anterior, mismo día y siguiente). Hubo advertencia de INUMET por tormentas en el país ese día o el anterior (cobertura local no verificada). Control automático emparejado con 2026-09-20-rivera-aeropuerto (45 días de diferencia en el año, 0 km).",
+    "sources": [
+      "https://mesonet.agron.iastate.edu/cgi-bin/request/asos.py?station=SURV&data=metar&year1=2025&month1=11&day1=4&year2=2025&month2=11&day2=5&tz=America%2FMontevideo&format=onlycomma&latlon=no&missing=empty&trace=T&direct=no&report_type=3&report_type=4",
+      "https://www.inumet.gub.uy/tiempo/historico-alertas-meteorologicas"
+    ],
+    "confidence": "medium",
+    "matchedTo": "2026-09-20-rivera-aeropuerto"
+  },
+  {
+    "id": "ctl-2025-11-16-surv",
+    "type": "control",
+    "date": "2025-11-16",
+    "localTime": "08:00",
+    "place": "Aeropuerto de Rivera",
+    "department": "Rivera",
+    "lat": -30.9,
+    "lon": -55.54,
+    "hailSizeCm": null,
+    "damaging": false,
+    "damage": {
+      "vehicles": null,
+      "roofs": null,
+      "crops": null
+    },
+    "inumetAlert": {
+      "status": "unknown",
+      "mentionsHail": null
+    },
+    "evidence": "METAR SURV: tormenta (TS) en 8 reportes entre 08:00 y 15:00, con lluvia fuerte, ráfaga máx 30 kt. Sin GR/GS en ningún aeropuerto, sin granizo en el boletín mensual de INUMET ni en la lista de eventos (día anterior, mismo día y siguiente). Hubo advertencia de INUMET por tormentas en el país ese día o el anterior (cobertura local no verificada). Control automático emparejado con 2023-10-03-artigas (44 días de diferencia en el año, 104 km).",
+    "sources": [
+      "https://mesonet.agron.iastate.edu/cgi-bin/request/asos.py?station=SURV&data=metar&year1=2025&month1=11&day1=16&year2=2025&month2=11&day2=17&tz=America%2FMontevideo&format=onlycomma&latlon=no&missing=empty&trace=T&direct=no&report_type=3&report_type=4",
+      "https://www.inumet.gub.uy/tiempo/historico-alertas-meteorologicas"
+    ],
+    "confidence": "medium",
+    "matchedTo": "2023-10-03-artigas"
+  },
+  {
+    "id": "ctl-2025-11-16-suso",
+    "type": "control",
+    "date": "2025-11-16",
+    "localTime": "07:00",
+    "place": "Aeropuerto de Salto",
+    "department": "Salto",
+    "lat": -31.44,
+    "lon": -57.98,
+    "hailSizeCm": null,
+    "damaging": false,
+    "damage": {
+      "vehicles": null,
+      "roofs": null,
+      "crops": null
+    },
+    "inumetAlert": {
+      "status": "unknown",
+      "mentionsHail": null
+    },
+    "evidence": "METAR SUSO: tormenta (TS) en 6 reportes entre 07:00 y 20:00, ráfaga máx 31 kt. Sin GR/GS en ningún aeropuerto, sin granizo en el boletín mensual de INUMET ni en la lista de eventos (día anterior, mismo día y siguiente). Hubo advertencia de INUMET por tormentas en el país ese día o el anterior (cobertura local no verificada). Control automático emparejado con 2023-11-08-salto (8 días de diferencia en el año, 6 km).",
+    "sources": [
+      "https://mesonet.agron.iastate.edu/cgi-bin/request/asos.py?station=SUSO&data=metar&year1=2025&month1=11&day1=16&year2=2025&month2=11&day2=17&tz=America%2FMontevideo&format=onlycomma&latlon=no&missing=empty&trace=T&direct=no&report_type=3&report_type=4",
+      "https://www.inumet.gub.uy/tiempo/historico-alertas-meteorologicas"
+    ],
+    "confidence": "medium",
+    "matchedTo": "2023-11-08-salto"
+  },
+  {
+    "id": "2025-11-20-trinidad",
+    "type": "hail",
+    "date": "2025-11-20",
+    "localTime": null,
+    "place": "Trinidad",
+    "department": "Flores",
+    "lat": -33.52,
+    "lon": -56.9,
+    "hailSizeCm": null,
+    "damaging": null,
+    "damage": {
+      "vehicles": null,
+      "roofs": null,
+      "crops": null
+    },
+    "inumetAlert": {
+      "status": "unknown",
+      "mentionsHail": null
+    },
+    "evidence": "Boletín de INUMET (noviembre 2025): el 20 de noviembre se reportó granizo en la ciudad de Trinidad (y en Talita, Florida), con un frente frío lento.",
+    "sources": [
+      "https://www.inumet.gub.uy/sites/default/files/2025-12/BOLETIN%20NOVIEMBRE%202025.pdf"
+    ],
+    "confidence": "medium"
+  },
+  {
+    "id": "ctl-2025-12-01-surv",
+    "type": "control",
+    "date": "2025-12-01",
+    "localTime": "18:15",
+    "place": "Aeropuerto de Rivera",
+    "department": "Rivera",
+    "lat": -30.9,
+    "lon": -55.54,
+    "hailSizeCm": null,
+    "damaging": false,
+    "damage": {
+      "vehicles": null,
+      "roofs": null,
+      "crops": null
+    },
+    "inumetAlert": {
+      "status": "unknown",
+      "mentionsHail": null
+    },
+    "evidence": "METAR SURV: tormenta (TS) en 7 reportes entre 18:15 y 21:00. Sin GR/GS en ningún aeropuerto, sin granizo en el boletín mensual de INUMET ni en la lista de eventos (día anterior, mismo día y siguiente). Hubo advertencia de INUMET por tormentas en el país ese día o el anterior (cobertura local no verificada). Control automático emparejado con 2024-12-01-isidoro-noblia (1 días de diferencia en el año, 179 km).",
+    "sources": [
+      "https://mesonet.agron.iastate.edu/cgi-bin/request/asos.py?station=SURV&data=metar&year1=2025&month1=12&day1=1&year2=2025&month2=12&day2=2&tz=America%2FMontevideo&format=onlycomma&latlon=no&missing=empty&trace=T&direct=no&report_type=3&report_type=4",
+      "https://www.inumet.gub.uy/tiempo/historico-alertas-meteorologicas"
+    ],
+    "confidence": "medium",
+    "matchedTo": "2024-12-01-isidoro-noblia"
+  },
+  {
+    "id": "ctl-2025-12-20-suso",
+    "type": "control",
+    "date": "2025-12-20",
+    "localTime": "13:00",
+    "place": "Aeropuerto de Salto",
+    "department": "Salto",
+    "lat": -31.44,
+    "lon": -57.98,
+    "hailSizeCm": null,
+    "damaging": false,
+    "damage": {
+      "vehicles": null,
+      "roofs": null,
+      "crops": null
+    },
+    "inumetAlert": {
+      "status": "unknown",
+      "mentionsHail": null
+    },
+    "evidence": "METAR SUSO: tormenta (TS) en 8 reportes entre 13:00 y 19:00, ráfaga máx 28 kt. Sin GR/GS en ningún aeropuerto, sin granizo en el boletín mensual de INUMET ni en la lista de eventos (día anterior, mismo día y siguiente). Hubo advertencia de INUMET por tormentas en el país ese día o el anterior (cobertura local no verificada). Control automático emparejado con 2022-12-28-salto (8 días de diferencia en el año, 6 km).",
+    "sources": [
+      "https://mesonet.agron.iastate.edu/cgi-bin/request/asos.py?station=SUSO&data=metar&year1=2025&month1=12&day1=20&year2=2025&month2=12&day2=21&tz=America%2FMontevideo&format=onlycomma&latlon=no&missing=empty&trace=T&direct=no&report_type=3&report_type=4",
+      "https://www.inumet.gub.uy/tiempo/historico-alertas-meteorologicas"
+    ],
+    "confidence": "medium",
+    "matchedTo": "2022-12-28-salto"
+  },
+  {
+    "id": "ctl-2025-12-24-surv",
+    "type": "control",
+    "date": "2025-12-24",
+    "localTime": "01:00",
+    "place": "Aeropuerto de Rivera",
+    "department": "Rivera",
+    "lat": -30.9,
+    "lon": -55.54,
+    "hailSizeCm": null,
+    "damaging": false,
+    "damage": {
+      "vehicles": null,
+      "roofs": null,
+      "crops": null
+    },
+    "inumetAlert": {
+      "status": "unknown",
+      "mentionsHail": null
+    },
+    "evidence": "METAR SURV: tormenta (TS) en 9 reportes entre 01:00 y 17:08. Sin GR/GS en ningún aeropuerto, sin granizo en el boletín mensual de INUMET ni en la lista de eventos (día anterior, mismo día y siguiente). Hubo advertencia de INUMET por tormentas en el país ese día o el anterior (cobertura local no verificada). Control automático emparejado con 2021-12-21-rivera (3 días de diferencia en el año, 0 km).",
+    "sources": [
+      "https://mesonet.agron.iastate.edu/cgi-bin/request/asos.py?station=SURV&data=metar&year1=2025&month1=12&day1=24&year2=2025&month2=12&day2=25&tz=America%2FMontevideo&format=onlycomma&latlon=no&missing=empty&trace=T&direct=no&report_type=3&report_type=4",
+      "https://www.inumet.gub.uy/tiempo/historico-alertas-meteorologicas"
+    ],
+    "confidence": "medium",
+    "matchedTo": "2021-12-21-rivera"
+  },
+  {
+    "id": "2026-02-11-cebollati",
+    "type": "hail",
+    "date": "2026-02-11",
+    "localTime": null,
+    "place": "Cebollatí",
+    "department": "Rocha",
+    "lat": -33.27,
+    "lon": -53.8,
+    "hailSizeCm": null,
+    "damaging": true,
+    "damage": {
+      "vehicles": true,
+      "roofs": true,
+      "crops": true
+    },
+    "inumetAlert": {
+      "status": "unknown",
+      "mentionsHail": null
+    },
+    "evidence": "Montevideo Portal y Subrayado: en la noche del miércoles 11, una intensa tormenta con granizo en Cebollatí rompió vidrios en viviendas y dañó vehículos. Subrayado agrega voladuras de techos, y otra nota informa daños por granizo y viento en arrozales (se formó una comisión de granizo). También granizó de noche en Fray Marcos. Las primeras advertencias amarillas se emitieron desde las 20:43 (norte de Treinta y Tres, Melo, Rivera); no se verificó si cubrían Cebollatí. El boletín de INUMET no registra este evento.",
+    "sources": [
+      "https://www.montevideo.com.uy/Noticias/De-Paysandu-a-Cebollati-viento-rayos-y-granizo-dejaron-secuelas-a-lo-ancho-del-pais-uc952821",
+      "https://www.subrayado.com.uy/granizo-rafagas-mas-110kmh-y-evacuados-el-temporal-golpeo-fuerte-al-interior-n999866",
+      "https://www.montevideo.com.uy/Noticias/-Pensamos-lo-peor--conducia-por-Paysandu-cuando-sobrevinieron-vientos-de-mas-de-100-km-h-uc952963",
+      "https://www.montevideo.com.uy/Noticias/Ya-llego-el-frente-frio-a-Uruguay-la-alerta-amarilla-de-Inumet-por-tormentas-fuertes-uc952810"
+    ],
+    "confidence": "high"
+  },
+  {
+    "id": "ctl-2026-02-19-surv",
+    "type": "control",
+    "date": "2026-02-19",
+    "localTime": "05:10",
+    "place": "Aeropuerto de Rivera",
+    "department": "Rivera",
+    "lat": -30.9,
+    "lon": -55.54,
+    "hailSizeCm": null,
+    "damaging": false,
+    "damage": {
+      "vehicles": null,
+      "roofs": null,
+      "crops": null
+    },
+    "inumetAlert": {
+      "status": "unknown",
+      "mentionsHail": null
+    },
+    "evidence": "METAR SURV: tormenta (TS) en 14 reportes entre 05:10 y 16:00. Sin GR/GS en ningún aeropuerto, sin granizo en el boletín mensual de INUMET ni en la lista de eventos (día anterior, mismo día y siguiente). Hubo advertencia de INUMET por tormentas en el país ese día o el anterior (cobertura local no verificada). Control automático emparejado con 2024-02-04-rivera (15 días de diferencia en el año, 0 km).",
+    "sources": [
+      "https://mesonet.agron.iastate.edu/cgi-bin/request/asos.py?station=SURV&data=metar&year1=2026&month1=2&day1=19&year2=2026&month2=2&day2=20&tz=America%2FMontevideo&format=onlycomma&latlon=no&missing=empty&trace=T&direct=no&report_type=3&report_type=4",
+      "https://www.inumet.gub.uy/tiempo/historico-alertas-meteorologicas"
+    ],
+    "confidence": "medium",
+    "matchedTo": "2024-02-04-rivera"
+  },
+  {
+    "id": "2026-02-23-san-jose-de-mayo",
+    "type": "control",
+    "date": "2026-02-23",
+    "localTime": null,
+    "place": "San José de Mayo",
+    "department": "San José",
+    "lat": -34.34,
+    "lon": -56.71,
+    "hailSizeCm": null,
+    "damaging": false,
+    "damage": {
+      "vehicles": null,
+      "roofs": null,
+      "crops": null
+    },
+    "inumetAlert": {
+      "status": "yellow",
+      "mentionsHail": true
+    },
+    "evidence": "Lunes 23 y madrugada del martes 24: tormentas localmente fuertes en el sur, con fuertes ráfagas en zonas rurales de San José (Colonia Italia) desde la tarde y lluvias abundantes en áreas urbanas (San José Ahora, Libertad). La advertencia amarilla por tormentas cubría todo San José. Los boletines de INUMET de verano 2025-2026 y febrero 2026 no registran granizo en febrero.",
+    "sources": [
+      "https://www.montevideo.com.uy/Noticias/Llego-el-agua-asi-fue-la-tormenta-que-se-hizo-sentir-durante-la-madrugada-uc953965",
+      "https://www.montevideo.com.uy/Noticias/Inumet-emitio-una-alerta-amarilla-por-tormentas-fuertes-cuales-son-las-zonas-afectadas-uc953879",
+      "https://www.inumet.gub.uy/sites/default/files/2026-03/Boletin%20verano%202025-2026%202.pdf"
+    ],
+    "confidence": "medium"
+  },
+  {
+    "id": "ctl-2026-02-24-suls",
+    "type": "control",
+    "date": "2026-02-24",
+    "localTime": "01:00",
+    "place": "Aeropuerto de Laguna del Sauce",
+    "department": "Maldonado",
+    "lat": -34.85,
+    "lon": -55.09,
+    "hailSizeCm": null,
+    "damaging": false,
+    "damage": {
+      "vehicles": null,
+      "roofs": null,
+      "crops": null
+    },
+    "inumetAlert": {
+      "status": "unknown",
+      "mentionsHail": null
+    },
+    "evidence": "METAR SULS: tormenta (TS) en 10 reportes entre 01:00 y 09:41, ráfaga máx 32 kt. Sin GR/GS en ningún aeropuerto, sin granizo en el boletín mensual de INUMET ni en la lista de eventos (día anterior, mismo día y siguiente). Hubo advertencia de INUMET por tormentas en el país ese día o el anterior (cobertura local no verificada). Control automático emparejado con 2024-02-23-lascano (1 días de diferencia en el año, 155 km).",
+    "sources": [
+      "https://mesonet.agron.iastate.edu/cgi-bin/request/asos.py?station=SULS&data=metar&year1=2026&month1=2&day1=24&year2=2026&month2=2&day2=25&tz=America%2FMontevideo&format=onlycomma&latlon=no&missing=empty&trace=T&direct=no&report_type=3&report_type=4",
+      "https://www.inumet.gub.uy/tiempo/historico-alertas-meteorologicas"
+    ],
+    "confidence": "medium",
+    "matchedTo": "2024-02-23-lascano"
+  },
+  {
+    "id": "ctl-2026-02-24-surv",
+    "type": "control",
+    "date": "2026-02-24",
+    "localTime": "08:35",
+    "place": "Aeropuerto de Rivera",
+    "department": "Rivera",
+    "lat": -30.9,
+    "lon": -55.54,
+    "hailSizeCm": null,
+    "damaging": false,
+    "damage": {
+      "vehicles": null,
+      "roofs": null,
+      "crops": null
+    },
+    "inumetAlert": {
+      "status": "unknown",
+      "mentionsHail": null
+    },
+    "evidence": "METAR SURV: tormenta (TS) en 7 reportes entre 08:35 y 20:00, con lluvia fuerte. Sin GR/GS en ningún aeropuerto, sin granizo en el boletín mensual de INUMET ni en la lista de eventos (día anterior, mismo día y siguiente). Hubo advertencia de INUMET por tormentas en el país ese día o el anterior (cobertura local no verificada). Control automático emparejado con 2024-02-23-tranqueras (1 días de diferencia en el año, 39 km).",
+    "sources": [
+      "https://mesonet.agron.iastate.edu/cgi-bin/request/asos.py?station=SURV&data=metar&year1=2026&month1=2&day1=24&year2=2026&month2=2&day2=25&tz=America%2FMontevideo&format=onlycomma&latlon=no&missing=empty&trace=T&direct=no&report_type=3&report_type=4",
+      "https://www.inumet.gub.uy/tiempo/historico-alertas-meteorologicas"
+    ],
+    "confidence": "medium",
+    "matchedTo": "2024-02-23-tranqueras"
+  },
+  {
+    "id": "ctl-2026-03-17-sudu",
+    "type": "control",
+    "date": "2026-03-17",
+    "localTime": "17:00",
+    "place": "Aeropuerto de Durazno",
+    "department": "Durazno",
+    "lat": -33.35,
+    "lon": -56.5,
+    "hailSizeCm": null,
+    "damaging": false,
+    "damage": {
+      "vehicles": null,
+      "roofs": null,
+      "crops": null
+    },
+    "inumetAlert": {
+      "status": "unknown",
+      "mentionsHail": null
+    },
+    "evidence": "METAR SUDU: tormenta (TS) en 7 reportes entre 17:00 y 19:00, con lluvia fuerte, ráfaga máx 50 kt. Sin GR/GS en ningún aeropuerto, sin granizo en el boletín mensual de INUMET ni en la lista de eventos (día anterior, mismo día y siguiente). Hubo advertencia de INUMET por tormentas en el país ese día o el anterior (cobertura local no verificada). Control automático emparejado con 2025-03-03-clara (14 días de diferencia en el año, 144 km).",
+    "sources": [
+      "https://mesonet.agron.iastate.edu/cgi-bin/request/asos.py?station=SUDU&data=metar&year1=2026&month1=3&day1=17&year2=2026&month2=3&day2=18&tz=America%2FMontevideo&format=onlycomma&latlon=no&missing=empty&trace=T&direct=no&report_type=3&report_type=4",
+      "https://www.inumet.gub.uy/tiempo/historico-alertas-meteorologicas"
+    ],
+    "confidence": "medium",
+    "matchedTo": "2025-03-03-clara"
+  },
+  {
+    "id": "ctl-2026-03-29-suls",
+    "type": "control",
+    "date": "2026-03-29",
+    "localTime": "08:06",
+    "place": "Aeropuerto de Laguna del Sauce",
+    "department": "Maldonado",
+    "lat": -34.85,
+    "lon": -55.09,
+    "hailSizeCm": null,
+    "damaging": false,
+    "damage": {
+      "vehicles": null,
+      "roofs": null,
+      "crops": null
+    },
+    "inumetAlert": {
+      "status": "unknown",
+      "mentionsHail": null
+    },
+    "evidence": "METAR SULS: tormenta (TS) en 7 reportes entre 08:06 y 11:31, con lluvia fuerte. Sin GR/GS en ningún aeropuerto, sin granizo en el boletín mensual de INUMET ni en la lista de eventos (día anterior, mismo día y siguiente). Hubo advertencia de INUMET por tormentas en el país ese día o el anterior (cobertura local no verificada). Control automático emparejado con 2025-03-28-piriapolis (1 días de diferencia en el año, 16 km).",
+    "sources": [
+      "https://mesonet.agron.iastate.edu/cgi-bin/request/asos.py?station=SULS&data=metar&year1=2026&month1=3&day1=29&year2=2026&month2=3&day2=30&tz=America%2FMontevideo&format=onlycomma&latlon=no&missing=empty&trace=T&direct=no&report_type=3&report_type=4",
+      "https://www.inumet.gub.uy/tiempo/historico-alertas-meteorologicas"
+    ],
+    "confidence": "medium",
+    "matchedTo": "2025-03-28-piriapolis"
+  },
+  {
+    "id": "ctl-2026-04-03-sumu",
+    "type": "control",
+    "date": "2026-04-03",
+    "localTime": "21:30",
+    "place": "Aeropuerto de Carrasco",
+    "department": "Canelones",
+    "lat": -34.83,
+    "lon": -56.01,
+    "hailSizeCm": null,
+    "damaging": false,
+    "damage": {
+      "vehicles": null,
+      "roofs": null,
+      "crops": null
+    },
+    "inumetAlert": {
+      "status": "unknown",
+      "mentionsHail": null
+    },
+    "evidence": "METAR SUMU: tormenta (TS) en 6 reportes entre 21:30 y 23:37, con lluvia fuerte, ráfaga máx 25 kt. Sin GR/GS en ningún aeropuerto, sin granizo en el boletín mensual de INUMET ni en la lista de eventos (día anterior, mismo día y siguiente). Hubo advertencia de INUMET por tormentas en el país ese día o el anterior (cobertura local no verificada). Control automático emparejado con 2025-04-17-villa-25-de-agosto (14 días de diferencia en el año, 59 km).",
+    "sources": [
+      "https://mesonet.agron.iastate.edu/cgi-bin/request/asos.py?station=SUMU&data=metar&year1=2026&month1=4&day1=3&year2=2026&month2=4&day2=4&tz=America%2FMontevideo&format=onlycomma&latlon=no&missing=empty&trace=T&direct=no&report_type=3&report_type=4",
+      "https://www.inumet.gub.uy/tiempo/historico-alertas-meteorologicas"
+    ],
+    "confidence": "medium",
+    "matchedTo": "2025-04-17-villa-25-de-agosto"
+  },
+  {
+    "id": "2026-04-26-barra-del-chuy",
+    "type": "hail",
+    "date": "2026-04-26",
+    "localTime": null,
+    "place": "Barra del Chuy",
+    "department": "Rocha",
+    "lat": -33.76,
+    "lon": -53.39,
+    "hailSizeCm": null,
+    "damaging": null,
+    "damage": {
+      "vehicles": null,
+      "roofs": null,
+      "crops": null
+    },
+    "inumetAlert": {
+      "status": "none",
+      "mentionsHail": false
+    },
+    "evidence": "Montevideo Portal: intensa granizada en la tarde del domingo 26 en Maldonado y Rocha. Duró unos 10 minutos, con rachas muy fuertes, y dejó las playas del Chuy completamente blancas. Las alertas vigentes eran por viento (naranja en Maldonado, amarilla en Rocha), no por tormentas. El boletín de INUMET de abril 2026 no registra granizo.",
+    "sources": [
+      "https://www.montevideo.com.uy/Noticias/Temporal-en-el-este-fuerte-vendaval-con-granizo-azoto-este-domingo-a-Maldonado-y-Rocha-uc960234"
+    ],
+    "confidence": "medium"
+  },
+  {
+    "id": "2026-05-05-san-javier-y-tres-quintas",
+    "type": "hail",
+    "date": "2026-05-05",
+    "localTime": null,
+    "place": "San Javier (y Tres Quintas)",
+    "department": "Río Negro",
+    "lat": -32.67,
+    "lon": -58.13,
+    "hailSizeCm": null,
+    "damaging": null,
+    "damage": {
+      "vehicles": null,
+      "roofs": null,
+      "crops": null
+    },
+    "inumetAlert": {
+      "status": "unknown",
+      "mentionsHail": null
+    },
+    "evidence": "Montevideo Portal: con la tormenta que llegó al litoral, en Tres Quintas (Río Negro) cayó granizo 'de varios tamaños'. El boletín de INUMET de mayo 2026 registra granizo el día 5 en San Javier (Río Negro), la localidad oficial usada para las coordenadas. Ese día rigieron advertencias naranja y amarilla por tormentas (no se verificó la zona).",
+    "sources": [
+      "https://www.montevideo.com.uy/Noticias/Rayos-y-centellas-los-videos-de-la-tormenta-que-ya-llego-y-azoto-al-litoral-del-pais-uc961118",
+      "https://www.inumet.gub.uy/sites/default/files/2026-06/Boletin%20Mayo_2026.pdf",
+      "https://www.montevideo.com.uy/Noticias/Tormenta-fuerte-granizo-y-viento-alerta-naranja-de-Inumet-y-las-localidades-afectadas-uc961103"
+    ],
+    "confidence": "medium"
+  },
+  {
+    "id": "2026-05-07-rivera",
+    "type": "control",
+    "date": "2026-05-07",
+    "localTime": "08:30",
+    "place": "Rivera",
+    "department": "Rivera",
+    "lat": -30.9,
+    "lon": -55.54,
+    "hailSizeCm": null,
+    "damaging": false,
+    "damage": {
+      "vehicles": null,
+      "roofs": null,
+      "crops": null
+    },
+    "inumetAlert": {
+      "status": "yellow",
+      "mentionsHail": true
+    },
+    "evidence": "Tarde-noche del 6 y madrugada-mañana del 7: temporal con ráfagas de hasta 130 km/h en Livramento-Rivera, con voladura de techos, árboles y cables caídos, un semáforo derribado y cortes de luz. Rivera estaba en alerta amarilla por tormentas fuertes o severas. METAR SURV TS/TSRA (08:30 con 500 m de visibilidad), sin GR. El boletín de INUMET de mayo 2026 registra granizo solo el día 5 (San Javier).",
+    "sources": [
+      "https://www.montevideo.com.uy/Noticias/Voladuras-arboles-caidos-y-semaforos-rotos-lo-que-dejo-el-temporal-en-el-norte-del-pais-uc961256",
+      "https://www.montevideo.com.uy/Noticias/Temporal-en-el-norte-rafagas-de-130-km-h-causan-destrozos-en-Rivera-y-Livramento-uc961292",
+      "https://mesonet.agron.iastate.edu/cgi-bin/request/asos.py?station=SURV&data=metar&year1=2026&month1=5&day1=7&year2=2026&month2=5&day2=8&tz=America%2FMontevideo&format=onlycomma&latlon=no&missing=empty&trace=T&direct=no&report_type=3&report_type=4",
+      "https://www.inumet.gub.uy/sites/default/files/2026-06/Boletin%20Mayo_2026.pdf"
+    ],
+    "confidence": "high"
+  },
+  {
+    "id": "2026-05-07-tacuarembo",
+    "type": "control",
+    "date": "2026-05-07",
+    "localTime": null,
+    "place": "Tacuarembó",
+    "department": "Tacuarembó",
+    "lat": -31.71,
+    "lon": -55.98,
+    "hailSizeCm": null,
+    "damaging": false,
+    "damage": {
+      "vehicles": null,
+      "roofs": null,
+      "crops": null
+    },
+    "inumetAlert": {
+      "status": "orange",
+      "mentionsHail": true
+    },
+    "evidence": "Mismo temporal: múltiples caídas de árboles e inundaciones en la vía pública en Tacuarembó. Tacuarembó figuraba en la alerta naranja por tormentas fuertes o severas. El boletín de INUMET de mayo 2026 registra granizo solo el día 5 (San Javier).",
+    "sources": [
+      "https://www.montevideo.com.uy/Noticias/Temporal-en-el-norte-rafagas-de-130-km-h-causan-destrozos-en-Rivera-y-Livramento-uc961292",
+      "https://www.montevideo.com.uy/Noticias/Voladuras-arboles-caidos-y-semaforos-rotos-lo-que-dejo-el-temporal-en-el-norte-del-pais-uc961256",
+      "https://www.inumet.gub.uy/sites/default/files/2026-06/Boletin%20Mayo_2026.pdf"
+    ],
+    "confidence": "medium"
+  },
+  {
+    "id": "ctl-2026-05-07-suls",
+    "type": "control",
+    "date": "2026-05-07",
+    "localTime": "02:49",
+    "place": "Aeropuerto de Laguna del Sauce",
+    "department": "Maldonado",
+    "lat": -34.85,
+    "lon": -55.09,
+    "hailSizeCm": null,
+    "damaging": false,
+    "damage": {
+      "vehicles": null,
+      "roofs": null,
+      "crops": null
+    },
+    "inumetAlert": {
+      "status": "unknown",
+      "mentionsHail": null
+    },
+    "evidence": "METAR SULS: tormenta (TS) en 20 reportes entre 02:49 y 15:00, con lluvia fuerte, ráfaga máx 36 kt. Sin GR/GS en ningún aeropuerto, sin granizo en el boletín mensual de INUMET ni en la lista de eventos (día anterior, mismo día y siguiente). Hubo advertencia de INUMET por tormentas en el país ese día o el anterior (cobertura local no verificada). Control automático emparejado con 2026-04-26-barra-del-chuy (11 días de diferencia en el año, 198 km).",
+    "sources": [
+      "https://mesonet.agron.iastate.edu/cgi-bin/request/asos.py?station=SULS&data=metar&year1=2026&month1=5&day1=7&year2=2026&month2=5&day2=8&tz=America%2FMontevideo&format=onlycomma&latlon=no&missing=empty&trace=T&direct=no&report_type=3&report_type=4",
+      "https://www.inumet.gub.uy/tiempo/historico-alertas-meteorologicas"
+    ],
+    "confidence": "medium",
+    "matchedTo": "2026-04-26-barra-del-chuy"
+  },
+  {
+    "id": "ctl-2026-05-07-suso",
+    "type": "control",
+    "date": "2026-05-07",
+    "localTime": "07:00",
+    "place": "Aeropuerto de Salto",
+    "department": "Salto",
+    "lat": -31.44,
+    "lon": -57.98,
+    "hailSizeCm": null,
+    "damaging": false,
+    "damage": {
+      "vehicles": null,
+      "roofs": null,
+      "crops": null
+    },
+    "inumetAlert": {
+      "status": "unknown",
+      "mentionsHail": null
+    },
+    "evidence": "METAR SUSO: tormenta (TS) en 14 reportes entre 07:00 y 18:00, ráfaga máx 27 kt. Sin GR/GS en ningún aeropuerto, sin granizo en el boletín mensual de INUMET ni en la lista de eventos (día anterior, mismo día y siguiente). Hubo advertencia de INUMET por tormentas en el país ese día o el anterior (cobertura local no verificada). Control automático emparejado con 2026-05-05-san-javier-y-tres-quintas (2 días de diferencia en el año, 138 km).",
+    "sources": [
+      "https://mesonet.agron.iastate.edu/cgi-bin/request/asos.py?station=SUSO&data=metar&year1=2026&month1=5&day1=7&year2=2026&month2=5&day2=8&tz=America%2FMontevideo&format=onlycomma&latlon=no&missing=empty&trace=T&direct=no&report_type=3&report_type=4",
+      "https://www.inumet.gub.uy/tiempo/historico-alertas-meteorologicas"
+    ],
+    "confidence": "medium",
+    "matchedTo": "2026-05-05-san-javier-y-tres-quintas"
+  },
+  {
+    "id": "2026-07-02-montevideo",
+    "type": "hail",
+    "date": "2026-07-02",
+    "localTime": null,
+    "place": "Montevideo",
+    "department": "Montevideo",
+    "lat": -34.91,
+    "lon": -56.19,
+    "hailSizeCm": null,
+    "damaging": false,
+    "damage": {
+      "vehicles": null,
+      "roofs": null,
+      "crops": null
+    },
+    "inumetAlert": {
+      "status": "unknown",
+      "mentionsHail": null
+    },
+    "evidence": "Montevideo Portal: con frío polar intenso, cayeron pequeñas piedras de hielo sobre calles y vehículos en distintos puntos de Montevideo. Antes también en Colonia y Soriano. INUMET (Santayana) confirmó graupel ('pequeño granizo blanco') en Maldonado, Canelones, Montevideo y Rocha. No hay registros de advertencias de junio-julio 2026 en el histórico.",
+    "sources": [
+      "https://www.montevideo.com.uy/Noticias/Llueven-piedras-cayo-granizo-en-Montevideo-en-medio-de-frios-intensos-mira-el-video-uc967070",
+      "https://www.montevideo.com.uy/Noticias/Cayo-nieve-Uruguay-Inumet-confirmo-que-se-dio-el-fenomeno-y-dijo-en-que-departamentos-uc967168"
+    ],
+    "confidence": "high"
+  },
+  {
+    "id": "2026-07-27-tomas-gomensoro",
+    "type": "hail",
+    "date": "2026-07-27",
+    "localTime": null,
+    "place": "Tomás Gomensoro",
+    "department": "Artigas",
+    "lat": -30.43,
+    "lon": -57.44,
+    "hailSizeCm": null,
+    "damaging": true,
+    "damage": {
+      "vehicles": null,
+      "roofs": null,
+      "crops": null
+    },
+    "inumetAlert": {
+      "status": "yellow",
+      "mentionsHail": null
+    },
+    "evidence": "Montevideo Portal: 'brutal granizada' en Tomás Gomensoro, que según la usuaria que la filmó causó daños en la zona (no detallados). Todo Artigas estaba bajo alerta amarilla por tormentas puntualmente fuertes. El boletín de INUMET de julio 2026 registra granizo el 27 en Tomás Gomensoro. damaging=true por daño explícito pero genérico.",
+    "sources": [
+      "https://www.montevideo.com.uy/Noticias/-Brutal-granizada--videos-muestran-tormenta-en-Artigas-que-causo-danos-en-una-localidad-uc969693",
+      "https://www.montevideo.com.uy/Noticias/Una-mujer-debio-ser-rescatada-por-Bomberos-por-la-fuerte-granizada-que-le-cayo-encima-uc969754",
+      "https://www.inumet.gub.uy/sites/default/files/2026-09/Boletin%20Julio%202026_1.pdf"
+    ],
+    "confidence": "medium"
+  },
+  {
+    "id": "2026-07-28-artigas",
+    "type": "hail",
+    "date": "2026-07-28",
+    "localTime": null,
+    "place": "Artigas",
+    "department": "Artigas",
+    "lat": -30.4,
+    "lon": -56.46,
+    "hailSizeCm": null,
+    "damaging": null,
+    "damage": {
+      "vehicles": null,
+      "roofs": null,
+      "crops": null
+    },
+    "inumetAlert": {
+      "status": "unknown",
+      "mentionsHail": null
+    },
+    "evidence": "Boletín de INUMET (julio 2026): el 28 de julio se reportó granizo en la ciudad de Artigas, en Bernabé Rivera y en varias localidades de Salto.",
+    "sources": [
+      "https://www.inumet.gub.uy/sites/default/files/2026-09/Boletin%20Julio%202026_1.pdf"
+    ],
+    "confidence": "medium"
+  },
+  {
+    "id": "2026-08-01-salto",
+    "type": "control",
+    "date": "2026-08-01",
+    "localTime": "07:00",
+    "place": "Salto",
+    "department": "Salto",
+    "lat": -31.39,
+    "lon": -57.96,
+    "hailSizeCm": null,
+    "damaging": false,
+    "damage": {
+      "vehicles": null,
+      "roofs": null,
+      "crops": null
+    },
+    "inumetAlert": {
+      "status": "orange",
+      "mentionsHail": true
+    },
+    "evidence": "Madrugada y mañana del sábado 1: temporal en Salto con rachas de hasta 102 km/h (estación de INUMET), árboles caídos, voladura de techos, sectores a oscuras y lluvia torrencial. La advertencia naranja por tormentas muy fuertes y severas incluía localidades de Salto (20:00 del 31 a 09:00 del 1); al cese de la mañana regían naranja y amarilla en el norte y noreste. METAR SUSO TSRA a las 07:00 y 08:00, sin GR. El boletín de INUMET de agosto 2026 registra granizo los días 6, 16 y 27 (el de julio, el 31 en Migues, a más de 400 km).",
+    "sources": [
+      "https://www.montevideo.com.uy/Noticias/Temporal-en-Salto-rachas-de-hasta-102-km-h-dejaron-arboles-caidos-y-voladura-de-techos-uc970336",
+      "https://www.montevideo.com.uy/Noticias/Alerta-naranja-de-Inumet-para-todo-el-pais-a-que-hora-comienza-en-cada-departamento-uc970281",
+      "https://www.montevideo.com.uy/Noticias/Inumet-ceso-sus-alertas-por-tormentas-puntualmente-fuertes-pero-monitorea-la-situacion--uc970334",
+      "https://mesonet.agron.iastate.edu/cgi-bin/request/asos.py?station=SUSO&data=metar&year1=2026&month1=8&day1=1&year2=2026&month2=8&day2=2&tz=America%2FMontevideo&format=onlycomma&latlon=no&missing=empty&trace=T&direct=no&report_type=3&report_type=4",
+      "https://www.inumet.gub.uy/sites/default/files/2026-09/Boletin%20Agosto_2026.pdf",
+      "https://www.inumet.gub.uy/sites/default/files/2026-09/Boletin%20Julio%202026_1.pdf"
+    ],
+    "confidence": "high"
+  },
+  {
+    "id": "2026-08-06-mercedes",
+    "type": "hail",
+    "date": "2026-08-06",
+    "localTime": null,
+    "place": "Mercedes",
+    "department": "Soriano",
+    "lat": -33.25,
+    "lon": -58.03,
+    "hailSizeCm": null,
+    "damaging": null,
+    "damage": {
+      "vehicles": null,
+      "roofs": null,
+      "crops": null
+    },
+    "inumetAlert": {
+      "status": "unknown",
+      "mentionsHail": null
+    },
+    "evidence": "Boletín de INUMET (agosto 2026): el 6 de agosto se recibieron reportes de granizo en Agraciada y Mercedes (Soriano), Carmelo, Artigas, Tranqueras y otras localidades. Montevideo Portal informa tormentas fuertes con vientos, granizo y daños en estructuras ese jueves en varios departamentos.",
+    "sources": [
+      "https://www.inumet.gub.uy/sites/default/files/2026-09/Boletin%20Agosto_2026.pdf",
+      "https://www.montevideo.com.uy/Noticias/Techos-caidos-y-evacuados-los-videos-del-temporal-en-los-departamentos-de-Uruguay-uc970977"
+    ],
+    "confidence": "medium"
+  },
+  {
+    "id": "2026-08-16-nico-perez",
+    "type": "hail",
+    "date": "2026-08-16",
+    "localTime": null,
+    "place": "Nico Pérez",
+    "department": "Florida",
+    "lat": -33.48,
+    "lon": -55.15,
+    "hailSizeCm": null,
+    "damaging": null,
+    "damage": {
+      "vehicles": null,
+      "roofs": null,
+      "crops": null
+    },
+    "inumetAlert": {
+      "status": "unknown",
+      "mentionsHail": null
+    },
+    "evidence": "Boletín de INUMET (agosto 2026): el 16 de agosto se registró granizo en Nico Pérez (Florida), José Batlle y Ordóñez (Lavalleja) y Las Toscas (Tacuarembó).",
+    "sources": [
+      "https://www.inumet.gub.uy/sites/default/files/2026-09/Boletin%20Agosto_2026.pdf"
+    ],
+    "confidence": "medium"
+  },
+  {
+    "id": "2026-08-17-rivera-aeropuerto",
+    "type": "hail",
+    "date": "2026-08-17",
+    "localTime": "01:00",
+    "place": "Rivera (aeropuerto)",
+    "department": "Rivera",
+    "lat": -30.9,
+    "lon": -55.54,
+    "hailSizeCm": null,
+    "damaging": null,
+    "damage": {
+      "vehicles": null,
+      "roofs": null,
+      "crops": null
+    },
+    "inumetAlert": {
+      "status": "orange",
+      "mentionsHail": true
+    },
+    "evidence": "METAR SURV 170400Z ... 0100 TS FG ... RETSGRRA (01:00 local): tormenta con granizo en la hora previa en el aeropuerto de Rivera. Rivera estaba bajo advertencia naranja por tormentas fuertes y puntualmente severas (emisiones del 16/08 23:45 y del 17/08 00:45), que mencionaba granizo.",
+    "sources": [
+      "https://mesonet.agron.iastate.edu/cgi-bin/request/asos.py?station=SURV&data=metar&year1=2026&month1=8&day1=17&year2=2026&month2=8&day2=18&tz=America%2FMontevideo&format=onlycomma&latlon=no&missing=empty&trace=T&direct=no&report_type=3&report_type=4",
+      "https://www.inumet.gub.uy/reportes/riesgo/pdf/adv1786938305309.pdf"
+    ],
+    "confidence": "high"
+  },
+  {
+    "id": "2026-08-27-piedras-coloradas",
+    "type": "hail",
+    "date": "2026-08-27",
+    "localTime": null,
+    "place": "Piedras Coloradas",
+    "department": "Paysandú",
+    "lat": -32.37,
+    "lon": -57.61,
+    "hailSizeCm": null,
+    "damaging": true,
+    "damage": {
+      "vehicles": null,
+      "roofs": true,
+      "crops": true
+    },
+    "inumetAlert": {
+      "status": "orange",
+      "mentionsHail": true
+    },
+    "evidence": "Montevideo Portal: en la zona de Guichón hubo sucesivas granizadas. En Piedras Coloradas, Orgoroso y otras localidades se reportaron daños en cultivos y techos, con piedras 'del tamaño de una pelota de ping pong'. El boletín de INUMET registra granizo el 27/08 en Guichón, Piedras Coloradas y Pueblo Porvenir. Piedras Coloradas tuvo advertencia naranja ese día (amarilla en algunas emisiones). Hora no precisada.",
+    "sources": [
+      "https://www.montevideo.com.uy/Noticias/Tremendo-granizo-de-tamano-descomunal-y-lluvias-copiosas-castigaron-varios-departamentos-uc973320",
+      "https://www.inumet.gub.uy/sites/default/files/2026-09/Boletin%20Agosto_2026.pdf",
+      "https://www.inumet.gub.uy/reportes/riesgo/pdf/adv1787885154475.pdf"
+    ],
+    "confidence": "medium"
+  },
+  {
+    "id": "2026-08-27-salto",
+    "type": "hail",
+    "date": "2026-08-27",
+    "localTime": null,
+    "place": "Salto",
+    "department": "Salto",
+    "lat": -31.39,
+    "lon": -57.96,
+    "hailSizeCm": null,
+    "damaging": null,
+    "damage": {
+      "vehicles": null,
+      "roofs": null,
+      "crops": null
+    },
+    "inumetAlert": {
+      "status": "orange",
+      "mentionsHail": true
+    },
+    "evidence": "Montevideo Portal: intensa caída de granizo de distintos tamaños que cubrió calles, veredas, patios y vehículos estacionados en Salto (av. Manuel Oribe y otros puntos), con anegamientos. La nota no informa daños. El boletín de INUMET registra granizo el 27/08 en la ciudad de Salto. Salto tuvo advertencia naranja ese día (08:00 y 23:45). Ocurrió en la noche del 27 o en la madrugada del 28.",
+    "sources": [
+      "https://www.montevideo.com.uy/Noticias/Tremendo-granizo-de-tamano-descomunal-y-lluvias-copiosas-castigaron-varios-departamentos-uc973320",
+      "https://www.inumet.gub.uy/sites/default/files/2026-09/Boletin%20Agosto_2026.pdf",
+      "https://www.inumet.gub.uy/reportes/riesgo/pdf/adv1787885154475.pdf"
+    ],
+    "confidence": "medium"
+  },
+  {
+    "id": "2026-08-27-treinta-y-tres",
+    "type": "hail",
+    "date": "2026-08-27",
+    "localTime": "23:50",
+    "place": "Treinta y Tres",
+    "department": "Treinta y Tres",
+    "lat": -33.23,
+    "lon": -54.39,
+    "hailSizeCm": null,
+    "damaging": null,
+    "damage": {
+      "vehicles": null,
+      "roofs": null,
+      "crops": null
+    },
+    "inumetAlert": {
+      "status": "orange",
+      "mentionsHail": true
+    },
+    "evidence": "Montevideo Portal: minutos antes de la medianoche del jueves 27 hubo granizadas de distintos tamaños en Treinta y Tres y alrededores. El boletín de INUMET registra granizo el 27/08 en la ciudad de Treinta y Tres. La ciudad estaba en naranja (emisión de las 23:45). Hora aproximada ('minutos antes de la medianoche').",
+    "sources": [
+      "https://www.montevideo.com.uy/Noticias/Tremendo-granizo-de-tamano-descomunal-y-lluvias-copiosas-castigaron-varios-departamentos-uc973320",
+      "https://www.inumet.gub.uy/sites/default/files/2026-09/Boletin%20Agosto_2026.pdf",
+      "https://www.inumet.gub.uy/reportes/riesgo/pdf/adv1787885154475.pdf"
+    ],
+    "confidence": "high"
+  },
+  {
+    "id": "2026-08-27-vichadero",
+    "type": "hail",
+    "date": "2026-08-27",
+    "localTime": null,
+    "place": "Vichadero",
+    "department": "Rivera",
+    "lat": -31.78,
+    "lon": -54.69,
+    "hailSizeCm": null,
+    "damaging": true,
+    "damage": {
+      "vehicles": null,
+      "roofs": true,
+      "crops": null
+    },
+    "inumetAlert": {
+      "status": "orange",
+      "mentionsHail": true
+    },
+    "evidence": "Montevideo Portal y La Mañana: granizada fuerte durante la noche del jueves 27 y la madrugada del viernes 28 en Vichadero. Las piedras superaron el tamaño de un huevo de gallina y dañaron más de 30 viviendas, sobre todo techos. Se activó el Cecoed y el Ejército repartió lonas. El meteorólogo Ramis habló de 'pedrisco' (>5 cm). El boletín de INUMET fecha el reporte de Vichadero el 27/08. Vichadero estaba en naranja (emisiones de las 20:35 y 23:45). Hora exacta no informada.",
+    "sources": [
+      "https://www.montevideo.com.uy/Noticias/Tremendo-granizo-de-tamano-descomunal-y-lluvias-copiosas-castigaron-varios-departamentos-uc973320",
+      "https://www.montevideo.com.uy/Noticias/Granizo-no-lo-siguiente-meteorologo-se-refirio-a-precipitaciones-de-las-ultimas-horas-uc973358",
+      "https://www.xn--lamaana-7za.uy/actualidad/santa-rosa-granizo-perforo-techos-y-destruyo-viviendas-en-el-norte-del-pais/",
+      "https://www.inumet.gub.uy/sites/default/files/2026-09/Boletin%20Agosto_2026.pdf",
+      "https://www.inumet.gub.uy/reportes/riesgo/pdf/adv1787885154475.pdf"
+    ],
+    "confidence": "medium"
+  },
+  {
+    "id": "2026-09-05-aeropuerto-de-laguna-del-sauce",
+    "type": "hail",
+    "date": "2026-09-05",
+    "localTime": "16:37",
+    "place": "Aeropuerto de Laguna del Sauce",
+    "department": "Maldonado",
+    "lat": -34.86,
+    "lon": -55.09,
+    "hailSizeCm": null,
+    "damaging": false,
+    "damage": {
+      "vehicles": null,
+      "roofs": null,
+      "crops": null
+    },
+    "inumetAlert": {
+      "status": "none",
+      "mentionsHail": false
+    },
+    "evidence": "METAR SULS 051937Z 8000 SHGSRA (16:37 local) y RESHGSRA a las 17:00: chaparrón con granizo pequeño en aire frío. El histórico de INUMET no registra advertencias ese día.",
+    "sources": [
+      "https://mesonet.agron.iastate.edu/cgi-bin/request/asos.py?station=SULS&data=metar&year1=2026&month1=9&day1=5&year2=2026&month2=9&day2=6&tz=America%2FMontevideo&format=onlycomma&latlon=no&missing=empty&trace=T&direct=no&report_type=3&report_type=4",
+      "https://www.inumet.gub.uy/tiempo/historico-alertas-meteorologicas"
+    ],
+    "confidence": "high"
+  },
+  {
+    "id": "2026-09-06-aeropuerto-de-melilla",
+    "type": "hail",
+    "date": "2026-09-06",
+    "localTime": "08:00",
+    "place": "Aeropuerto de Melilla",
+    "department": "Montevideo",
+    "lat": -34.79,
+    "lon": -56.26,
+    "hailSizeCm": null,
+    "damaging": false,
+    "damage": {
+      "vehicles": null,
+      "roofs": null,
+      "crops": null
+    },
+    "inumetAlert": {
+      "status": "none",
+      "mentionsHail": false
+    },
+    "evidence": "METAR SUAA 061100Z 9999 5000W RA GS ... 05/03 (08:00 local): lluvia con granizo pequeño/graupel con 5 °C. El histórico de INUMET no registra advertencias ese día.",
+    "sources": [
+      "https://mesonet.agron.iastate.edu/cgi-bin/request/asos.py?station=SUAA&data=metar&year1=2026&month1=9&day1=6&year2=2026&month2=9&day2=7&tz=America%2FMontevideo&format=onlycomma&latlon=no&missing=empty&trace=T&direct=no&report_type=3&report_type=4",
+      "https://www.inumet.gub.uy/tiempo/historico-alertas-meteorologicas"
+    ],
+    "confidence": "high"
+  },
+  {
+    "id": "2026-09-20-rivera-aeropuerto",
+    "type": "hail",
+    "date": "2026-09-20",
+    "localTime": "23:00",
+    "place": "Rivera (aeropuerto)",
+    "department": "Rivera",
+    "lat": -30.9,
+    "lon": -55.54,
+    "hailSizeCm": null,
+    "damaging": null,
+    "damage": {
+      "vehicles": null,
+      "roofs": null,
+      "crops": null
+    },
+    "inumetAlert": {
+      "status": "orange",
+      "mentionsHail": true
+    },
+    "evidence": "METAR SURV 210200Z 30023G42KT 0100 +TSGR FG OVC001 (23:00 local del 20): tormenta fuerte con granizo y rachas de 42 kt en el aeropuerto de Rivera. Subrayado: en la noche del domingo 20 cayó granizo en varias zonas desde Fray Bentos hasta Tacuarembó, Rivera y Artigas. Rivera estaba en naranja en la emisión de las 22:47.",
+    "sources": [
+      "https://mesonet.agron.iastate.edu/cgi-bin/request/asos.py?station=SURV&data=metar&year1=2026&month1=9&day1=20&year2=2026&month2=9&day2=21&tz=America%2FMontevideo&format=onlycomma&latlon=no&missing=empty&trace=T&direct=no&report_type=3&report_type=4",
+      "https://www.subrayado.com.uy/arboles-caidos-granizo-mucha-lluvia-y-viento-la-noche-del-domingo-y-la-madrugada-del-lunes-n1018655",
+      "https://www.inumet.gub.uy/reportes/riesgo/pdf/adv1789955260386.pdf"
+    ],
+    "confidence": "high"
+  },
+  {
+    "id": "2026-09-27-la-vibora-rutas-2-y-24-cerca-de-fray-bentos",
+    "type": "hail",
+    "date": "2026-09-27",
+    "localTime": null,
+    "place": "La Víbora (rutas 2 y 24, cerca de Fray Bentos)",
+    "department": "Río Negro",
+    "lat": -33.12,
+    "lon": -58.31,
+    "hailSizeCm": null,
+    "damaging": true,
+    "damage": {
+      "vehicles": true,
+      "roofs": true,
+      "crops": null
+    },
+    "inumetAlert": {
+      "status": "orange",
+      "mentionsHail": true
+    },
+    "evidence": "Subrayado: una fuerte granizada dañó los parabrisas de unos 30 vehículos en la estación de servicio de La Víbora (rutas 2 y 24) y las chapas de techos de establecimientos rurales de Río Negro. Hubo granizo también en Sarandí de Navarro y San Javier. Montevideo Portal: 'vehículos destrozados por granizo grande' en la zona de Las Víboras, Río Negro. Coordenadas aproximadas: centroide de Fray Bentos, la ciudad más cercana. Río Negro estuvo todo en naranja en la mañana del 27.",
+    "sources": [
+      "https://www.subrayado.com.uy/fuerte-granizada-rio-negro-causo-destrozos-techos-viviendas-rurales-y-parabrisas-30-vehiculos-n1019277",
+      "https://www.montevideo.com.uy/Noticias/-De-varios-tamanos--las-imagenes-del-granizo-que-cubrio-a-varias-ciudades-del-pais-uc976711",
+      "https://www.inumet.gub.uy/reportes/riesgo/pdf/adv1790499520220.pdf"
+    ],
+    "confidence": "medium"
+  },
+  {
+    "id": "2026-09-27-paysandu",
+    "type": "hail",
+    "date": "2026-09-27",
+    "localTime": null,
+    "place": "Paysandú",
+    "department": "Paysandú",
+    "lat": -32.32,
+    "lon": -58.09,
+    "hailSizeCm": null,
+    "damaging": null,
+    "damage": {
+      "vehicles": null,
+      "roofs": null,
+      "crops": null
+    },
+    "inumetAlert": {
+      "status": "orange",
+      "mentionsHail": true
+    },
+    "evidence": "Montevideo Portal: en la mañana del domingo 27, intensa caída de granizo de diferentes tamaños en varias zonas de la ciudad de Paysandú, junto con unos 140 mm de lluvia y el desborde del arroyo Sacra. No se precisan daños por granizo. Paysandú estaba todo en naranja (emisiones de las 06:00 y 09:00).",
+    "sources": [
+      "https://www.montevideo.com.uy/Noticias/-De-varios-tamanos--las-imagenes-del-granizo-que-cubrio-a-varias-ciudades-del-pais-uc976711",
+      "https://www.subrayado.com.uy/fuerte-granizada-rio-negro-causo-destrozos-techos-viviendas-rurales-y-parabrisas-30-vehiculos-n1019277",
+      "https://www.inumet.gub.uy/reportes/riesgo/pdf/adv1790510264095.pdf"
+    ],
+    "confidence": "high"
+  },
+  {
+    "id": "2026-09-27-rivera",
+    "type": "hail",
+    "date": "2026-09-27",
+    "localTime": null,
+    "place": "Rivera",
+    "department": "Rivera",
+    "lat": -30.9,
+    "lon": -55.54,
+    "hailSizeCm": null,
+    "damaging": null,
+    "damage": {
+      "vehicles": null,
+      "roofs": null,
+      "crops": null
+    },
+    "inumetAlert": {
+      "status": "none",
+      "mentionsHail": false
+    },
+    "evidence": "Montevideo Portal: importante granizada en la ciudad de Rivera durante la madrugada del domingo 27, con piedras de diversos tamaños. En las advertencias de la madrugada (03:00 y 06:00) la ciudad de Rivera no figuraba, aunque sí otras localidades del departamento en naranja. La ciudad entró en naranja recién a las 20:00.",
+    "sources": [
+      "https://www.montevideo.com.uy/Noticias/-De-varios-tamanos--las-imagenes-del-granizo-que-cubrio-a-varias-ciudades-del-pais-uc976711",
+      "https://www.inumet.gub.uy/reportes/riesgo/pdf/adv1790488646406.pdf",
+      "https://www.inumet.gub.uy/reportes/riesgo/pdf/adv1790499520220.pdf"
+    ],
+    "confidence": "medium"
+  },
+  {
+    "id": "2026-09-27-young",
+    "type": "hail",
+    "date": "2026-09-27",
+    "localTime": null,
+    "place": "Young",
+    "department": "Río Negro",
+    "lat": -32.7,
+    "lon": -57.63,
+    "hailSizeCm": null,
+    "damaging": null,
+    "damage": {
+      "vehicles": null,
+      "roofs": null,
+      "crops": null
+    },
+    "inumetAlert": {
+      "status": "orange",
+      "mentionsHail": true
+    },
+    "evidence": "Montevideo Portal: intensa y abundante caída de granizo durante la mañana del domingo 27 en Young; cerca de allí se vio una nube embudo. Young estaba en naranja en la mañana (emisiones de las 06:00 y 09:00).",
+    "sources": [
+      "https://www.montevideo.com.uy/Noticias/-De-varios-tamanos--las-imagenes-del-granizo-que-cubrio-a-varias-ciudades-del-pais-uc976711",
+      "https://www.montevideo.com.uy/Noticias/La-nube-embudo-vista-cerca-de-Young-y-los-cascotazos-de-granizo-desde-arriba-de-tractor-uc976749",
+      "https://www.inumet.gub.uy/reportes/riesgo/pdf/adv1790510264095.pdf"
+    ],
+    "confidence": "high"
+  }
+]

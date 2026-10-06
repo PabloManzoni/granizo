@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="es-UY">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>¿Lo dejo afuera?</title>
+    <meta name="description" content="Riesgo de granizo para tu auto, en tu zona." />
+    <meta name="theme-color" content="#1f2937" />
+    <link rel="manifest" href="/manifest.webmanifest" />
+    <link rel="icon" href="/icon.svg" type="image/svg+xml" />
+    <link rel="apple-touch-icon" href="/icon.svg" />
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body>
+    <main>
+      <header>
+        <h1>¿Lo dejo afuera?</h1>
+        <p class="sub">Riesgo de granizo para el auto, en tu zona.</p>
+      </header>
+
+      <section aria-labelledby="where-title">
+        <h2 id="where-title">¿Dónde va a estar el auto?</h2>
+        <div id="places" class="chips" role="group" aria-label="Lugares guardados"></div>
+        <div class="row">
+          <button type="button" id="locate">Usar mi ubicación</button>
+          <button type="button" id="save-place" hidden>Guardar este lugar</button>
+        </div>
+        <p id="place-status" class="muted" aria-live="polite">Elegí un lugar o usá tu ubicación.</p>
+      </section>
+
+      <section aria-labelledby="when-title">
+        <h2 id="when-title">¿Cuándo?</h2>
+        <div class="chips" role="radiogroup" aria-label="Ventana de tiempo">
+          <label><input type="radio" name="window" value="tonight" /> Esta noche</label>
+          <label><input type="radio" name="window" value="today" /> Hoy</label>
+          <label><input type="radio" name="window" value="tomorrow" /> Mañana</label>
+        </div>
+      </section>
+
+      <button type="button" id="check" class="primary" disabled>Consultar</button>
+
+      <section id="result" aria-live="polite" hidden></section>
+
+      <footer class="muted">
+        <p>Esto no reemplaza las alertas oficiales. Mirá siempre <a href="https://www.inumet.gub.uy/alerta" target="_blank" rel="noopener">INUMET</a>.</p>
+        <p>Prototipo · pronósticos GFS (NOAA) y ECMWF vía <a href="https://open-meteo.com" target="_blank" rel="noopener">Open-Meteo</a> (CC BY 4.0). Contiene datos de ECMWF.</p>
+      </footer>
+    </main>
+    <script src="/app.js" type="module"></script>
+  </body>
+</html>

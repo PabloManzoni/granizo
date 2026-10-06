@@ -1,0 +1,21 @@
+{
+  "name": "hail-guard",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": ">=24"
+  },
+  "scripts": {
+    "check": "node src/cli/check.ts",
+    "backtest": "node src/cli/backtest.ts",
+    "test": "node --test \"test/**/*.test.ts\"",
+    "typecheck": "tsc",
+    "calibrate": "node src/cli/calibrate.ts",
+    "log-forecast": "node src/cli/log-forecast.ts",
+    "serve": "node src/server.ts"
+  },
+  "devDependencies": {
+    "@types/node": "^24.19.1",
+    "typescript": "^5.9.3"
+  }
+}
