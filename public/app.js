@@ -250,9 +250,13 @@ function renderTech(r) {
 
 function renderError(kind) {
   const e = errorCopy(kind);
+  // Buscando el GPS: el logo late. Error: el logo apagado, con el símbolo del problema encima.
+  const logo = kind === 'locating'
+    ? '<div class="shield pulse" aria-hidden="true"><car-shield level="calm"></car-shield></div>'
+    : `<div class="shield dim" aria-hidden="true"><car-shield level="calm"></car-shield><span class="badge">${esc(e.mark)}</span></div>`;
   return `
     <section class="error">
-      <div class="mark" aria-hidden="true">${esc(e.mark)}</div>
+      ${logo}
       <div class="eyebrow">${esc(e.cat)}</div>
       <h1>${esc(e.title)}</h1>
       <p>${esc(e.body)}</p>
@@ -313,7 +317,7 @@ export function render() {
   renderPlacesBar();
   const screen = $('#screen');
   if (state.view === 'result' && state.result) screen.innerHTML = renderResult(state.result);
-  else if (state.view === 'loading') screen.innerHTML = `<div class="loading" role="status"><div class="spinner"></div><span class="sr-only">Consultando el pronóstico…</span></div>`;
+  else if (state.view === 'loading') screen.innerHTML = `<div class="loading" role="status"><div class="shield pulse" aria-hidden="true"><car-shield level="calm"></car-shield></div><p>Consultando el pronóstico…</p></div>`;
   else if (state.view === 'locating') screen.innerHTML = renderError('locating');
   else if (state.view === 'error') screen.innerHTML = renderError(state.error);
   else if (state.view === 'places') screen.innerHTML = renderPlaces();

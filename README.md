@@ -55,14 +55,15 @@ Habilidad estimada **fuera de muestra** (2025–2026, en días de tormenta): "pr
 
 ## Interfaz (PWA "Cubierto")
 
-Estética "Orbe" (diseño en Claude Design): un orbe con 1, 2 o 3 ondas según el nivel (Tranquilo, Atento, Protegelo), más desenfocado cuanto menor es la confianza. Abre directo con el resultado para "Acá" o el último lugar.
+Logo animado `<car-shield>` (`public/car-shield.js`): un auto bajo un domo de panal, con un estado por nivel (Tranquilo, Tormenta, Atento, Protegelo). Mientras carga o busca el GPS, el logo late; en los errores aparece apagado con el símbolo del problema. Abre directo con el resultado para "Mi ubicación" o el último lugar.
 
-- `src/presenter.ts` convierte el resultado del motor en lo que muestra la interfaz: título, nota, avisos, porqué, horas y detalles. Son plantillas, sin IA.
-- **Botonera de desarrollo** (`public/dev.js`): **solo en localhost**. Fuerza cada estado:
-  - escenarios de resultado, que pasan por el motor y el presentador reales vía `/api/dev/scenario`, endpoint apagado con `NODE_ENV=production`;
+- `src/presenter.ts` convierte el resultado del motor en lo que muestra la interfaz: título, nota, avisos, porqué, horas y "Algoritmo". Son plantillas, sin IA.
+- **Botonera de desarrollo** (`public/dev.js`): **solo en localhost** y no se publica. Fuerza cada estado:
+  - escenarios de resultado (`src/dev-scenarios.ts`), que pasan por el motor y el presentador reales en el navegador;
   - cargando, buscando GPS y cada error;
-  - la pantalla de Lugares;
+  - la pantalla de Lugares y el modal de instalar;
   - una consulta real simulando "sin red" o "sin GPS".
+- **PWA**: manifest con íconos PNG 192/512 y maskable, `favicon.ico`, apple-touch-icon, service worker (red primero; sin red abre la última versión guardada, pero el pronóstico nunca sale de caché), `404.html` y vista previa al compartir (`og.jpg`, fuente en `scripts/og/`).
 
 ## Publicación (granizo.tuggsy.com)
 
@@ -77,8 +78,8 @@ src/engine/     termodinámica, ingredientes, reglas, textos (sin I/O)
 src/data/       Open-Meteo (con caché) y lista de eventos
 src/cli/        check, backtest, calibrate, log-forecast
 src/browser.ts  motor para el navegador (se empaqueta en public/engine.js)
-src/server.ts   servidor local: estáticos de la PWA + /api/assess
-public/         PWA básica (sin diseño)
+src/server.ts   servidor local: estáticos de la PWA + /api/assess (solo desarrollo)
+public/         PWA: interfaz, logo, íconos, service worker
 scripts/        controles METAR y rayos GLM (Python)
 data/           eventos, fechas de granizo de INUMET, registro de pronósticos
 docs/           brief, análisis, resultados, bitácora

@@ -18,6 +18,10 @@ const MIME: Record<string, string> = {
   '.css': 'text/css; charset=utf-8',
   '.webmanifest': 'application/manifest+json',
   '.svg': 'image/svg+xml',
+  '.png': 'image/png',
+  '.jpg': 'image/jpeg',
+  '.ico': 'image/x-icon',
+  '.txt': 'text/plain; charset=utf-8',
   '.json': 'application/json',
   '.map': 'application/json',
 };
