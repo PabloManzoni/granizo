@@ -11,6 +11,10 @@ Asistente de decisión sobre granizo para el auto: *¿lo puedo dejar afuera o co
 - [`docs/como-lo-probamos.md`](docs/como-lo-probamos.md): **cómo funciona el motor y cómo se probó**: reglas, validación, métricas y limitaciones (es lo que enlaza la app)
 - [`docs/bitacora-motor.md`](docs/bitacora-motor.md): bitácora de desarrollo del motor v0.2: calibración, pronóstico real, ECMWF, rayos y PWA
 
+## Registro de pronósticos
+
+La única forma de saber cuánto rinde el motor con pronósticos reales (y no con casi-análisis) es guardarlos todos los días y cruzarlos después con las granizadas. El workflow [`registro-pronosticos.yml`](.github/workflows/registro-pronosticos.yml) corre a diario a las 16:30 (hora de Uruguay), guarda la corrida de las 12 UTC de GFS y ECMWF para 16 ciudades y 4 ventanas (esta noche, mañana, mañana a la noche y pasado mañana) y reconstruye de a poco los días desde abril de 2026, que es cuando la Single Runs API de Open-Meteo empezó a archivar GFS. Los datos quedan en `data/forecast-log/runs/AAAA-MM.jsonl`; cada línea trae el nivel, la anticipación en horas y los ingredientes de cada modelo. Los commits de datos no vuelven a publicar el sitio.
+
 ## Principio
 
 Meteorología primero, IA después. El riesgo lo decide un motor determinístico; la redacción viene de plantillas (o de un LLM más adelante), y la redacción nunca cambia el nivel.
@@ -24,7 +28,9 @@ npm install
 npm run serve                                                 # compila el motor y sirve la PWA en http://localhost:8787 (en local aparece la botonera "dev")
 npm run build:site                                            # arma site/ para GitHub Pages
 npm run check -- --lat -34.80 --lon -55.90 --window tonight   # tonight | today | tomorrow | next12h
-npm run log-forecast                                          # guarda el pronóstico de 16 ciudades en data/forecast-log/ (correr 1 vez por día)
+npm run log-forecast                                          # guarda el pronóstico vigente de 16 ciudades en data/forecast-log/ (correr 1 vez por día)
+npm run log-runs                                              # guarda lo que pronosticó la corrida de las 12 UTC (Single Runs API) a 12–60 h: data/forecast-log/runs/
+npm run log-runs -- --backfill-from 2026-04-02                # reconstruye días anteriores desde abril de 2026 (retoma donde quedó; 4 ciudades)
 npm run backtest                                              # test histórico sobre data/events.json → reports/backtest.md
 npm run calibrate                                             # qué variables separan granizo de controles → reports/calibration.md
 python3 scripts/glm/glm_point.py -34.80 -55.91 now            # rayos (GOES GLM) en la última hora a ≤30/50 km, con "lightning jump"
@@ -44,13 +50,13 @@ npm run typecheck
    - T500, nivel de congelamiento y SHIP.
 4. **Reglas legibles**, calibradas en Uruguay 2021–2024 y validadas en 2025–2026 (`src/engine/classify.ts`, umbrales en `src/engine/config.ts`):
    - gradiente ≥ 6,5 °C/km y WMAXSHEAR ≥ 1200, más tormentas en el modelo → **protect**
-   - gradiente ≥ 6,5 y WMAXSHEAR ≥ 400 (o ambiente fuerte sin tormentas en el modelo) → **watch**
+   - gradiente ≥ 6,5 y WMAXSHEAR ≥ 900 (o ambiente fuerte sin tormentas en el modelo) → **watch**
    - resto → **calm**
 5. **Dos modelos**: protect solo si GFS **y** ECMWF dicen protect; watch si alguno dice protect o los dos dicen al menos watch.
 6. **Confianza**: baja en oct–mar (en el test el ambiente no distinguió granizo de lluvia en verano); en abr–sep, media si los modelos coinciden y baja si no.
 7. **Razones y textos** desde plantillas (`src/engine/messages.ts`). Los nombres visibles de los niveles están a definir en diseño.
 
-Habilidad estimada **fuera de muestra** (2025–2026, en días de tormenta): "protegelo" detecta el **43%** de las granizadas con **15%** de falsas alarmas (57% y 19% en abr–sep; nada en oct–mar). "Atento o más" detecta el 93% con 65% de falsas alarmas. Son datos casi de análisis: el pronóstico real del día anterior va a rendir algo menos. Detalle en [`docs/como-lo-probamos.md`](docs/como-lo-probamos.md).
+Habilidad estimada **fuera de muestra** (2025–2026, en días de tormenta): "protegelo" detecta el **43%** de las granizadas con **15%** de falsas alarmas (57% y 19% en abr–sep; nada en oct–mar). "Atento o más" detecta el 82% con 38% de falsas alarmas (con el umbral anterior, 93% y 65%). Son datos casi de análisis: el pronóstico real del día anterior va a rendir algo menos. Detalle en [`docs/como-lo-probamos.md`](docs/como-lo-probamos.md).
 
 **Rayos (prototipo, `scripts/glm/`)**: el GLM del GOES llega con < 30 s de latencia. Avisa bien "tormenta fuerte cerca, ahora", pero en la muestra no distinguió granizo de tormenta fuerte sin granizo. Sirve como capa de nowcasting de 0–1 h, no como detector de granizo.
 

@@ -70,6 +70,13 @@ test('WMAXSHEAR entre los umbrales → supportive → watch', () => {
   assert.equal(classifyEnvironment({ ...base, wmaxshearM2s2: RULES.wmaxshearWatch - 1 }), 'weak');
 });
 
+test('"atento" arranca en 900 y "protegelo" sigue en 1200 (v0.2.1)', () => {
+  assert.equal(RULES.wmaxshearWatch, 900);
+  assert.equal(RULES.wmaxshearProtect, 1200);
+  assert.equal(classifyEnvironment({ ...base, wmaxshearM2s2: 899 }), 'weak');
+  assert.equal(classifyEnvironment({ ...base, wmaxshearM2s2: 900 }), 'supportive');
+});
+
 test('estación cálida: confianza baja y lo dice', () => {
   const w = assessWindow([assessPointHour('2025-01-15T20:00', -34.8, -55.9, base)]);
   assert.equal(seasonOfTime('2025-01-15T20:00'), 'warm');

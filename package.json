@@ -12,6 +12,7 @@
     "typecheck": "tsc",
     "calibrate": "node src/cli/calibrate.ts",
     "log-forecast": "node src/cli/log-forecast.ts",
+    "log-runs": "node src/cli/log-runs.ts",
     "serve": "npm run build && node src/server.ts",
     "build": "esbuild src/browser.ts --bundle --format=esm --target=es2020 --minify --sourcemap --outfile=public/engine.js",
     "build:site": "npm run build && node scripts/build-site.mjs"

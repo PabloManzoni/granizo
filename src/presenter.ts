@@ -116,7 +116,7 @@ export function present(r: WindowAssessment, window: WindowInfo, generatedAt: st
   if (agree && r.level === 'watch') {
     notices.push({
       strong: 'Es lo habitual.',
-      text: 'Así salen 2 de cada 3 días de tormenta. No es para correr: es para tener pensado dónde guardarlo.',
+      text: 'Así sale en 4 de cada 10 días de tormenta. No es para correr: es para tener pensado dónde guardarlo.',
     });
   }
   if (r.level === 'protect') notices.push({ strong: 'Mirá también INUMET.', text: 'Esto no reemplaza los avisos oficiales.' });

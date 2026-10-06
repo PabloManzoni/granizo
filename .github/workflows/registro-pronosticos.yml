@@ -1,0 +1,43 @@
+name: Registro diario de pronósticos
+
+# Guarda cada día lo que habría pronosticado el motor con la corrida de las 12 UTC (Single Runs API de Open-Meteo),
+# para medir su habilidad real a 12–60 h. Además reconstruye de a poco los días desde abril de 2026.
+# Los datos quedan en data/forecast-log/runs/. Es lo único que no se puede recuperar después.
+on:
+  schedule:
+    - cron: '30 19 * * *' # 16:30 en Uruguay: la corrida de las 12 UTC ya está publicada
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: registro-pronosticos
+  cancel-in-progress: false
+
+jobs:
+  registrar:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+      - run: npm ci
+      - name: Corrida de hoy (16 ciudades)
+        run: npm run log-runs
+      # Reconstruye hacia atrás con 4 ciudades y 8 días por vez, para no agotar el cupo gratuito.
+      # Retoma donde quedó; cuando no queda nada por hacer, termina sin escribir.
+      - name: Reconstrucción desde abril de 2026
+        continue-on-error: true
+        run: npm run log-runs -- --backfill-from 2026-04-02 --max-days 8
+      - name: Guardar datos
+        run: |
+          git config user.name "registro-pronosticos"
+          git config user.email "actions@users.noreply.github.com"
+          git add data/forecast-log/runs
+          if git diff --cached --quiet; then echo "Sin datos nuevos"; exit 0; fi
+          git commit -m "Registro de pronósticos $(date -u +%F)"
+          git pull --rebase origin main
+          git push origin main

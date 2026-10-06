@@ -38,7 +38,7 @@ Las reglas se aplican a cada punto y a cada hora; el resultado de la ventana es 
 | Nivel | Condición en un modelo |
 |---|---|
 | **Protegelo** | Gradiente ≥ 6,5 °C/km **y** WMAXSHEAR ≥ 1200 m²/s², y además el modelo forma tormentas en la zona. |
-| **Atento** | Gradiente ≥ 6,5 °C/km y WMAXSHEAR ≥ 400 m²/s² (o ambiente fuerte, pero sin tormentas en el modelo). |
+| **Atento** | Gradiente ≥ 6,5 °C/km y WMAXSHEAR ≥ 900 m²/s² (o ambiente fuerte, pero sin tormentas en el modelo). |
 | **Tranquilo** | Todo lo demás. |
 
 Los números de la tabla salen de la calibración, no de la bibliografía de otras regiones. En Uruguay la CAPE sola y la cizalladura sola separaron poco las tormentas con granizo de las comunes: la cizalladura es alta casi siempre, y el umbral usual de 20 m/s no discrimina. Lo que sí separó fue el gradiente 700–500 hPa y la combinación de energía con viento.
@@ -88,11 +88,11 @@ La pregunta de la prueba no fue "¿hay tormenta?", sino **si el motor distingue 
 | **Protegelo** (GFS + ECMWF) | **43%** | **15%** |
 | Protegelo, abril–septiembre | 57% | 19% |
 | Protegelo, octubre–marzo | 0% (de 7 casos) | 11% |
-| Atento o más | 93% | 65% |
+| Atento o más | 82% | 38% |
 
 - **Detección** es el porcentaje de granizadas que el nivel avisó. **Falsas alarmas** es el porcentaje de tormentas sin granizo en las que el nivel se activó igual.
-- **Protegelo** es el nivel útil para decidir. Cuando GFS dice Protegelo y ECMWF coincide, hubo granizo en el 71% de los casos; cuando no coincide, en el 50%.
-- **Atento** casi no se pierde granizadas, pero se activa en la mayoría de los días de tormenta. Funciona como un "tené pensado dónde guardarlo", no como un discriminador.
+- **Protegelo** es el nivel útil para decidir. Estas cifras describen cómo se comporta el motor *dentro de días de tormenta*; no son la probabilidad de granizo cuando el nivel se activa. Esa probabilidad depende de cuántas tormentas reales traen granizo, y en la muestra de prueba el granizo está sobrerrepresentado (cerca de la mitad de los casos), mientras que en la vida real es una minoría de los días de tormenta. Con una frecuencia real de granizo del 2% al 10% de los días de tormenta, un "Protegelo" acierta entre ~5% y ~25% de las veces. Sigue siendo mucho más que el promedio, pero conviene leerlo como "el riesgo es varias veces mayor que lo normal", no como "va a granizar".
+- **Atento** avisa de ocho de cada diez granizadas y se activa en cerca de 4 de cada 10 días de tormenta sin granizo. Funciona como un "tené pensado dónde guardarlo", no como una orden de actuar. Su umbral se subió en la versión 0.2.1: con el valor anterior (400) detectaba el 93%, pero se activaba en el 65% de los días de tormenta, casi sin información.
 - El puntaje TSS de Protegelo fue de 0,28 en la validación, contra 0,58 en la calibración. La caída a la mitad es esperable con una muestra de unos 25 casos por grupo, y es la razón por la que los umbrales se consideran provisorios.
 
 ### Qué aporta frente a una alerta oficial
@@ -117,7 +117,7 @@ Por eso los rayos no entran en el veredicto. Podrían servir más adelante como 
 
 ## Cómo seguir mejorando
 
-- Medir el desempeño con pronósticos reales a 12–36 horas, guardando cada día la salida del motor y cruzándola con las granizadas de la temporada.
+- Medir el desempeño con pronósticos reales a 12–60 horas. Cada día se guarda la salida del motor sobre la corrida de las 12 UTC de los dos modelos (más una reconstrucción desde abril de 2026), para cruzarla después con las granizadas de la temporada.
 - Reunir más casos de verano con hora conocida.
 - Sumar observaciones en tiempo real para la estación cálida.
 

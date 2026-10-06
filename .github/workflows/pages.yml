@@ -3,6 +3,8 @@ name: Publicar en GitHub Pages
 on:
   push:
     branches: [main]
+    # El registro diario de pronósticos solo agrega datos: no hace falta volver a publicar el sitio.
+    paths-ignore: ['data/**']
   workflow_dispatch:
 
 permissions:

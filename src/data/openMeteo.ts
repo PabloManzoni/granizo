@@ -1,17 +1,23 @@
 // Descarga de perfiles verticales desde Open-Meteo (uso no comercial, sin API key).
 // - historical: archivo de pronósticos (GFS desde 2021), para el test histórico.
 // - forecast: pronóstico vigente, para el uso diario.
+// - single-run: una corrida concreta de un modelo (run=…), guardada con todos sus niveles. Sirve para medir el motor
+//   con pronósticos reales a 24–72 h (GFS desde 2026-04-02, ECMWF desde 2024-03).
 // Sin dependencias de Node: corre igual en el navegador (PWA) y en Node (CLI, test histórico).
 // La caché se inyecta con configureOpenMeteo(): en Node, archivos (nodeCache.ts); en el navegador, la sesión.
 import type { ProfileHour, ProfileLevel, WindLevel } from '../engine/types.ts';
 import type { Point } from '../geo/neighborhood.ts';
 
-export type Source = 'historical' | 'forecast';
+export type Source = 'historical' | 'forecast' | 'single-run';
 
 const BASE_URL: Record<Source, string> = {
   historical: 'https://historical-forecast-api.open-meteo.com/v1/forecast',
   forecast: 'https://api.open-meteo.com/v1/forecast',
+  'single-run': 'https://single-runs-api.open-meteo.com/v1/forecast',
 };
+
+/** Días de pronóstico que se piden de una corrida: 4 cubren hasta ~72 h desde el inicio de la corrida. */
+const SINGLE_RUN_DAYS = 4;
 
 // Con más niveles el servidor a veces corta la respuesta (timeout); 15 alcanza para la parcela y la cizalladura.
 const LEVELS_HPA = [1000, 975, 950, 925, 900, 850, 800, 750, 700, 600, 500, 400, 300, 250, 200];
@@ -61,6 +67,8 @@ export interface FetchOptions {
   startDate: string; // YYYY-MM-DD (local)
   endDate: string;
   model?: string;
+  /** Solo single-run: inicio de la corrida en UTC, "YYYY-MM-DDTHH:MM" (en vez de las fechas). */
+  run?: string;
 }
 
 interface OpenMeteoLocation {
@@ -70,12 +78,15 @@ interface OpenMeteoLocation {
   hourly: Record<string, (number | null)[]> & { time: string[] };
 }
 
-function buildUrl(source: Source, points: Point[], startDate: string, endDate: string, model: string): string {
+function buildUrl(opts: FetchOptions, points: Point[], model: string): string {
+  const { source, startDate, endDate, run } = opts;
+  if (source === 'single-run' && !run) throw new Error('single-run necesita "run" (UTC, YYYY-MM-DDTHH:MM)');
+  const when: Record<string, string> =
+    source === 'single-run' ? { run: run!, forecast_days: String(SINGLE_RUN_DAYS) } : { start_date: startDate, end_date: endDate };
   const params = new URLSearchParams({
     latitude: points.map((p) => p.lat).join(','),
     longitude: points.map((p) => p.lon).join(','),
-    start_date: startDate,
-    end_date: endDate,
+    ...when,
     hourly: hourlyVariables().join(','),
     models: model,
     timezone: 'America/Montevideo',
@@ -85,7 +96,7 @@ function buildUrl(source: Source, points: Point[], startDate: string, endDate: s
 }
 
 /** Cuánto vale una respuesta en caché: el archivo histórico no cambia; el pronóstico se refresca cada hora. */
-const CACHE_TTL_MS: Record<Source, number> = { historical: Infinity, forecast: 60 * 60 * 1000 };
+const CACHE_TTL_MS: Record<Source, number> = { historical: Infinity, forecast: 60 * 60 * 1000, 'single-run': Infinity };
 
 async function getJson(url: string, ttlMs: number): Promise<OpenMeteoLocation[]> {
   const useCache = ttlMs > 0;
@@ -134,7 +145,7 @@ export class RateLimitError extends Error {}
 export class NetworkError extends Error {}
 
 async function fetchChunk(opts: FetchOptions, points: Point[], model: string): Promise<OpenMeteoLocation[]> {
-  const url = buildUrl(opts.source, points, opts.startDate, opts.endDate, model);
+  const url = buildUrl(opts, points, model);
   try {
     return await getJson(url, CACHE_TTL_MS[opts.source]);
   } catch (err) {
