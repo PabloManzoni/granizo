@@ -1,4 +1,5 @@
 // Cubierto — PWA. Abre directo con un resultado (donde estás o el último lugar), sin pasos previos.
+import { dayLabels } from '/day-labels.js';
 const $ = (sel) => document.querySelector(sel);
 const esc = (s) => String(s ?? '').replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[c]);
 
@@ -172,6 +173,7 @@ function renderResult(r) {
   document.body.dataset.level = r.level;
   document.title = `${r.levelName} · ${r.hailStatus} — Cubierto`;
   const place = currentPlace();
+  const days = dayLabels()[r.window.name];
   const models = r.models
     .map((m) => `<span class="conf-model"><span class="mini-orb ${m.level}"></span><span class="mono">${esc(m.model)}</span> ${esc(m.levelName)}</span>`)
     .join('');
@@ -179,7 +181,7 @@ function renderResult(r) {
     <section class="hero" aria-label="Resultado">
       <div class="shield" aria-hidden="true"><car-shield level="${esc(r.level)}"></car-shield></div>
       <div class="hero-text">
-        <div class="kicker">${esc(place?.name ?? '')} · ${esc(WHEN_SHORT[r.window.name] ?? r.window.label)}</div>
+        <div class="kicker">${esc(place?.name ?? '')} · ${esc(WHEN_SHORT[r.window.name] ?? r.window.label)}${days ? ` · ${esc(days)}` : ''}</div>
         <h1 class="level">${esc(r.levelName)}</h1>
         <p class="hail">${esc(r.hailStatus)}</p>
         ${r.note ? `<span class="note">${esc(r.note)}</span>` : ''}
@@ -296,10 +298,11 @@ function renderBottom() {
   const bottom = $('#bottom');
   if (['result', 'loading'].includes(state.view)) {
     const idx = WHENS.findIndex((w) => w.id === state.when);
+    const days = dayLabels();
     bottom.innerHTML = `
       <div class="when" role="radiogroup" aria-label="Cuándo">
         <div class="thumb" style="transform:translateX(${idx * 100}%)"></div>
-        ${WHENS.map((w) => `<button type="button" role="radio" aria-checked="${w.id === state.when}" data-when="${w.id}">${w.label}</button>`).join('')}
+        ${WHENS.map((w) => `<button type="button" role="radio" aria-checked="${w.id === state.when}" aria-label="${w.label}, ${days[w.id]}" data-when="${w.id}">${w.label}<span class="day mono" aria-hidden="true">${days[w.id]}</span></button>`).join('')}
       </div>`;
   } else if (state.view === 'error' || state.view === 'locating') {
     const e = errorCopy(state.view === 'locating' ? 'locating' : state.error);
