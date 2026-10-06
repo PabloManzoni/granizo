@@ -8,7 +8,8 @@ Asistente de decisión sobre granizo para el auto: *¿lo puedo dejar afuera o co
 - [`docs/revision-brief.md`](docs/revision-brief.md): revisión del brief, con los cambios propuestos al contrato de datos, las fuentes y el orden de implementación
 - [`docs/analisis-motor.md`](docs/analisis-motor.md): **decisiones vigentes** (problema, alcance, próximos pasos). Si contradice a la revisión, manda este
 - [`docs/resultados-test-v0.md`](docs/resultados-test-v0.md): resultados del test histórico del motor v0: qué separa granizo de tormenta común y qué no
-- [`docs/bitacora-motor.md`](docs/bitacora-motor.md): **bitácora del motor v0.2**: calibración, pronóstico real, ECMWF, rayos, PWA y números fuera de muestra
+- [`docs/como-lo-probamos.md`](docs/como-lo-probamos.md): **cómo funciona el motor y cómo se probó**: reglas, validación, métricas y limitaciones (es lo que enlaza la app)
+- [`docs/bitacora-motor.md`](docs/bitacora-motor.md): bitácora de desarrollo del motor v0.2: calibración, pronóstico real, ECMWF, rayos y PWA
 
 ## Principio
 
@@ -49,7 +50,7 @@ npm run typecheck
 6. **Confianza**: baja en oct–mar (en el test el ambiente no distinguió granizo de lluvia en verano); en abr–sep, media si los modelos coinciden y baja si no.
 7. **Razones y textos** desde plantillas (`src/engine/messages.ts`). Los nombres visibles de los niveles están a definir en diseño.
 
-Habilidad estimada **fuera de muestra** (2025–2026, en días de tormenta): "protegelo" detecta el **43%** de las granizadas con **15%** de falsas alarmas (57% y 19% en abr–sep; nada en oct–mar). "Atento o más" detecta el 93% con 65% de falsas alarmas. Son datos casi de análisis: el pronóstico real del día anterior va a rendir algo menos. Detalle en [`docs/bitacora-motor.md`](docs/bitacora-motor.md).
+Habilidad estimada **fuera de muestra** (2025–2026, en días de tormenta): "protegelo" detecta el **43%** de las granizadas con **15%** de falsas alarmas (57% y 19% en abr–sep; nada en oct–mar). "Atento o más" detecta el 93% con 65% de falsas alarmas. Son datos casi de análisis: el pronóstico real del día anterior va a rendir algo menos. Detalle en [`docs/como-lo-probamos.md`](docs/como-lo-probamos.md).
 
 **Rayos (prototipo, `scripts/glm/`)**: el GLM del GOES llega con < 30 s de latencia. Avisa bien "tormenta fuerte cerca, ahora", pero en la muestra no distinguió granizo de tormenta fuerte sin granizo. Sirve como capa de nowcasting de 0–1 h, no como detector de granizo.
 

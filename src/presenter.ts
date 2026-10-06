@@ -204,7 +204,7 @@ export function present(r: WindowAssessment, window: WindowInfo, generatedAt: st
       confidenceWhy,
       validation:
         'Reglas calibradas con granizadas y días de tormenta de Uruguay 2021–2024 y probadas en 2025–2026: "Protegelo" avisó en ~4 de cada 10 granizadas, con ~15% de falsas alarmas en días de tormenta. Es un motor de reglas, sin IA.',
-      moreUrl: 'https://github.com/PabloManzoni/granizo/blob/main/docs/bitacora-motor.md',
+      moreUrl: 'https://github.com/PabloManzoni/granizo/blob/main/docs/como-lo-probamos.md',
     },
     level,
     levelName: LEVEL_NAMES[level],

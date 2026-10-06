@@ -1,5 +1,5 @@
 // Umbrales del motor. v0.2: calibrados con granizadas y controles de Uruguay 2021–2024 y validados
-// fuera de muestra en 2025–2026 (ver docs/bitacora-motor.md). Muestras chicas: tomarlos como provisorios.
+// fuera de muestra en 2025–2026 (ver docs/como-lo-probamos.md). Muestras chicas: tomarlos como provisorios.
 
 export const ENGINE_VERSION = '0.2.0';
 
