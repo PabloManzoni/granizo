@@ -1,80 +1,28 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
 <!--
-  Ícono de Cubierto (fuente de public/icon.svg y los PNG). Versión simplificada del logo en estado "Protegelo":
-  auto de frente bajo el domo y piedras grandes cayendo. Pocos detalles y trazos gruesos para que se lea a 48 px.
-  Todo lo importante queda dentro del círculo seguro de los íconos "maskable" (radio 205 desde el centro).
+  Ícono de Cubierto (fuente de public/icon.svg y los PNG). Pictograma plano, en dos colores, pensado para leerse
+  a 48–60 px en la pantalla de inicio: nube con granizo arriba, auto de costado debajo de un domo.
+  Sin degradés ni detalles finos. variants.mjs arma las variantes y render.mjs los PNG.
 -->
-<defs>
-  <radialGradient id="bg" cx="256" cy="340" r="330" gradientUnits="userSpaceOnUse">
-    <stop offset="0" stop-color="#FF5C93" stop-opacity=".55"/>
-    <stop offset=".42" stop-color="#6E1544" stop-opacity=".55"/>
-    <stop offset="1" stop-color="#6E1544" stop-opacity="0"/>
-  </radialGradient>
-  <radialGradient id="dome" cx="256" cy="372" r="162" gradientUnits="userSpaceOnUse">
-    <stop offset="0" stop-color="#FF5C93" stop-opacity=".08"/>
-    <stop offset=".7" stop-color="#FF5C93" stop-opacity=".18"/>
-    <stop offset=".95" stop-color="#FF5C93" stop-opacity=".5"/>
-    <stop offset="1" stop-color="#FFD3E3" stop-opacity=".8"/>
-  </radialGradient>
-  <linearGradient id="body" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#2A2338"/><stop offset="1" stop-color="#08060C"/></linearGradient>
-  <linearGradient id="glass" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FF5C93" stop-opacity=".6"/><stop offset="1" stop-color="#0A0710"/></linearGradient>
-  <linearGradient id="trail" x1="0" y1="1" x2="1" y2="0"><stop offset="0" stop-color="#FFD3E3" stop-opacity=".95"/><stop offset="1" stop-color="#FFD3E3" stop-opacity="0"/></linearGradient>
-  <filter id="glow" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="5" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
-  <filter id="soft" x="-30%" y="-200%" width="160%" height="500%"><feGaussianBlur stdDeviation="10"/></filter>
-</defs>
-
+<defs></defs>
 <!--SHAPE-->
-<rect width="512" height="512" fill="url(#bg)"/>
-
-<!-- Todo el dibujo, centrado y un poco más grande -->
-<g transform="translate(256 240) scale(1.1) translate(-256 -270)">
-
-<!-- Domo -->
-<path d="M94 372 A162 162 0 0 1 418 372 Z" fill="url(#dome)"/>
-<path d="M94 372 A162 162 0 0 1 418 372" fill="none" stroke="#FF5C93" stroke-width="7"/>
-<path d="M120 330 A138 138 0 0 1 200 240" fill="none" stroke="#fff" stroke-opacity=".35" stroke-width="6" stroke-linecap="round"/>
-<ellipse cx="256" cy="374" rx="170" ry="12" fill="#FF5C93" opacity=".7" filter="url(#soft)"/>
-<line x1="70" y1="373" x2="442" y2="373" stroke="#FF5C93" stroke-opacity=".8" stroke-width="3"/>
-
-<!-- Auto (muscle car de frente, el mismo del logo, a escala 2.3) -->
-<g transform="translate(256 372) scale(2.3) translate(-100 -150)">
-  <rect x="54" y="128" width="17" height="22" rx="3" fill="#040308" stroke="#FF5C93" stroke-opacity=".6" stroke-width=".8"/>
-  <rect x="129" y="128" width="17" height="22" rx="3" fill="#040308" stroke="#FF5C93" stroke-opacity=".6" stroke-width=".8"/>
-  <rect x="62" y="105" width="9" height="6" rx="2" fill="#0D0B14" stroke="#FFD3E3" stroke-width="1"/>
-  <rect x="129" y="105" width="9" height="6" rx="2" fill="#0D0B14" stroke="#FFD3E3" stroke-width="1"/>
-  <path d="M52 128 Q52 121.5 59 120 L71.5 117.2 L79 102.2 Q80 100 83 100 L117 100 Q120 100 121 102.2 L128.5 117.2 L141 120 Q148 121.5 148 128 L148 134 L52 134 Z" fill="url(#body)" stroke="#FF5C93" stroke-width="1.2"/>
-  <path d="M82 102.8 L118 102.8 L125.5 116.5 L74.5 116.5 Z" fill="url(#glass)"/>
-  <path d="M79 102.2 Q80 100 83 100 L117 100 Q120 100 121 102.2" fill="none" stroke="#FFD3E3" stroke-width="1.8" stroke-linecap="round"/>
-  <rect x="64" y="122.2" width="72" height="11" rx="2.5" fill="#040308" stroke="#FFD3E3" stroke-width="1.2"/>
-  <path d="M82 127.7 L118 127.7" stroke="#FF5C93" stroke-opacity=".7" stroke-width="1"/>
-  <g filter="url(#glow)">
-    <circle cx="71.5" cy="127.8" r="5" fill="#FFD3E3"/><circle cx="128.5" cy="127.8" r="5" fill="#FFD3E3"/>
-    <circle cx="71.5" cy="127.8" r="2.2" fill="#fff"/><circle cx="128.5" cy="127.8" r="2.2" fill="#fff"/>
+<g class="art">
+  <!-- Nube con granizo -->
+  <g fill="#FFFFFF">
+    <circle cx="214" cy="112" r="32"/><circle cx="260" cy="92" r="42"/><circle cx="304" cy="114" r="28"/>
+    <rect x="182" y="108" width="150" height="38" rx="19"/>
+    <circle cx="214" cy="186" r="17"/><circle cx="256" cy="206" r="17"/><circle cx="298" cy="186" r="17"/>
   </g>
-  <path d="M49 133.2 Q50 132.6 52 133.2 L148 133.2 Q150 132.6 151 133.2 L150 137.4 Q149.5 138.4 148 138.4 L52 138.4 Q50.5 138.4 50 137.4 Z" fill="#FFD3E3"/>
-  <path d="M60 138.4 L140 138.4 L135 142.6 L65 142.6 Z" fill="#040308"/>
-  <rect x="91" y="139.2" width="18" height="5.2" rx="1" fill="#FFD3E3"/>
-</g>
-
-
-<!-- Piedras de granizo con su estela (caen hacia abajo a la izquierda, como en el logo) -->
-<g>
-  <line x1="168" y1="150" x2="214" y2="50" stroke="url(#trail)" stroke-width="16" stroke-linecap="round"/>
-  <polygon points="192,146 178,170 150,170 138,148 152,124 180,124" fill="#FFD3E3" stroke="#FF5C93" stroke-width="4" stroke-linejoin="round"/>
-  <polygon points="165,147 152,124 180,124" fill="#fff" opacity=".9"/>
-  <polygon points="165,147 178,170 192,146" fill="#FF5C93" opacity=".55"/>
-</g>
-<g>
-  <line x1="300" y1="118" x2="336" y2="40" stroke="url(#trail)" stroke-width="12" stroke-linecap="round"/>
-  <polygon points="320,114 310,132 290,133 280,117 290,99 310,99" fill="#FFD3E3" stroke="#FF5C93" stroke-width="4" stroke-linejoin="round"/>
-  <polygon points="300,116 290,99 310,99" fill="#fff" opacity=".9"/>
-  <polygon points="300,116 310,132 320,114" fill="#FF5C93" opacity=".55"/>
-</g>
-<g>
-  <line x1="372" y1="196" x2="400" y2="135" stroke="url(#trail)" stroke-width="10" stroke-linecap="round"/>
-  <polygon points="388,193 380,207 364,207 357,194 365,180 380,180" fill="#FFD3E3" stroke="#FF5C93" stroke-width="3.5" stroke-linejoin="round"/>
-  <polygon points="372,194 365,180 380,180" fill="#fff" opacity=".9"/>
-  <polygon points="372,194 380,207 388,193" fill="#FF5C93" opacity=".55"/>
-</g>
+  <!-- Domo -->
+  <path d="M100 424 A156 156 0 0 1 412 424" fill="none" stroke="#FFFFFF" stroke-width="30" stroke-linecap="round"/>
+  <!-- Auto de costado: carrocería, ventanas y ruedas recortadas con el color de fondo -->
+  <g transform="translate(256 424)">
+    <path d="M-70 -90 L-42 -134 Q-38 -140 -30 -140 L36 -140 Q44 -140 49 -134 L82 -90 Z" fill="#FFFFFF" stroke="#FFFFFF" stroke-width="12" stroke-linejoin="round"/>
+    <rect x="-116" y="-96" width="232" height="64" rx="24" fill="#FFFFFF"/>
+    <path d="M-50 -92 L-32 -124 L-4 -124 L-4 -92 Z" fill="#1F5BD8"/>
+    <path d="M10 -92 L10 -124 L38 -124 L62 -92 Z" fill="#1F5BD8"/>
+    <circle cx="-62" cy="-30" r="33" fill="#1F5BD8"/><circle cx="62" cy="-30" r="33" fill="#1F5BD8"/>
+    <circle cx="-62" cy="-30" r="24" fill="#FFFFFF"/><circle cx="62" cy="-30" r="24" fill="#FFFFFF"/>
+  </g>
 </g>
 </svg>

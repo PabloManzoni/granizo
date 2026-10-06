@@ -1,6 +1,5 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
-<defs><clipPath id="tile"><rect width="512" height="512" rx="112"/></clipPath></defs>
-<g clip-path="url(#tile)">
+<defs></defs>
 <rect width="512" height="512" fill="#1F5BD8"/>
 <g class="art">
   <!-- Nube con granizo -->
@@ -20,6 +19,5 @@
     <circle cx="-62" cy="-30" r="33" fill="#1F5BD8"/><circle cx="62" cy="-30" r="33" fill="#1F5BD8"/>
     <circle cx="-62" cy="-30" r="24" fill="#FFFFFF"/><circle cx="62" cy="-30" r="24" fill="#FFFFFF"/>
   </g>
-</g>
 </g>
 </svg>
