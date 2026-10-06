@@ -5,12 +5,17 @@ import { assessPointHour, assessWindow, combineModels } from './engine/classify.
 import type { Ingredients, WindowAssessment } from './engine/types.ts';
 import { present, type ResultView } from './presenter.ts';
 
-type Env = 'weak' | 'watch' | 'strong';
+type Env = 'weak' | 'storm' | 'watch' | 'strong';
 
 const INGREDIENTS: Record<Env, Ingredients> = {
   weak: {
     muCapeJkg: 150, muCinJkg: -60, muMixingRatioGkg: 10, muStartHpa: 950, shear06Ms: 12, lapse700500CKm: 5.8,
     t500C: -9, freezingLevelMAgl: 3900, ship: 0, wmaxshearM2s2: 210, showersMm: 0, precipitationMm: 0, modelCapeJkg: 100,
+  },
+  // Tormenta de agua: energía y lluvia convectiva, pero el aire no se enfría lo suficiente con la altura.
+  storm: {
+    muCapeJkg: 900, muCinJkg: -40, muMixingRatioGkg: 12.5, muStartHpa: 950, shear06Ms: 18, lapse700500CKm: 6.0,
+    t500C: -8, freezingLevelMAgl: 4100, ship: 0.2, wmaxshearM2s2: 764, showersMm: 3.5, precipitationMm: 7.2, modelCapeJkg: 800,
   },
   watch: {
     muCapeJkg: 700, muCinJkg: -30, muMixingRatioGkg: 12, muStartHpa: 925, shear06Ms: 25, lapse700500CKm: 6.8,
@@ -49,6 +54,20 @@ const SCENARIOS: Record<string, () => { models: { model: string; assessment: Win
       { model: 'ECMWF', assessment: windowAssessment('2026-01-15', 8, {}) },
     ],
     window: { name: 'today', label: 'Hoy (hasta las 20 h)' },
+  }),
+  tormenta: () => ({
+    models: [
+      { model: 'GFS', assessment: windowAssessment('2026-06-12', 8, range(6, 9, 'storm')) },
+      { model: 'ECMWF', assessment: windowAssessment('2026-06-12', 8, range(7, 10, 'storm')) },
+    ],
+    window: { name: 'today', label: 'Hoy (hasta las 20 h)' },
+  }),
+  tormenta_verano: () => ({
+    models: [
+      { model: 'GFS', assessment: windowAssessment('2026-01-20', 20, range(1, 4, 'storm')) },
+      { model: 'ECMWF', assessment: windowAssessment('2026-01-20', 20, {}) },
+    ],
+    window: { name: 'tonight', label: 'Esta noche (20 a 8 h)' },
   }),
   atento: () => ({
     models: [

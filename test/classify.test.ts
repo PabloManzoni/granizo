@@ -54,7 +54,14 @@ test('mucha energía y lluvia pero el aire no se enfría con la altura → calm 
   const ph = assessPointHour('2024-09-09T16:00', -34.8, -55.9, { ...base, lapse700500CKm: 5.9, precipitationMm: 20 });
   const w = assessWindow([ph]);
   assert.equal(w.level, 'calm');
+  assert.equal(w.storm, true);
   assert.ok(w.reasons.includes('POOR_HAIL_GROWTH'));
+});
+
+test('tormenta solo si es calm: sin disparo no hay tormenta, y con ambiente de granizo manda el granizo', () => {
+  const dry = assessWindow([assessPointHour('2024-09-09T16:00', -34.8, -55.9, { ...base, lapse700500CKm: 5.9, showersMm: 0, precipitationMm: 0 })]);
+  assert.equal(dry.storm, false);
+  assert.equal(assessWindow([assessPointHour('2024-09-09T16:00', -34.8, -55.9, base)]).storm, false);
 });
 
 test('WMAXSHEAR entre los umbrales → supportive → watch', () => {
@@ -102,5 +109,7 @@ test('dos modelos: uno "watch" y otro "calm" → calm', async () => {
   const { combineModels } = await import('../src/engine/classify.ts');
   const watch = assessWindow([assessPointHour('2024-09-09T16:00', -34.8, -55.9, { ...base, wmaxshearM2s2: 600 })]);
   const calm = assessWindow([assessPointHour('2024-09-09T16:00', -34.8, -55.9, { ...base, lapse700500CKm: 5 })]);
-  assert.equal(combineModels([{ model: 'GFS', assessment: watch }, { model: 'ECMWF', assessment: calm }]).level, 'calm');
+  const combined = combineModels([{ model: 'GFS', assessment: watch }, { model: 'ECMWF', assessment: calm }]);
+  assert.equal(combined.level, 'calm');
+  assert.equal(combined.storm, true); // tranquilo para granizo, pero los modelos forman tormentas
 });

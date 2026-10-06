@@ -154,8 +154,6 @@ function errorCopy(kind) {
 }
 
 // ---------- Render ----------
-const RINGS = { calm: [1, 4.5], watch: [2, 3], protect: [3, 1.6] };
-const BLUR = { low: '7px', medium: '2px', high: '0px' };
 const WHEN_SHORT = { today: 'Hoy', tonight: 'Esta noche', tomorrow: 'Mañana' };
 
 function renderPlacesBar() {
@@ -173,15 +171,13 @@ function renderPlacesBar() {
 function renderResult(r) {
   document.body.dataset.level = r.level;
   document.title = `${r.levelName} · ${r.hailStatus} — Cubierto`;
-  const [n, dur] = RINGS[r.level];
-  const rings = Array.from({ length: n }, (_, i) => `<div class="ring" style="--dur:${dur}s;--delay:${(-(dur / n) * i).toFixed(2)}s;--i:${i}"></div>`).join('');
   const place = currentPlace();
   const models = r.models
     .map((m) => `<span class="conf-model"><span class="mini-orb ${m.level}"></span><span class="mono">${esc(m.model)}</span> ${esc(m.levelName)}</span>`)
     .join('');
   return `
     <section class="hero" aria-label="Resultado">
-      <div class="orb-wrap" aria-hidden="true">${rings}<div class="orb" style="--blur:${BLUR[r.confidence]}"></div></div>
+      <div class="shield" aria-hidden="true"><car-shield level="${esc(r.level)}"></car-shield></div>
       <div class="hero-text">
         <div class="kicker">${esc(place?.name ?? '')} · ${esc(WHEN_SHORT[r.window.name] ?? r.window.label)}</div>
         <h1 class="level">${esc(r.levelName)}</h1>
@@ -400,7 +396,7 @@ export function openInstallModal() {
   }
   dlg.innerHTML = `
     <div class="modal-body">
-      <div class="modal-orb" aria-hidden="true"></div>
+      <div class="modal-logo" aria-hidden="true"><car-shield level="calm"></car-shield></div>
       <h2 id="install-title">Instalar Cubierto</h2>
       <p>Queda en tu pantalla de inicio y se abre como una app, sin la barra del navegador.</p>
       <p class="modal-intro">${esc(s.intro)}</p>

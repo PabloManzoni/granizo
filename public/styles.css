@@ -1,4 +1,4 @@
-/* Estética "Orbe" (diseño de Pablo, Claude Design). Oscuro, Sora + JetBrains Mono, un color por nivel. */
+/* Estética de Cubierto (diseño de Pablo, Claude Design). Oscuro, Sora + JetBrains Mono, un color por nivel. */
 :root {
   --bg: #000;
   --ink: #f2f0f7;
@@ -13,6 +13,7 @@
   --line-3: #3a3545;
   --dot-off: #2a2633;
   --c-calm: #8ec5ff;
+  --c-storm: #5fd8e6;
   --c-watch: #d2b1ff;
   --c-protect: #ffa6d0;
   /* nivel activo (lo cambia data-level en <body>) */
@@ -22,6 +23,7 @@
   color-scheme: dark;
 }
 body[data-level='calm'] { --accent: var(--c-calm); --soft: rgba(142, 197, 255, 0.22); --deep: #14306b; }
+body[data-level='storm'] { --accent: var(--c-storm); --soft: rgba(95, 216, 230, 0.22); --deep: #0d4652; }
 body[data-level='watch'] { --accent: var(--c-watch); --soft: rgba(210, 177, 255, 0.22); --deep: #3e1f72; }
 body[data-level='protect'] { --accent: var(--c-protect); --soft: rgba(255, 166, 208, 0.28); --deep: #6e1544; }
 
@@ -79,26 +81,10 @@ a { color: var(--ink-3); }
 .places-bar button[aria-pressed='true'] { background: var(--ink); color: #000; }
 .places-bar .more { width: 34px; padding: 0; color: var(--faint); font-size: 16px; }
 
-/* ---------- Orbe ---------- */
+/* ---------- Logo (auto bajo el domo, un estado por nivel) ---------- */
 .hero { display: flex; flex-direction: column; align-items: center; gap: 16px; padding: 18px 0 22px; text-align: center; }
-.orb-wrap { position: relative; width: 210px; height: 210px; display: grid; place-items: center; }
-.ring {
-  position: absolute;
-  inset: 45px;
-  border-radius: 50%;
-  border: 1.5px solid var(--accent);
-  animation: ripple var(--dur) ease-out var(--delay) infinite;
-}
-.orb {
-  width: 120px;
-  height: 120px;
-  border-radius: 50%;
-  background: radial-gradient(circle at 35% 30%, #fff 0%, var(--accent) 38%, var(--deep) 92%);
-  box-shadow: 0 0 80px var(--soft);
-  filter: blur(var(--blur, 0px));
-  transition: filter 1s, background 1s;
-  animation: float 6s ease-in-out infinite;
-}
+.shield { width: min(260px, 72vw); aspect-ratio: 1; margin: -8px 0 -18px; }
+car-shield { display: block; width: 100%; height: 100%; }
 .kicker { font-size: 12px; letter-spacing: 0.24em; text-transform: uppercase; color: var(--accent); }
 .level { margin: 0; font-size: 54px; line-height: 1; font-weight: 200; letter-spacing: -0.04em; }
 .hail {
@@ -141,6 +127,7 @@ a { color: var(--ink-3); }
 .model { flex: 1; display: flex; align-items: center; gap: 10px; padding: 10px; border-radius: 16px; background: var(--panel-2); }
 .mini-orb { width: 18px; height: 18px; border-radius: 50%; flex: none; }
 .mini-orb.calm { background: radial-gradient(circle at 35% 30%, #fff, var(--c-calm) 60%); }
+.mini-orb.storm { background: radial-gradient(circle at 35% 30%, #fff, var(--c-storm) 60%); }
 .mini-orb.watch { background: radial-gradient(circle at 35% 30%, #fff, var(--c-watch) 60%); }
 .mini-orb.protect { background: radial-gradient(circle at 35% 30%, #fff, var(--c-protect) 60%); }
 .model .mono { display: block; font-size: 10px; color: var(--faint); }
@@ -206,7 +193,7 @@ a { color: var(--ink-3); }
 .modal::backdrop { background: rgba(0, 0, 0, 0.6); backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); }
 .modal[open] { animation: rise 0.4s both; }
 .modal-body { display: flex; flex-direction: column; gap: 12px; padding: 24px; }
-.modal-orb { width: 44px; height: 44px; border-radius: 50%; background: radial-gradient(circle at 35% 30%, #fff, #c7b4ff 45%, #5a3fa8); box-shadow: 0 0 0 6px rgba(199, 180, 255, 0.14), 0 0 0 12px rgba(199, 180, 255, 0.06); margin-bottom: 6px; }
+.modal-logo { width: 56px; height: 56px; border-radius: 16px; overflow: hidden; background: var(--panel); border: 1px solid var(--line-2); margin-bottom: 6px; }
 .modal h2 { margin: 0; font-size: 24px; font-weight: 300; letter-spacing: -0.02em; }
 .modal p { margin: 0; font-size: 14px; line-height: 1.55; color: var(--muted); }
 .modal .modal-intro { color: var(--ink-2); }
@@ -275,12 +262,10 @@ a { color: var(--ink-3); }
 
 button:focus-visible, input:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
 
-@keyframes ripple { 0% { transform: scale(0.7); opacity: 0.9; } 100% { transform: scale(1.9); opacity: 0; } }
 @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-8px); } }
 @keyframes rise { from { opacity: 0; transform: translateY(18px); filter: blur(6px); } to { opacity: 1; transform: none; filter: blur(0); } }
 @keyframes spin { to { transform: rotate(360deg); } }
 
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; }
-  .ring { animation: none; transform: scale(calc(1 + var(--i, 0) * 0.3)); opacity: 0.5; }
 }

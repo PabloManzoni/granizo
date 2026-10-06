@@ -21,6 +21,25 @@ test('tranquilo en verano: con reservas, confianza baja y aviso de estación', (
   assert.equal(v.watchText, null);
 });
 
+test('tormenta sin granizo: tranquilo para el motor, se muestra "Tormenta"', () => {
+  const v = devScenario('tormenta', at);
+  assert.equal(v.level, 'storm');
+  assert.equal(v.levelName, 'Tormenta');
+  assert.equal(v.hailStatus, 'Lluvia fuerte, sin piedra');
+  assert.equal(v.note, null);
+  assert.deepEqual(v.models.map((m) => m.level), ['storm', 'storm']);
+  assert.ok(v.why.some((y) => /forma tormentas/.test(y)));
+  assert.match(v.algorithm.combination, /→ Tormenta\.$/);
+});
+
+test('tormenta en verano, un modelo la ve: con reservas y sin "modelos divididos"', () => {
+  const v = devScenario('tormenta_verano', at);
+  assert.equal(v.level, 'storm');
+  assert.equal(v.note, 'con reservas');
+  assert.equal(v.modelsAgree, true);
+  assert.deepEqual(v.models.map((m) => m.level), ['storm', 'calm']);
+});
+
 test('modelos divididos: atento, nota y aviso que explica quién ve qué', () => {
   const v = devScenario('atento_divididos', at);
   assert.equal(v.level, 'watch');

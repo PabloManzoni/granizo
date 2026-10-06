@@ -4,15 +4,20 @@ import { RULES, TRIGGER } from './engine/config.ts';
 import { DISCLAIMER, REASONS } from './engine/messages.ts';
 import type { RiskLevel, WindowAssessment } from './engine/types.ts';
 
-export const LEVEL_NAMES: Record<RiskLevel, string> = {
+/** Lo que se muestra: los tres niveles de granizo más "tormenta" (tranquilo para granizo, pero con tormentas). */
+export type ViewLevel = RiskLevel | 'storm';
+
+export const LEVEL_NAMES: Record<ViewLevel, string> = {
   calm: 'Tranquilo',
+  storm: 'Tormenta',
   watch: 'Atento',
   protect: 'Protegelo',
 };
 
 /** La palabra "granizo" siempre visible junto al nivel: la app es solo para granizo. */
-export const HAIL_STATUS: Record<RiskLevel, string> = {
+export const HAIL_STATUS: Record<ViewLevel, string> = {
   calm: 'Sin señales de granizo',
+  storm: 'Lluvia fuerte, sin piedra',
   watch: 'Posible granizo',
   protect: 'Peligro de granizo',
 };
@@ -25,9 +30,9 @@ export interface WindowInfo {
 }
 
 export interface ResultView {
-  level: RiskLevel;
+  level: ViewLevel;
   levelName: string;
-  /** "Sin señales de granizo", "Posible granizo", "Peligro de granizo". */
+  /** "Sin señales de granizo", "Lluvia fuerte, sin piedra", "Posible granizo", "Peligro de granizo". */
   hailStatus: string;
   /** Pastilla corta debajo del nivel ("con reservas", "modelos divididos"…) o null. */
   note: string | null;
@@ -37,7 +42,7 @@ export interface ResultView {
   /** Puntos de confianza encendidos, de 3. */
   confidenceDots: number;
   season: 'warm' | 'cold';
-  models: { model: string; level: RiskLevel; levelName: string }[];
+  models: { model: string; level: ViewLevel; levelName: string }[];
   modelsAgree: boolean;
   /** Motivo corto de la confianza (modelos, estación). */
   confidenceReason: string;
@@ -70,16 +75,17 @@ const fmt = (x: number | null, digits = 0, unit = '') =>
 const sentence = (s: string) => (/[.!?]$/.test(s) ? s : `${s}.`);
 const hh = (time: string) => time.slice(11, 13);
 
-function titleFor(level: RiskLevel, lowConfidence: boolean, agree: boolean): string {
+function titleFor(level: ViewLevel, lowConfidence: boolean, agree: boolean): string {
   if (level === 'protect') return 'Chances reales de piedra en tu zona.';
+  if (level === 'storm') return lowConfidence ? 'Se forman tormentas en tu zona; pocas chances de piedra.' : 'Se forman tormentas en tu zona, pero no es clima de piedra.';
   if (level === 'watch') return agree ? 'Hay ingredientes para piedra en tu zona.' : 'Los modelos no se ponen de acuerdo.';
   return lowConfidence ? 'Pocas chances de piedra en tu zona.' : 'No es clima de piedra en tu zona.';
 }
 
-function noteFor(level: RiskLevel, lowConfidence: boolean, agree: boolean, singleModel: boolean): string | null {
+function noteFor(level: ViewLevel, lowConfidence: boolean, agree: boolean, singleModel: boolean): string | null {
   if (singleModel) return 'un solo modelo';
   if (!agree) return 'modelos divididos';
-  if (level === 'calm' && lowConfidence) return 'con reservas';
+  if ((level === 'calm' || level === 'storm') && lowConfidence) return 'con reservas';
   if (level === 'watch') return 'lo habitual con tormenta';
   return null;
 }
@@ -94,9 +100,16 @@ function watchTextFor(hours: ResultView['hours']): string | null {
 }
 
 export function present(r: WindowAssessment, window: WindowInfo, generatedAt: string): ResultView {
-  const models = (r.models ?? []).map((m) => ({ ...m, levelName: LEVEL_NAMES[m.level] }));
+  const level: ViewLevel = r.storm ? 'storm' : r.level;
+  // Cada modelo con el mismo criterio: tranquilo para granizo pero formando tormentas → "Tormenta".
+  const models = (r.models ?? []).map((m) => {
+    const lv: ViewLevel = m.level === 'calm' && m.check?.triggerPresent ? 'storm' : m.level;
+    return { model: m.model, level: lv, levelName: LEVEL_NAMES[lv] };
+  });
   const singleModel = models.length === 1;
-  const agree = models.length < 2 || models[0].level === models[1].level;
+  // Acuerdo en granizo (lo que usa el motor para la confianza); la tormenta no cuenta.
+  const hailLevels = (r.models ?? []).map((m) => m.level);
+  const agree = hailLevels.length < 2 || hailLevels[0] === hailLevels[1];
   const lowConfidence = r.confidence === 'low';
 
   const notices: ResultView['notices'] = [];
@@ -107,6 +120,7 @@ export function present(r: WindowAssessment, window: WindowInfo, generatedAt: st
     });
   }
   if (r.level === 'protect') notices.push({ strong: 'Mirá también INUMET.', text: 'Esto no reemplaza los avisos oficiales.' });
+  if (level === 'storm') notices.push({ strong: 'Mirá también INUMET.', text: 'Una tormenta puede traer lluvia fuerte, rayos o viento.' });
 
   // Motivo de la confianza, corto: modelos y estación.
   const reasonParts: string[] = [];
@@ -171,9 +185,10 @@ export function present(r: WindowAssessment, window: WindowInfo, generatedAt: st
     },
   ];
   const perModel = verdicts.map((m) => `${m.model}: ${LEVEL_NAMES[m.level].toLowerCase()}`).join(' · ');
-  const combination = singleModel
+  const stormRule = r.storm ? ' Sin ambiente de granizo, pero el modelo forma tormentas en la zona → Tormenta.' : '';
+  const combination = (singleModel
     ? `Un solo modelo disponible (${perModel}): su nivel es el resultado.`
-    : `${perModel}. Regla: protegelo solo si los dos dicen protegelo; atento si alguno dice protegelo o los dos dicen al menos atento. → ${LEVEL_NAMES[r.level]}.`;
+    : `${perModel}. Regla: protegelo solo si los dos dicen protegelo; atento si alguno dice protegelo o los dos dicen al menos atento. → ${LEVEL_NAMES[r.level]}.`) + stormRule;
   const confidenceWhy = r.season === 'warm'
     ? 'Entre octubre y marzo la confianza es siempre baja: en la prueba histórica el ambiente no distinguió granizo de lluvia.'
     : singleModel
@@ -191,11 +206,11 @@ export function present(r: WindowAssessment, window: WindowInfo, generatedAt: st
         'Reglas calibradas con granizadas y días de tormenta de Uruguay 2021–2024 y probadas en 2025–2026: "Protegelo" avisó en ~4 de cada 10 granizadas, con ~15% de falsas alarmas en días de tormenta. Es un motor de reglas, sin IA.',
       moreUrl: 'https://github.com/PabloManzoni/granizo/blob/main/docs/bitacora-motor.md',
     },
-    level: r.level,
-    levelName: LEVEL_NAMES[r.level],
-    hailStatus: HAIL_STATUS[r.level],
-    note: noteFor(r.level, lowConfidence, agree, singleModel),
-    title: titleFor(r.level, lowConfidence, agree),
+    level,
+    levelName: LEVEL_NAMES[level],
+    hailStatus: HAIL_STATUS[level],
+    note: noteFor(level, lowConfidence, agree, singleModel),
+    title: titleFor(level, lowConfidence, agree),
     confidence: r.confidence,
     confidenceLabel: { low: 'Confianza baja', medium: 'Confianza media', high: 'Confianza alta' }[r.confidence],
     confidenceDots: { low: 1, medium: 2, high: 3 }[r.confidence],

@@ -5,6 +5,8 @@ import { consult, devFlags, openInstallModal, render, showError, showResult, sho
 const SCENARIOS = [
   ['tranquilo', 'Tranquilo'],
   ['tranquilo_verano', 'Tranq. verano'],
+  ['tormenta', 'Tormenta'],
+  ['tormenta_verano', 'Torm. verano'],
   ['atento', 'Atento'],
   ['atento_divididos', 'Divididos'],
   ['protegelo', 'Protegelo'],

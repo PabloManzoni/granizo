@@ -103,6 +103,7 @@ function reasonsFor(peak: PointHourAssessment, triggerPresent: boolean, season: 
  * - protect: ambiente fuerte en algún punto-hora Y el modelo forma tormentas en la ventana.
  * - watch: ambiente fuerte sin tormentas en el modelo, o ambiente favorable.
  * - calm: el resto.
+ * Aparte, `storm`: calm pero el modelo forma tormentas (tormenta sin granizo).
  * Confianza: media en la estación fría (donde el test mostró señal), baja en la cálida (donde no).
  */
 export function assessWindow(pointHours: PointHourAssessment[]): WindowAssessment {
@@ -138,6 +139,7 @@ export function assessWindow(pointHours: PointHourAssessment[]): WindowAssessmen
 
   return {
     level,
+    storm: level === 'calm' && triggerPresent,
     confidence,
     hourly,
     season,
@@ -161,6 +163,7 @@ const LEVEL_RANK: Record<RiskLevel, number> = { calm: 0, watch: 1, protect: 2 };
  * - protect: los DOS dicen protect ("día rojo" estricto: 43% de detección, 15% de falsas alarmas en prueba).
  * - watch: alguno dice protect, o los dos dicen al menos watch (93% / 65% en prueba).
  * - calm: el resto.
+ * Tormenta sin granizo (`storm`): calm y alguno de los dos modelos forma tormentas.
  * Confianza: en la estación cálida siempre baja; en la fría, media si coinciden y baja si no.
  */
 export function combineModels(results: { model: string; assessment: WindowAssessment }[]): WindowAssessment {
@@ -204,6 +207,7 @@ export function combineModels(results: { model: string; assessment: WindowAssess
   return {
     ...lead,
     level,
+    storm: level === 'calm' && (a.trigger.present || b.trigger.present),
     confidence,
     reasons: [...lead.reasons, agree ? 'MODELS_AGREE' : 'MODELS_DISAGREE'],
     favorableHours: [...new Set([...a.favorableHours, ...b.favorableHours])].sort(),

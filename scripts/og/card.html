@@ -1,0 +1,61 @@
+<!doctype html>
+<!--
+  Tarjeta para compartir el link (WhatsApp, iMessage, Telegram, redes): fuente de public/og.jpg.
+  Se renderiza a 1200×630 con un navegador (captura de pantalla de esta página, con las animaciones
+  congeladas en ?t=ms). Usa el mismo logo animado de la app (public/car-shield.js).
+-->
+<html lang="es-UY">
+<head>
+<meta charset="utf-8" />
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@200..800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<script src="../../public/car-shield.js"></script>
+<style>
+  * { box-sizing: border-box; }
+  html, body { margin: 0; background: #000; }
+  .card {
+    position: relative; width: 1200px; height: 630px; overflow: hidden;
+    display: flex; align-items: center; gap: 24px; padding: 0 72px 0 28px;
+    background: radial-gradient(circle at 26% 62%, rgba(255, 92, 147, 0.22), transparent 55%), #000;
+    font-family: 'Sora', system-ui, sans-serif; color: #f2f0f7; -webkit-font-smoothing: antialiased;
+  }
+  .logo { flex: none; width: 560px; height: 560px; }
+  car-shield { display: block; width: 100%; height: 100%; }
+  .text { display: flex; flex-direction: column; gap: 22px; min-width: 0; }
+  .brand { display: flex; align-items: center; gap: 14px; font-size: 30px; font-weight: 600; letter-spacing: -0.01em; }
+  .brand .tile { width: 54px; height: 54px; border-radius: 15px; overflow: hidden; background: #0d0b12; border: 1px solid #2a2633; }
+  .kicker { font-size: 19px; font-weight: 600; letter-spacing: 0.2em; text-transform: uppercase; color: #ff5c93; }
+  h1 { margin: 0; font-size: 66px; line-height: 1.02; font-weight: 300; letter-spacing: -0.035em; }
+  h1 b { font-weight: 600; }
+  .states { display: flex; flex-wrap: wrap; gap: 8px; }
+  .states span { display: inline-flex; align-items: center; gap: 8px; padding: 7px 13px; border-radius: 99px; border: 1px solid #2a2633; font-size: 16px; color: #dcd8e6; }
+  .states i { width: 10px; height: 10px; border-radius: 50%; }
+  .url { font-family: 'JetBrains Mono', monospace; font-size: 19px; color: #8a849c; }
+</style>
+</head>
+<body>
+  <div class="card">
+    <div class="logo"><car-shield level="protect"></car-shield></div>
+    <div class="text">
+      <div class="brand"><div class="tile"><car-shield level="calm"></car-shield></div>Cubierto</div>
+      <div class="kicker">Alerta de granizo · Uruguay</div>
+      <h1>¿Cae piedra?<br /><b>Cubrí el auto</b><br />a tiempo.</h1>
+      <div class="states">
+        <span><i style="background:#8ec5ff"></i>Tranquilo</span>
+        <span><i style="background:#5fd8e6"></i>Tormenta</span>
+        <span><i style="background:#c9a2ff"></i>Atento</span>
+        <span><i style="background:#ff5c93"></i>Protegelo</span>
+      </div>
+      <div class="url">granizo.tuggsy.com</div>
+    </div>
+  </div>
+  <script>
+    // Congela las animaciones en un instante fijo para que la captura salga igual siempre.
+    const t = Number(new URLSearchParams(location.search).get('t') ?? 700);
+    document.fonts.ready.then(() => {
+      const roots = [document, ...[...document.querySelectorAll('car-shield')].map((el) => el.shadowRoot)];
+      for (const r of roots) for (const a of r.getAnimations()) { a.pause(); a.currentTime = t; }
+      document.body.dataset.ready = 'true';
+    });
+  </script>
+</body>
+</html>

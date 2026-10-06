@@ -112,6 +112,11 @@ export interface ModelVerdict {
 
 export interface WindowAssessment {
   level: RiskLevel;
+  /**
+   * Sin ambiente de granizo ("calm") pero el modelo forma tormentas en la zona (el mismo disparo de `trigger`):
+   * lluvia fuerte o rayos, sin piedra. No es un nivel de granizo: el backtest y los niveles no lo usan.
+   */
+  storm: boolean;
   /** Qué tan confiable es el nivel. En la estación cálida el ambiente distingue poco → baja. */
   confidence: Confidence;
   season: Season;

@@ -3,12 +3,25 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-    <title>Cubierto · ¿lo dejo afuera?</title>
-    <meta name="description" content="Riesgo de granizo para tu auto, en tu zona." />
+    <title>Cubierto · alerta de granizo para tu auto</title>
+    <meta name="description" content="¿Cae piedra? Riesgo de granizo en tu zona, hora por hora, para saber si cubrir el auto. Uruguay." />
+    <!-- Vista previa al compartir el link (WhatsApp, iMessage, Telegram, redes). Las URLs tienen que ser absolutas. -->
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Cubierto" />
+    <meta property="og:locale" content="es_UY" />
+    <meta property="og:url" content="https://granizo.tuggsy.com/" />
+    <meta property="og:title" content="Cubierto · alerta de granizo para tu auto" />
+    <meta property="og:description" content="¿Cae piedra? Riesgo de granizo en tu zona, hora por hora, para saber si cubrir el auto. Uruguay." />
+    <meta property="og:image" content="https://granizo.tuggsy.com/og.jpg" />
+    <meta property="og:image:type" content="image/jpeg" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="Auto bajo un domo con granizo cayendo. Cubierto: alerta de granizo, Uruguay." />
+    <meta name="twitter:card" content="summary_large_image" />
     <meta name="theme-color" content="#000000" />
     <link rel="manifest" href="/manifest.webmanifest" />
     <link rel="icon" href="/icon.svg" type="image/svg+xml" />
-    <link rel="apple-touch-icon" href="/icon.svg" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Sora:wght@200..800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
@@ -20,6 +33,7 @@
       <div id="screen" aria-live="polite"></div>
     </main>
     <div class="bottom" id="bottom"></div>
+    <script src="/car-shield.js"></script>
     <script src="/app.js" type="module"></script>
     <script type="module">
       // Botonera de desarrollo: solo en local, nunca en producción.
