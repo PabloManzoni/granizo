@@ -1,6 +1,6 @@
 # Test histórico — motor v0.2.0
 
-Generado: 2026-10-04T10:24 UTC · 140 casos evaluados
+Generado: 2026-10-06T01:39 UTC · 140 casos evaluados
 
 > Datos: archivo de pronósticos GFS de Open-Meteo, que son las primeras horas de cada corrida (casi un análisis).
 > Esto mide si **la receta separa** con datos casi perfectos. Es un techo: el pronóstico real de 12–24 h va a ser peor.

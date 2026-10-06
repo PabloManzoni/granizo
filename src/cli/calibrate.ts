@@ -3,6 +3,7 @@
 // - AUC: probabilidad de que un día de granizo tenga un valor "peor" que un día sin granizo (0.5 = no sirve, 1 = perfecto).
 // - El umbral que maximiza detección − falsas alarmas (Peirce / True Skill Statistic).
 // Uso: npm run calibrate
+import '../data/nodeCache.ts'; // caché en disco de Open-Meteo
 import { mkdir, writeFile } from 'node:fs/promises';
 import { join } from 'node:path';
 import { NEIGHBORHOOD } from '../engine/config.ts';

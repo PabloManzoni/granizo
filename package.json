@@ -12,10 +12,13 @@
     "typecheck": "tsc",
     "calibrate": "node src/cli/calibrate.ts",
     "log-forecast": "node src/cli/log-forecast.ts",
-    "serve": "node src/server.ts"
+    "serve": "npm run build && node src/server.ts",
+    "build": "esbuild src/browser.ts --bundle --format=esm --target=es2020 --minify --sourcemap --outfile=public/engine.js",
+    "build:site": "npm run build && node scripts/build-site.mjs"
   },
   "devDependencies": {
     "@types/node": "^24.19.1",
+    "esbuild": "^0.25.12",
     "typescript": "^5.9.3"
   }
 }

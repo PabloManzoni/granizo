@@ -2,3 +2,7 @@ node_modules/
 .cache/
 .DS_Store
 __pycache__/
+design/
+public/engine.js
+public/engine.js.map
+site/

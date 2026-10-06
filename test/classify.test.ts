@@ -94,7 +94,8 @@ test('dos modelos: protect solo si los dos dicen protect', async () => {
   assert.equal(split.level, 'watch');
   assert.equal(split.confidence, 'low');
   assert.ok(split.reasons.includes('MODELS_DISAGREE'));
-  assert.deepEqual(split.models, [{ model: 'GFS', level: 'protect' }, { model: 'ECMWF', level: 'calm' }]);
+  assert.deepEqual(split.models?.map((m) => [m.model, m.level]), [['GFS', 'protect'], ['ECMWF', 'calm']]);
+  assert.equal(split.models?.[1].check?.lapse700500CKm, 5);
 });
 
 test('dos modelos: uno "watch" y otro "calm" → calm', async () => {

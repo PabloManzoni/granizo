@@ -3,6 +3,7 @@
 // Al cruzar este registro con las granizadas que ocurran, medimos la habilidad REAL a 12–36 h (el test histórico usa
 // casi-análisis, que es un techo). Pensado para correr una vez por día, a la tarde.
 // Uso: npm run log-forecast
+import '../data/nodeCache.ts'; // caché en disco de Open-Meteo
 import { appendFile, mkdir } from 'node:fs/promises';
 import { join } from 'node:path';
 import { assessProfiles } from '../assess.ts';

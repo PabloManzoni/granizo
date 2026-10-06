@@ -1,11 +1,11 @@
 {
-  "name": "¿Lo dejo afuera? — granizo para tu auto",
-  "short_name": "Granizo",
-  "description": "Riesgo de granizo para el auto, en tu zona (prototipo).",
+  "name": "Cubierto — granizo para tu auto",
+  "short_name": "Cubierto",
+  "description": "¿Lo dejo afuera? Riesgo de granizo para tu auto, en tu zona.",
   "lang": "es-UY",
   "start_url": "/",
   "display": "standalone",
-  "background_color": "#ffffff",
-  "theme_color": "#1f2937",
+  "background_color": "#000000",
+  "theme_color": "#000000",
   "icons": [{ "src": "/icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any" }]
 }

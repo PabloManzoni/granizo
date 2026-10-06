@@ -20,7 +20,8 @@ Requiere Node 24+ (corre TypeScript directo, sin compilar).
 
 ```bash
 npm install
-npm run serve                                                 # API + PWA básica en http://localhost:8787
+npm run serve                                                 # compila el motor y sirve la PWA en http://localhost:8787 (en local aparece la botonera "dev")
+npm run build:site                                            # arma site/ para GitHub Pages
 npm run check -- --lat -34.80 --lon -55.90 --window tonight   # tonight | today | tomorrow | next12h
 npm run log-forecast                                          # guarda el pronóstico de 16 ciudades en data/forecast-log/ (correr 1 vez por día)
 npm run backtest                                              # test histórico sobre data/events.json → reports/backtest.md
@@ -52,13 +53,31 @@ Habilidad estimada **fuera de muestra** (2025–2026, en días de tormenta): "pr
 
 **Rayos (prototipo, `scripts/glm/`)**: el GLM del GOES llega con < 30 s de latencia. Avisa bien "tormenta fuerte cerca, ahora", pero en la muestra no distinguió granizo de tormenta fuerte sin granizo. Sirve como capa de nowcasting de 0–1 h, no como detector de granizo.
 
+## Interfaz (PWA "Cubierto")
+
+Estética "Orbe" (diseño en Claude Design): un orbe con 1, 2 o 3 ondas según el nivel (Tranquilo, Atento, Protegelo), más desenfocado cuanto menor es la confianza. Abre directo con el resultado para "Acá" o el último lugar.
+
+- `src/presenter.ts` convierte el resultado del motor en lo que muestra la interfaz: título, nota, avisos, porqué, horas y detalles. Son plantillas, sin IA.
+- **Botonera de desarrollo** (`public/dev.js`): **solo en localhost**. Fuerza cada estado:
+  - escenarios de resultado, que pasan por el motor y el presentador reales vía `/api/dev/scenario`, endpoint apagado con `NODE_ENV=production`;
+  - cargando, buscando GPS y cada error;
+  - la pantalla de Lugares;
+  - una consulta real simulando "sin red" o "sin GPS".
+
+## Publicación (granizo.tuggsy.com)
+
+- **Sin servidor.** El motor corre en el teléfono: `src/browser.ts` se empaqueta con esbuild en `public/engine.js` y le pide los datos directo a Open-Meteo. Así cada persona usa su propio cupo gratuito.
+- **GitHub Pages** se publica solo con cada push a `main`, con `.github/workflows/pages.yml`: typecheck, tests, `build:site` y deploy.
+- **DNS en Cloudflare:** `CNAME granizo → pablomanzoni.github.io`, en "DNS only" (nube gris) para que GitHub pueda emitir el certificado HTTPS.
+
 ## Estructura
 
 ```
 src/engine/     termodinámica, ingredientes, reglas, textos (sin I/O)
 src/data/       Open-Meteo (con caché) y lista de eventos
 src/cli/        check, backtest, calibrate, log-forecast
-src/server.ts   API + estáticos de la PWA
+src/browser.ts  motor para el navegador (se empaqueta en public/engine.js)
+src/server.ts   servidor local: estáticos de la PWA + /api/assess
 public/         PWA básica (sin diseño)
 scripts/        controles METAR y rayos GLM (Python)
 data/           eventos, fechas de granizo de INUMET, registro de pronósticos

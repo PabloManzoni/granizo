@@ -1,6 +1,7 @@
 // Consulta el pronóstico vigente para un lugar.
 // Uso: npm run check -- --lat -34.80 --lon -55.90 --window tonight
 //      ventanas: tonight (20–08) | today (ahora–20) | tomorrow (08–20 de mañana) | next12h
+import '../data/nodeCache.ts'; // caché en disco de Open-Meteo
 import { assess } from '../assess.ts';
 import { CONFIDENCE, DISCLAIMER, HEADLINES, REASONS, SEASON_NOTE } from '../engine/messages.ts';
 import { resolveWindow, WINDOW_NAMES, type WindowName } from '../windows.ts';

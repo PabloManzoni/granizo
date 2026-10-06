@@ -2,6 +2,7 @@
 // Uso: npm run backtest [-- --file data/events.json]
 // Ojo: el archivo histórico de Open-Meteo son las primeras horas de cada corrida (casi un análisis),
 // así que esto mide "con un pronóstico casi perfecto, ¿la receta separa?". Es un techo, no la realidad a 24 h.
+import '../data/nodeCache.ts'; // caché en disco de Open-Meteo
 import { mkdir, writeFile } from 'node:fs/promises';
 import { join } from 'node:path';
 import { assess } from '../assess.ts';

@@ -98,6 +98,18 @@ export interface PointHourAssessment {
   environment: Environment;
 }
 
+export interface ModelVerdict {
+  model: string;
+  level: RiskLevel;
+  check?: {
+    lapse700500CKm: number | null;
+    wmaxshearM2s2: number | null;
+    maxShowersMm: number;
+    maxPrecipitationMm: number;
+    triggerPresent: boolean;
+  };
+}
+
 export interface WindowAssessment {
   level: RiskLevel;
   /** Qué tan confiable es el nivel. En la estación cálida el ambiente distingue poco → baja. */
@@ -110,7 +122,9 @@ export interface WindowAssessment {
   counts: { pointHours: number; supportive: number; strong: number };
   /** Horas (locales) con ambiente al menos "supportive" en algún punto. */
   favorableHours: string[];
+  /** Ambiente más favorable de la zona, hora por hora (para la línea de "horas a vigilar"). */
+  hourly: { time: string; environment: Environment }[];
   engineVersion: string;
-  /** Nivel según cada modelo, cuando se combinan varios. */
-  models?: { model: string; level: RiskLevel }[];
+  /** Nivel según cada modelo, con los valores que usó para decidir (punto-hora más favorable). */
+  models?: ModelVerdict[];
 }

@@ -1,9 +1,8 @@
 // Descarga de perfiles verticales desde Open-Meteo (uso no comercial, sin API key).
 // - historical: archivo de pronósticos (GFS desde 2021), para el test histórico.
 // - forecast: pronóstico vigente, para el uso diario.
-import { createHash } from 'node:crypto';
-import { mkdir, readFile, stat, writeFile } from 'node:fs/promises';
-import { join } from 'node:path';
+// Sin dependencias de Node: corre igual en el navegador (PWA) y en Node (CLI, test histórico).
+// La caché se inyecta con configureOpenMeteo(): en Node, archivos (nodeCache.ts); en el navegador, la sesión.
 import type { ProfileHour, ProfileLevel, WindLevel } from '../engine/types.ts';
 import type { Point } from '../geo/neighborhood.ts';
 
@@ -29,7 +28,25 @@ const SURFACE_VARS = [
   'precipitation',
 ];
 const CHUNK_SIZE = 3;
-const CACHE_DIR = join(import.meta.dirname, '../../.cache/open-meteo');
+
+/** Dónde guardar respuestas ya descargadas. `maxAgeMs` = antigüedad máxima aceptable. */
+export interface CacheStore {
+  get(url: string, maxAgeMs: number): Promise<unknown | null>;
+  set(url: string, data: unknown): Promise<void>;
+}
+
+const noCache: CacheStore = { get: async () => null, set: async () => {} };
+
+const settings = {
+  cache: noCache,
+  /** En Node conviene esperar el minuto del límite gratuito; en el navegador, mejor avisar enseguida. */
+  waitOnMinuteLimit: true,
+  attempts: 3,
+};
+
+export function configureOpenMeteo(opts: Partial<typeof settings>) {
+  Object.assign(settings, opts);
+}
 
 function hourlyVariables(): string[] {
   const vars = [...SURFACE_VARS];
@@ -72,23 +89,26 @@ const CACHE_TTL_MS: Record<Source, number> = { historical: Infinity, forecast: 6
 
 async function getJson(url: string, ttlMs: number): Promise<OpenMeteoLocation[]> {
   const useCache = ttlMs > 0;
-  const cacheFile = join(CACHE_DIR, `${createHash('sha1').update(url).digest('hex')}.json`);
   if (useCache) {
-    try {
-      if (Date.now() - (await stat(cacheFile)).mtimeMs > ttlMs) throw new Error('vencida');
-      return JSON.parse(await readFile(cacheFile, 'utf8'));
-    } catch {
-      // no está en caché
-    }
+    const hit = await settings.cache.get(url, ttlMs).catch(() => null);
+    if (hit) return hit as OpenMeteoLocation[];
   }
   let lastError: unknown;
-  for (let attempt = 0; attempt < 3; attempt++) {
+  for (let attempt = 0; attempt < settings.attempts; attempt++) {
+    let res: Response;
     try {
-      const res = await fetch(url);
+      res = await fetch(url);
+    } catch (err) {
+      // Sin red (o el pedido no llegó): reintentar y, si sigue, avisar como problema de conexión.
+      lastError = new NetworkError(String(err));
+      if (attempt < settings.attempts - 1) await new Promise((r) => setTimeout(r, 1500 * (attempt + 1)));
+      continue;
+    }
+    try {
       if (res.status === 429) {
         const reason = (await res.json().catch(() => ({}))).reason ?? '';
-        // Plan gratuito: si es el límite por minuto, esperar; si es por hora o por día, no tiene sentido reintentar.
-        if (/hourly|daily/i.test(reason)) throw new RateLimitError(`Open-Meteo: ${reason}`);
+        // Plan gratuito: si es el límite por hora o por día, no tiene sentido reintentar.
+        if (/hourly|daily/i.test(reason) || !settings.waitOnMinuteLimit) throw new RateLimitError(`Open-Meteo: ${reason}`);
         lastError = new Error(`Open-Meteo 429: ${reason}`);
         await new Promise((r) => setTimeout(r, 61_000));
         continue;
@@ -97,29 +117,28 @@ async function getJson(url: string, ttlMs: number): Promise<OpenMeteoLocation[]>
       const body = JSON.parse(text); // el servidor a veces devuelve 200 con texto de timeout
       if (!res.ok || body.error) throw new Error(`Open-Meteo ${res.status}: ${body.reason ?? text.slice(0, 200)}`);
       const locations: OpenMeteoLocation[] = Array.isArray(body) ? body : [body];
-      if (useCache) {
-        await mkdir(CACHE_DIR, { recursive: true });
-        await writeFile(cacheFile, JSON.stringify(locations));
-      }
+      if (useCache) await settings.cache.set(url, locations).catch(() => {});
       return locations;
     } catch (err) {
       if (err instanceof RateLimitError) throw err;
       lastError = err;
-      await new Promise((r) => setTimeout(r, 1500 * (attempt + 1)));
+      if (attempt < settings.attempts - 1) await new Promise((r) => setTimeout(r, 1500 * (attempt + 1)));
     }
   }
   throw lastError;
 }
 
-/** Se agotó el cupo gratuito por hora o por día de Open-Meteo. */
+/** Se agotó el cupo gratuito de Open-Meteo. */
 export class RateLimitError extends Error {}
+/** No se pudo hablar con Open-Meteo (sin conexión o red caída). */
+export class NetworkError extends Error {}
 
 async function fetchChunk(opts: FetchOptions, points: Point[], model: string): Promise<OpenMeteoLocation[]> {
   const url = buildUrl(opts.source, points, opts.startDate, opts.endDate, model);
   try {
     return await getJson(url, CACHE_TTL_MS[opts.source]);
   } catch (err) {
-    if (points.length === 1 || err instanceof RateLimitError) throw err;
+    if (points.length === 1 || err instanceof RateLimitError || err instanceof NetworkError) throw err;
     // Si falla un grupo, probar de a un punto.
     const out: OpenMeteoLocation[] = [];
     for (const p of points) out.push(...(await fetchChunk(opts, [p], model)));

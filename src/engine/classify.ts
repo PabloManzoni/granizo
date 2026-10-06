@@ -13,6 +13,7 @@ import type {
   IngredientLevel,
   IngredientLevels,
   Ingredients,
+  ModelVerdict,
   PointHourAssessment,
   ReasonCode,
   RiskLevel,
@@ -128,9 +129,17 @@ export function assessWindow(pointHours: PointHourAssessment[]): WindowAssessmen
     ...new Set(pointHours.filter((p) => p.environment !== 'weak').map((p) => p.time)),
   ].sort();
 
+  const byHour = new Map<string, Environment>();
+  for (const p of pointHours) {
+    const prev = byHour.get(p.time);
+    if (!prev || ENV_ORDER.indexOf(p.environment) > ENV_ORDER.indexOf(prev)) byHour.set(p.time, p.environment);
+  }
+  const hourly = [...byHour.entries()].sort(([a], [b]) => a.localeCompare(b)).map(([time, environment]) => ({ time, environment }));
+
   return {
     level,
     confidence,
+    hourly,
     season,
     reasons: reasonsFor(peak, triggerPresent, season),
     peak,
@@ -156,8 +165,19 @@ const LEVEL_RANK: Record<RiskLevel, number> = { calm: 0, watch: 1, protect: 2 };
  */
 export function combineModels(results: { model: string; assessment: WindowAssessment }[]): WindowAssessment {
   if (results.length === 0) throw new Error('Sin modelos para combinar');
-  const models = results.map((r) => ({ model: r.model, level: r.assessment.level }));
-  if (results.length === 1) return { ...results[0].assessment, models };
+  const models: ModelVerdict[] = results.map((r) => ({
+    model: r.model,
+    level: r.assessment.level,
+    check: {
+      lapse700500CKm: r.assessment.peak.ingredients.lapse700500CKm,
+      wmaxshearM2s2: r.assessment.peak.ingredients.wmaxshearM2s2,
+      maxShowersMm: r.assessment.trigger.maxShowersMm,
+      maxPrecipitationMm: r.assessment.trigger.maxPrecipitationMm,
+      triggerPresent: r.assessment.trigger.present,
+    },
+  }));
+  // Con un solo modelo no hay con qué contrastar: la confianza baja.
+  if (results.length === 1) return { ...results[0].assessment, confidence: 'low', models };
 
   const [a, b] = results.map((r) => r.assessment);
   const both = (min: RiskLevel) => LEVEL_RANK[a.level] >= LEVEL_RANK[min] && LEVEL_RANK[b.level] >= LEVEL_RANK[min];
@@ -170,12 +190,24 @@ export function combineModels(results: { model: string; assessment: WindowAssess
   // El punto-hora que se muestra sale del modelo más alarmado (a igualdad, el primero).
   const lead = LEVEL_RANK[b.level] > LEVEL_RANK[a.level] ? b : a;
   const confidence: Confidence = lead.season === 'warm' || !agree ? 'low' : 'medium';
+  // Hora por hora, con el mismo criterio que el nivel: "strong" solo si los dos modelos lo ven.
+  const envOf = (x: WindowAssessment, time: string) => x.hourly.find((h) => h.time === time)?.environment ?? 'weak';
+  const times = [...new Set([...a.hourly, ...b.hourly].map((h) => h.time))].sort();
+  const hourly = times.map((time) => {
+    const ea = envOf(a, time);
+    const eb = envOf(b, time);
+    const environment: Environment =
+      ea === 'strong' && eb === 'strong' ? 'strong' : ea !== 'weak' || eb !== 'weak' ? 'supportive' : 'weak';
+    return { time, environment };
+  });
+
   return {
     ...lead,
     level,
     confidence,
     reasons: [...lead.reasons, agree ? 'MODELS_AGREE' : 'MODELS_DISAGREE'],
     favorableHours: [...new Set([...a.favorableHours, ...b.favorableHours])].sort(),
+    hourly,
     models,
   };
 }

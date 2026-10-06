@@ -1,11 +1,12 @@
 // Servidor local: API del motor + PWA básica (sin dependencias).
 // Uso: npm run serve   (PORT=8787 por defecto)
+import './data/nodeCache.ts'; // caché en disco de Open-Meteo
 import { createServer } from 'node:http';
 import { readFile } from 'node:fs/promises';
 import { extname, join, normalize } from 'node:path';
 import { assess } from './assess.ts';
-import { CONFIDENCE, DISCLAIMER, HEADLINES, REASONS, SEASON_NOTE } from './engine/messages.ts';
 import { RateLimitError } from './data/openMeteo.ts';
+import { present } from './presenter.ts';
 import { fmtLocal, nowLocal } from './cli/args.ts';
 import { resolveWindow, WINDOW_LABELS, WINDOW_NAMES, type WindowName } from './windows.ts';
 
@@ -18,6 +19,7 @@ const MIME: Record<string, string> = {
   '.webmanifest': 'application/manifest+json',
   '.svg': 'image/svg+xml',
   '.json': 'application/json',
+  '.map': 'application/json',
 };
 
 /** Uruguay con margen: el motor está calibrado acá. */
@@ -33,50 +35,22 @@ async function handleAssess(url: URL, res: import('node:http').ServerResponse) {
   const lat = Math.round(Number(url.searchParams.get('lat')) * 100) / 100;
   const lon = Math.round(Number(url.searchParams.get('lon')) * 100) / 100;
   const windowName = (url.searchParams.get('window') ?? 'tonight') as WindowName;
-  if (!Number.isFinite(lat) || !Number.isFinite(lon)) return json(res, 400, { error: 'Faltan lat y lon.' });
+  if (!Number.isFinite(lat) || !Number.isFinite(lon)) return json(res, 400, { code: 'bad_request', error: 'Faltan lat y lon.' });
   if (lat < BOUNDS.latMin || lat > BOUNDS.latMax || lon < BOUNDS.lonMin || lon > BOUNDS.lonMax) {
-    return json(res, 400, { error: 'Por ahora el motor solo funciona en Uruguay.' });
+    return json(res, 400, { code: 'outside', error: 'Por ahora el motor solo funciona en Uruguay.' });
   }
-  if (!WINDOW_NAMES.includes(windowName)) return json(res, 400, { error: 'Ventana desconocida.' });
+  if (!WINDOW_NAMES.includes(windowName)) return json(res, 400, { code: 'bad_request', error: 'Ventana desconocida.' });
 
   const { from, to } = resolveWindow(windowName);
   try {
     const r = await assess({ center: { lat, lon }, from, to, source: 'forecast' });
-    const i = r.peak.ingredients;
-    json(res, 200, {
-      level: r.level,
-      headline: HEADLINES[r.level],
-      confidence: r.confidence,
-      confidenceLabel: CONFIDENCE[r.confidence],
-      season: r.season,
-      seasonNote: SEASON_NOTE[r.season],
-      reasons: r.reasons.map((code) => ({ code, text: REASONS[code] })),
-      window: { name: windowName, label: WINDOW_LABELS[windowName], from, to },
-      favorableHours: r.favorableHours.length
-        ? { from: r.favorableHours[0], to: r.favorableHours.at(-1) }
-        : null,
-      peak: {
-        time: r.peak.time,
-        muCapeJkg: Math.round(i.muCapeJkg),
-        shear06Ms: i.shear06Ms === null ? null : Math.round(i.shear06Ms * 10) / 10,
-        lapse700500CKm: i.lapse700500CKm === null ? null : Math.round(i.lapse700500CKm * 100) / 100,
-        t500C: i.t500C,
-        wmaxshearM2s2: i.wmaxshearM2s2 === null ? null : Math.round(i.wmaxshearM2s2),
-        ship: i.ship === null ? null : Math.round(i.ship * 100) / 100,
-        maxShowersMm: r.trigger.maxShowersMm,
-      },
-      models: r.models ?? [],
-      model: `${(r.models ?? []).map((m) => m.model).join(' + ') || 'GFS'} (vía Open-Meteo)`,
-      generatedAt: fmtLocal(nowLocal()),
-      engineVersion: r.engineVersion,
-      disclaimer: DISCLAIMER,
-    });
+    json(res, 200, present(r, { name: windowName, label: WINDOW_LABELS[windowName], from, to }, fmtLocal(nowLocal())));
   } catch (err) {
     if (err instanceof RateLimitError) {
-      return json(res, 503, { error: 'La fuente de datos llegó a su límite gratuito por ahora. Probá en un rato.' });
+      return json(res, 503, { code: 'limit', error: 'La fuente de datos llegó a su límite gratuito por ahora.' });
     }
     console.error('assess error', err);
-    json(res, 502, { error: 'No pudimos obtener el pronóstico. Probá de nuevo en unos minutos.' });
+    json(res, 502, { code: 'server', error: 'No pudimos obtener el pronóstico.' });
   }
 }
 
@@ -91,7 +65,7 @@ async function serveStatic(pathname: string, res: import('node:http').ServerResp
     const body = await readFile(file);
     res.writeHead(200, {
       'content-type': MIME[extname(file)] ?? 'application/octet-stream',
-      'cache-control': rel === 'sw.js' ? 'no-cache' : 'public, max-age=300',
+      'cache-control': rel === 'sw.js' || process.env.NODE_ENV !== 'production' ? 'no-cache' : 'public, max-age=300',
     });
     res.end(body);
   } catch {

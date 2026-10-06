@@ -5,7 +5,8 @@
       "name": "hail-guard",
       "runtimeExecutable": "npm",
       "runtimeArgs": ["run", "serve"],
-      "port": 8787
+      "port": 8787,
+      "autoPort": true
     }
   ]
 }
