@@ -112,13 +112,13 @@ test('solo señales fuertes: protegelo cuando los dos modelos lo ven, sin "es lo
   assert.ok(!v.notices.some((x) => x.strong === 'Es lo habitual.'));
 });
 
-test('cada resultado trae los tres grados para el selector', () => {
+test('el selector ofrece dos grados: equilibrado y solo señales fuertes', () => {
   const all = devScenario('atento_divididos');
   assert.deepEqual(
     all.balanced.sensitivityOptions.map((o) => [o.id, o.name]),
-    [['sensitive', 'Cualquier señal'], ['balanced', 'Equilibrado'], ['strict', 'Solo señales fuertes']],
+    [['balanced', 'Equilibrado'], ['strict', 'Solo señales fuertes']],
   );
-  assert.equal(all.balanced.sensitivityOptions[1].summary, 'Recomendado.');
+  assert.equal(all.balanced.sensitivityOptions[0].summary, 'Recomendado.');
   // El nivel de cada grado sale de las mismas reglas: GFS fuerte con tormentas, ECMWF nada.
   assert.deepEqual([all.sensitive.levelName, all.balanced.levelName, all.strict.levelName], ['Chances reales', 'Algunas chances', 'Muy pocas chances']);
 });

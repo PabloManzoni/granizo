@@ -26,9 +26,10 @@ const K = { places: 'hg.places', useGps: 'hg.useGps', lastPlace: 'hg.lastPlace',
 // El resultado vale para las próximas 24 h (ver src/windows.ts); las horas se ven en una tira que se desliza.
 
 // Grado de alerta: cuánta señal hace falta para avisar. El motor calcula los tres; acá se elige cuál mostrar.
-const SENSITIVITIES = ['sensitive', 'balanced', 'strict'];
+// "Cualquier señal" ya no se ofrece: quien la tenía guardada vuelve a "Equilibrado".
+const SENSITIVITIES = ['balanced', 'strict'];
 /** Hacia dónde apunta la aguja del ícono: a la derecha, más sensible (avisa más). */
-const SENSITIVITY_NEEDLE = { sensitive: 'M12 14L17.2 11', balanced: 'M12 14V8', strict: 'M12 14L6.8 11' };
+const SENSITIVITY_NEEDLE = { balanced: 'M12 14V8', strict: 'M12 14L6.8 11' };
 const sensitivity = () => {
   const s = store.get(K.sensitivity, 'balanced');
   return SENSITIVITIES.includes(s) ? s : 'balanced';

@@ -59,11 +59,10 @@ Cuando el ambiente no es de granizo pero el modelo pronostica lluvia convectiva 
 
 ### Grado de alerta
 
-Cada persona elige en la app cuánta señal hace falta para que suba el nivel. Los datos y los ingredientes son los mismos; cambian el umbral de Algunas chances y cuántos modelos tienen que coincidir. Se guarda solo en el teléfono.
+Cada persona elige en la app cuánta señal hace falta para que suba el nivel: **Equilibrado** o **Solo señales fuertes**. Los datos y los ingredientes son los mismos; cambian el umbral de Algunas chances y cuántos modelos tienen que coincidir. Se guarda solo en el teléfono.
 
 | Grado | Algunas chances | Chances reales | Modelos |
 |---|---|---|---|
-| **Cualquier señal** | WMAXSHEAR ≥ 400 | ≥ 1200 y tormentas | alcanza con uno |
 | **Equilibrado** (por defecto) | WMAXSHEAR ≥ 900 | ≥ 1200 y tormentas | la regla de arriba |
 | **Solo señales fuertes** | WMAXSHEAR ≥ 1200 | ≥ 1200 y tormentas | los dos |
 
@@ -71,11 +70,12 @@ Medidos sobre los mismos casos (`node scripts/sweep-sensitivity.ts`), en 2025–
 
 | Grado | Algunas chances o más: detección / falsas alarmas | Chances reales: detección / falsas alarmas |
 |---|---|---|
-| Cualquier señal | 96% / 79% | 68% / 29% |
 | Equilibrado | 82% / 38% | 43% / 15% |
 | Solo señales fuertes | 46% / 18% | 43% / 15% |
 
 Los grados se definieron mirando todos los años, así que estas cifras no son una validación limpia: sirven para comparar los grados entre sí. Con "Solo señales fuertes", si el grado equilibrado habría avisado, la app no sube el nivel pero dice "Señales débiles de granizo".
+
+Hubo un tercer grado, "Cualquier señal" (WMAXSHEAR ≥ 400 y alcanza con un modelo), que se sacó de la app: detectaba el 96% de las granizadas, pero avisaba en el 79% de los días de tormenta sin granizo, casi siempre. El motor lo sigue calculando para las pruebas.
 
 ### Confianza
 

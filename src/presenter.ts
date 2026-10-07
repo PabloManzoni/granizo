@@ -36,6 +36,9 @@ export const HAIL_STATUS: Record<ViewLevel, string> = {
   protect: 'Peligro de granizo',
 };
 
+/** Los grados que ofrece la app. "Cualquier señal" sigue en el motor (consola y pruebas), pero no se ofrece. */
+export const APP_SENSITIVITIES: Sensitivity[] = ['balanced', 'strict'];
+
 /** Grado de alerta: nombre visible y una línea de qué hace. */
 export const SENSITIVITY_NAMES: Record<Sensitivity, string> = {
   sensitive: 'Cualquier señal',
@@ -64,7 +67,7 @@ export interface ResultView {
   /** Grado de alerta con el que se armó este resultado. */
   sensitivity: Sensitivity;
   sensitivityName: string;
-  /** Los tres grados, para el selector. */
+  /** Los grados que ofrece la app, para el selector. */
   sensitivityOptions: {
     id: Sensitivity;
     name: string;
@@ -313,7 +316,7 @@ export function present(
         ? 'Abril–septiembre y los modelos coinciden → media. No damos "alta": la prueba histórica no lo justifica.'
         : 'Los modelos no coinciden → baja.';
 
-  const sensitivityOptions = SENSITIVITIES.map((id) => ({ id, name: SENSITIVITY_NAMES[id], summary: SENSITIVITY_SUMMARY[id] }));
+  const sensitivityOptions = APP_SENSITIVITIES.map((id) => ({ id, name: SENSITIVITY_NAMES[id], summary: SENSITIVITY_SUMMARY[id] }));
 
   return {
     sensitivity,

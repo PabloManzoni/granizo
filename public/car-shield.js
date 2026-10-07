@@ -10,7 +10,9 @@
   };
   const LV = {
     calm: { hail: 0, rain: 0, breath: 6, scan: 6 },
-    storm: { hail: 0, rain: 78, rmin: 0.34, rmax: 0.55, splash: true, bolt: true, flicker: true, soft: true, breath: 1.1, scan: 2 },
+    // Sutil: tormenta sin granizo es el estado de "muy pocas chances". Poca lluvia y lenta, salpicaduras chicas,
+    // un rayo de vez en cuando sin destello de pantalla; el auto y el domo quietos.
+    storm: { hail: 0, rain: 26, rmin: 0.8, rmax: 1.15, splash: 'soft', ro: '.38', bolt: 'soft', breath: 3.2, scan: 3.6 },
     watch: { hail: 4, rain: 9, rmin: 1.7, rmax: 2.6, dmin: 2.6, dmax: 3.8, smin: 2.6, smax: 4.2, breath: 3, scan: 3.2 },
     protect: { hail: 26, dmin: 0.7, dmax: 1.15, smin: 3.2, smax: 7.5, breath: 0.9, scan: 0.9, rain: 30, rmin: 0.42, rmax: 0.66, violent: true, bolt: true }
   };
@@ -32,6 +34,7 @@ svg{width:100%;height:100%;display:block;overflow:hidden}
 .shake2{transform-box:view-box;transform-origin:100px 130px;animation:shake2 .6s linear infinite}
 .bolt{animation:bolt 3.7s linear infinite}
 .bolt2{animation:bolt 5.3s linear 1.9s infinite}
+.bolt-soft{animation:bolt 11s linear 2.5s infinite}
 .flicker{animation:flicker 1.1s steps(1) infinite}
 .hl{animation:hl var(--b) ease-in-out infinite}
 .hz{animation:hz .55s steps(1) infinite}
@@ -97,9 +100,9 @@ svg{width:100%;height:100%;display:block;overflow:hidden}
       for (let i = 0; i < L.rain; i++) {
         const [ex, ey] = surf((192 + r() * 156) * Math.PI / 180), D = 190, len = L.splash ? 12 + r() * 12 : 8 + r() * 10;
         const dur = L.rmin + r() * (L.rmax - L.rmin), del = -r() * dur * 3;
-        if (L.splash && i % 3 === 0) fx += `<polygon class="fl" style="animation-duration:${n(dur)}s;animation-delay:${n(del)}s" points="${hexAt(ex, ey, 6.9)}" fill="${P.c}" fill-opacity=".4" stroke="${P.hi}" stroke-width=".7"/>`;
+        if (L.splash === true && i % 3 === 0) fx += `<polygon class="fl" style="animation-duration:${n(dur)}s;animation-delay:${n(del)}s" points="${hexAt(ex, ey, 6.9)}" fill="${P.c}" fill-opacity=".4" stroke="${P.hi}" stroke-width=".7"/>`;
         else if (L.splash && i % 2 === 0) fx += `<ellipse class="fl" style="animation-duration:${n(dur)}s;animation-delay:${n(del)}s" cx="${n(ex)}" cy="${n(ey)}" rx="2.4" ry="1" fill="none" stroke="${P.hi}" stroke-opacity=".8" stroke-width=".6"/>`;
-        rain += `<line class="st" style="--sx:${n(ex - DIR[0] * D)}px;--sy:${n(ey - DIR[1] * D)}px;--ex:${n(ex)}px;--ey:${n(ey)}px;animation-duration:${n(dur)}s;animation-delay:${n(del)}s" x1="0" y1="0" x2="${n(-DIR[0] * len)}" y2="${n(-DIR[1] * len)}" stroke="${P.hi}" stroke-opacity="${L.splash ? '.55' : '.35'}" stroke-width="${L.splash ? '.7' : '.6'}" stroke-linecap="round"/>`;
+        rain += `<line class="st" style="--sx:${n(ex - DIR[0] * D)}px;--sy:${n(ey - DIR[1] * D)}px;--ex:${n(ex)}px;--ey:${n(ey)}px;animation-duration:${n(dur)}s;animation-delay:${n(del)}s" x1="0" y1="0" x2="${n(-DIR[0] * len)}" y2="${n(-DIR[1] * len)}" stroke="${P.hi}" stroke-opacity="${L.ro || (L.splash ? '.55' : '.35')}" stroke-width="${L.splash ? '.7' : '.6'}" stroke-linecap="round"/>`;
       }
       for (let i = 0; i < L.hail; i++) {
         const [ex, ey] = surf((195 + r() * 150) * Math.PI / 180), D = 200;
@@ -125,14 +128,16 @@ svg{width:100%;height:100%;display:block;overflow:hidden}
 <g mask="url(#${id}mk)"><path d="${D}" fill="url(#${id}hxb)"/></g>`;
       const front = `<path class="${L.violent || L.flicker ? 'flicker' : ''}" d="M28 150 A72 72 0 0 1 172 150" fill="none" stroke="${P.c}" stroke-width="1.2"/>`;
 
-      const bolt = L.bolt ? `<path class="bolt" d="M44 6 L34 34 L43 34 L30 66 L54 28 L44 28 L53 6 Z" fill="${P.hi}" opacity="0" filter="url(#${id}gl)"/>
+      const bolt = L.bolt === 'soft'
+        ? `<path class="bolt-soft" d="M44 6 L34 34 L43 34 L30 66 L54 28 L44 28 L53 6 Z" fill="${P.hi}" opacity="0" style="fill-opacity:.6"/>`
+        : L.bolt ? `<path class="bolt" d="M44 6 L34 34 L43 34 L30 66 L54 28 L44 28 L53 6 Z" fill="${P.hi}" opacity="0" filter="url(#${id}gl)"/>
 <path class="bolt2" d="M164 4 L156 26 L163 26 L152 50 L171 21 L163 21 L170 4 Z" fill="${P.hi}" opacity="0" filter="url(#${id}gl)"/>` : '';
-      const overlay = L.bolt ? `<circle class="bolt" cx="100" cy="100" r="100" fill="url(#${id}fl)" opacity="0"/><circle class="bolt2" cx="100" cy="100" r="100" fill="url(#${id}fl)" opacity="0" style="fill-opacity:.65"/>` : '';
+      const overlay = L.bolt === true ? `<circle class="bolt" cx="100" cy="100" r="100" fill="url(#${id}fl)" opacity="0"/><circle class="bolt2" cx="100" cy="100" r="100" fill="url(#${id}fl)" opacity="0" style="fill-opacity:.65"/>` : '';
 
       this.shadowRoot.innerHTML = `<style>${CSS}</style>
 <svg viewBox="0 0 200 200" role="img" aria-label="${LABEL[l] || LABEL.calm}" style="--b:${L.breath}s;--sc:${L.scan}s">
 <defs>
-<radialGradient id="${id}bg" cx="100" cy="128" r="100" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="${P.c}" stop-opacity="${L.violent ? '.42' : L.bolt ? '.38' : '.26'}"/><stop offset=".55" stop-color="${P.deep}" stop-opacity=".22"/><stop offset="1" stop-color="#000" stop-opacity="0"/></radialGradient>
+<radialGradient id="${id}bg" cx="100" cy="128" r="100" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="${P.c}" stop-opacity="${L.violent ? '.42' : L.bolt === true ? '.38' : '.26'}"/><stop offset=".55" stop-color="${P.deep}" stop-opacity=".22"/><stop offset="1" stop-color="#000" stop-opacity="0"/></radialGradient>
 <radialGradient id="${id}dm" cx="100" cy="150" r="72" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="${P.c}" stop-opacity=".06"/><stop offset=".72" stop-color="${P.c}" stop-opacity=".14"/><stop offset=".95" stop-color="${P.c}" stop-opacity=".42"/><stop offset="1" stop-color="${P.hi}" stop-opacity=".7"/></radialGradient>
 <radialGradient id="${id}fl" cx="100" cy="80" r="100" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="${P.hi}" stop-opacity=".32"/><stop offset=".6" stop-color="${P.hi}" stop-opacity=".1"/><stop offset="1" stop-color="${P.hi}" stop-opacity="0"/></radialGradient>
 <linearGradient id="${id}bd" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#262335"/><stop offset="1" stop-color="#07060B"/></linearGradient>
