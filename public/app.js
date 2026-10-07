@@ -76,7 +76,7 @@ function getPosition() {
 // El motor corre en el teléfono (engine.js, empaquetado desde src/browser.ts).
 let enginePromise = null;
 const loadEngine = () => (enginePromise ??= import('/engine.js'));
-const ERROR_VIEWS = { outside: 'outside', limit: 'limit', offline: 'offline', server: 'server' };
+const ERROR_VIEWS = { outside: 'outside', limit: 'limit', offline: 'offline', slow: 'slow', server: 'server' };
 
 let requestId = 0;
 export async function consult() {
@@ -153,6 +153,7 @@ function errorCopy(kind) {
     nolocation: { mark: '?', cat: 'Ubicación', title: 'No pudimos ubicarte', body: 'El GPS tardó demasiado. Probá de nuevo o elegí un lugar guardado.', cta: retry, cta2: usePlace },
     outside: { mark: '×', cat: 'Cobertura', title: 'Por ahora, solo Uruguay', body: 'Ese lugar queda fuera de la zona que miramos. Probá con un punto dentro del país.', cta: { label: 'Elegir otro lugar', action: () => showView('places') } },
     limit: { mark: '~', cat: 'Servicio', title: 'Mucha demanda', body: 'La fuente de datos llegó a su límite gratuito por ahora. Probá en un rato.', cta: retry },
+    slow: { mark: '–', cat: 'Servicio', title: 'El pronóstico no responde', body: 'Open-Meteo, de donde sacamos los datos, está tardando demasiado. Probá de nuevo en un rato.', cta: retry },
     server: { mark: '!', cat: 'Servicio', title: 'No pudimos consultar', body: 'El problema es nuestro, no tuyo. Probá de nuevo en un rato.', cta: retry },
     // No es un error, pero comparte el molde: mientras el GPS responde.
     locating: { mark: '…', cat: 'Ubicación', title: 'Buscando dónde estás', body: first ? `Tarda unos segundos. Si preferís, mirá ${first.name}.` : 'Tarda unos segundos.', cta: usePlace },

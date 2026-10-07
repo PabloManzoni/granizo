@@ -48,6 +48,8 @@ const settings = {
   /** En Node conviene esperar el minuto del límite gratuito; en el navegador, mejor avisar enseguida. */
   waitOnMinuteLimit: true,
   attempts: 3,
+  /** Cuánto esperar cada pedido (0 = lo que aguante fetch). En el navegador, sin esto una consulta colgada queda cargando para siempre. */
+  timeoutMs: 0,
 };
 
 export function configureOpenMeteo(opts: Partial<typeof settings>) {
@@ -108,10 +110,10 @@ async function getJson(url: string, ttlMs: number): Promise<OpenMeteoLocation[]>
   for (let attempt = 0; attempt < settings.attempts; attempt++) {
     let res: Response;
     try {
-      res = await fetch(url);
+      res = await fetch(url, settings.timeoutMs > 0 ? { signal: AbortSignal.timeout(settings.timeoutMs) } : undefined);
     } catch (err) {
       // Sin red (o el pedido no llegó): reintentar y, si sigue, avisar como problema de conexión.
-      lastError = new NetworkError(String(err));
+      lastError = isTimeout(err) ? new SlowError('Open-Meteo no respondió a tiempo') : new NetworkError(String(err));
       if (attempt < settings.attempts - 1) await new Promise((r) => setTimeout(r, 1500 * (attempt + 1)));
       continue;
     }
@@ -132,7 +134,7 @@ async function getJson(url: string, ttlMs: number): Promise<OpenMeteoLocation[]>
       return locations;
     } catch (err) {
       if (err instanceof RateLimitError) throw err;
-      lastError = err;
+      lastError = isTimeout(err) ? new SlowError('Open-Meteo no terminó de responder a tiempo') : err;
       if (attempt < settings.attempts - 1) await new Promise((r) => setTimeout(r, 1500 * (attempt + 1)));
     }
   }
@@ -143,6 +145,9 @@ async function getJson(url: string, ttlMs: number): Promise<OpenMeteoLocation[]>
 export class RateLimitError extends Error {}
 /** No se pudo hablar con Open-Meteo (sin conexión o red caída). */
 export class NetworkError extends Error {}
+/** Open-Meteo no contestó dentro de `timeoutMs`. Es un NetworkError para no reintentar de a un punto (sería peor). */
+export class SlowError extends NetworkError {}
+const isTimeout = (err: unknown) => err instanceof Error && (err.name === 'TimeoutError' || err.name === 'AbortError');
 
 async function fetchChunk(opts: FetchOptions, points: Point[], model: string): Promise<OpenMeteoLocation[]> {
   const url = buildUrl(opts, points, model);

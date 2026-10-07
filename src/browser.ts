@@ -3,7 +3,7 @@
 // Se empaqueta con esbuild en public/engine.js (npm run build).
 import { assessBySensitivity } from './assess.ts';
 import { fmtLocal, nowLocal } from './cli/args.ts';
-import { configureOpenMeteo, NetworkError, RateLimitError, type CacheStore } from './data/openMeteo.ts';
+import { configureOpenMeteo, NetworkError, RateLimitError, SlowError, type CacheStore } from './data/openMeteo.ts';
 import type { Sensitivity } from './engine/config.ts';
 import { presentAll, type ResultView } from './presenter.ts';
 import { resolveWindow, WINDOW_LABELS, WINDOW_NAMES, type WindowName } from './windows.ts';
@@ -35,12 +35,12 @@ const sessionCache: CacheStore = {
     }
   },
 };
-configureOpenMeteo({ cache: sessionCache, waitOnMinuteLimit: false, attempts: 2 });
+configureOpenMeteo({ cache: sessionCache, waitOnMinuteLimit: false, attempts: 2, timeoutMs: 20_000 });
 
 /** Uruguay con margen: el motor está calibrado acá. */
 const BOUNDS = { latMin: -35.5, latMax: -29.5, lonMin: -59.0, lonMax: -52.5 };
 
-export type ErrorCode = 'outside' | 'limit' | 'offline' | 'server';
+export type ErrorCode = 'outside' | 'limit' | 'offline' | 'slow' | 'server';
 
 export class AssessError extends Error {
   code: ErrorCode;
@@ -68,6 +68,7 @@ export async function assessHere(latIn: number, lonIn: number, windowName: Windo
     return presentAll(r, { name, label: WINDOW_LABELS[name], from, to }, fmtLocal(nowLocal()));
   } catch (err) {
     if (err instanceof RateLimitError) throw new AssessError('limit', err.message);
+    if (err instanceof SlowError) throw new AssessError('slow', err.message);
     if (err instanceof NetworkError) throw new AssessError('offline', err.message);
     throw new AssessError('server', String(err));
   }

@@ -20,6 +20,7 @@ const STATES = [
   ['nolocation', 'GPS no responde', () => showError('nolocation')],
   ['outside', 'Fuera de UY', () => showError('outside')],
   ['limit', 'Límite datos', () => showError('limit')],
+  ['slow', 'Pronóstico lento', () => showError('slow')],
   ['server', 'Error servidor', () => showError('server')],
   ['places', 'Lugares', () => showView('places')],
   ['install', 'Modal instalar', () => openInstallModal()],
