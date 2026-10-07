@@ -36,3 +36,8 @@ test('hoy y mañana se tocan: no queda ninguna hora afuera', () => {
     assert.equal(resolveWindow('today', at(t)).to, resolveWindow('tomorrow', at(t)).from, t);
   }
 });
+
+test('próximas 24 h: desde la hora actual, 24 horas contando la primera', () => {
+  assert.deepEqual(resolveWindow('next24h', at('2026-10-06T10:40')), { from: '2026-10-06T10:00', to: '2026-10-07T09:00' });
+  assert.deepEqual(resolveWindow('next24h', at('2026-12-31T23:05')), { from: '2026-12-31T23:00', to: '2027-01-01T22:00' });
+});

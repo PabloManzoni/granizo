@@ -50,15 +50,18 @@ export class AssessError extends Error {
   }
 }
 
-/** El resultado con cada grado de alerta: la app muestra el que eligió la persona y cambia sin volver a consultar. */
-export async function assessHere(latIn: number, lonIn: number, windowName: WindowName): Promise<Record<Sensitivity, ResultView>> {
+/**
+ * El resultado con cada grado de alerta: la app muestra el que eligió la persona y cambia sin volver a consultar.
+ * La app pide las próximas 24 h; las otras ventanas quedan para la consola.
+ */
+export async function assessHere(latIn: number, lonIn: number, windowName: WindowName = 'next24h'): Promise<Record<Sensitivity, ResultView>> {
   // Redondeo a ~1 km: alcanza para una zona de 40 km.
   const lat = Math.round(latIn * 100) / 100;
   const lon = Math.round(lonIn * 100) / 100;
   if (lat < BOUNDS.latMin || lat > BOUNDS.latMax || lon < BOUNDS.lonMin || lon > BOUNDS.lonMax) {
     throw new AssessError('outside', 'Por ahora el motor solo funciona en Uruguay.');
   }
-  const name: WindowName = WINDOW_NAMES.includes(windowName) ? windowName : 'today';
+  const name: WindowName = WINDOW_NAMES.includes(windowName) ? windowName : 'next24h';
   const { from, to } = resolveWindow(name);
   try {
     const r = await assessBySensitivity({ center: { lat, lon }, from, to, source: 'forecast' });

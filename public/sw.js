@@ -1,8 +1,8 @@
 // Service worker mínimo: cachea la "cáscara" de la app. El veredicto NUNCA se sirve desde caché
 // (un pronóstico viejo podría engañar): /api y Open-Meteo siempre van a la red.
-const CACHE = 'hg-shell-v10';
+const CACHE = 'hg-shell-v13';
 const SHELL = [
-  '/', '/index.html', '/app.js', '/day-labels.js', '/engine.js', '/styles.css', '/car-shield.js', '/manifest.webmanifest',
+  '/', '/index.html', '/app.js', '/engine.js', '/styles.css', '/car-shield.js', '/manifest.webmanifest',
   '/icon.svg', '/icon-192.png', '/icon-512.png', '/favicon.ico', '/apple-touch-icon.png',
 ];
 self.addEventListener('install', (e) => e.waitUntil(caches.open(CACHE).then((c) => c.addAll(SHELL)).then(() => self.skipWaiting())));

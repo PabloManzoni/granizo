@@ -5,6 +5,7 @@ import { assessPointHour, assessWindow, combineModels } from './engine/classify.
 import { SENSITIVITIES, SENSITIVITY_RULES, type Sensitivity, type SensitivityRules } from './engine/config.ts';
 import type { Ingredients, WindowAssessment } from './engine/types.ts';
 import { presentAll, type ResultView } from './presenter.ts';
+import { WINDOW_LABELS } from './windows.ts';
 
 type Env = 'weak' | 'storm' | 'watch' | 'strong';
 
@@ -28,90 +29,76 @@ const INGREDIENTS: Record<Env, Ingredients> = {
   },
 };
 
-/** Ventana de 24 h desde `start`; `pattern` asigna un ambiente por hora (índice), el resto queda "weak". */
-const windowAssessment = (date: string, startHour: number, pattern: Record<number, Env>) => (rules: SensitivityRules): WindowAssessment => {
-  const pts = Array.from({ length: 24 }, (_, i) => {
-    const t = new Date(`${date}T${String(startHour).padStart(2, '0')}:00:00Z`);
-    t.setUTCHours(t.getUTCHours() + i);
-    const time = t.toISOString().slice(0, 16);
-    return assessPointHour(time, -34.8, -55.9, INGREDIENTS[pattern[i] ?? 'weak'], rules);
-  });
+/** Las 24 h que mira la app. */
+const HOURS = 24;
+
+/** Ventana de 24 h desde `start` ("YYYY-MM-DDTHH"); `pattern` asigna un ambiente por hora (índice), el resto queda "weak". */
+const windowAssessment = (start: string, pattern: Record<number, Env>) => (rules: SensitivityRules): WindowAssessment => {
+  const pts = Array.from({ length: HOURS }, (_, i) =>
+    assessPointHour(hourAt(start, i), -34.8, -55.9, INGREDIENTS[pattern[i] ?? 'weak'], rules),
+  );
   return assessWindow(pts, rules);
 };
+const hourAt = (start: string, plus: number) => new Date(Date.parse(`${start}:00:00Z`) + plus * 3600_000).toISOString().slice(0, 16);
 
 const range = (a: number, b: number, env: Env) => Object.fromEntries(Array.from({ length: b - a + 1 }, (_, k) => [a + k, env]));
 
-type Scenario = { models: { model: string; assessment: (rules: SensitivityRules) => WindowAssessment }[]; window: { name: string; label: string } };
-const TODAY = { name: 'today', label: 'Hoy (hasta mañana a las 8 h)' };
-const TOMORROW = { name: 'tomorrow', label: 'Mañana (8 a 8 h)' };
+/** `start`: la hora de la consulta; `pattern`: ambiente por hora desde ahí (índice). */
+type Scenario = { models: { model: string; pattern: Record<number, Env> }[]; start: string };
 
 const SCENARIOS: Record<string, () => Scenario> = {
-  tranquilo: () => ({
-    models: [
-      { model: 'GFS', assessment: windowAssessment('2026-07-15', 20, {}) },
-      { model: 'ECMWF', assessment: windowAssessment('2026-07-15', 20, {}) },
-    ],
-    window: TODAY,
-  }),
-  tranquilo_verano: () => ({
-    models: [
-      { model: 'GFS', assessment: windowAssessment('2026-01-15', 8, {}) },
-      { model: 'ECMWF', assessment: windowAssessment('2026-01-15', 8, {}) },
-    ],
-    window: TODAY,
-  }),
+  tranquilo: () => ({ start: '2026-07-15T20', models: [{ model: 'GFS', pattern: {} }, { model: 'ECMWF', pattern: {} }] }),
+  tranquilo_verano: () => ({ start: '2026-01-15T08', models: [{ model: 'GFS', pattern: {} }, { model: 'ECMWF', pattern: {} }] }),
   tormenta: () => ({
+    start: '2026-06-12T08',
     models: [
-      { model: 'GFS', assessment: windowAssessment('2026-06-12', 8, range(6, 9, 'storm')) },
-      { model: 'ECMWF', assessment: windowAssessment('2026-06-12', 8, range(7, 10, 'storm')) },
+      { model: 'GFS', pattern: range(6, 9, 'storm') },
+      { model: 'ECMWF', pattern: range(7, 10, 'storm') },
     ],
-    window: TODAY,
   }),
   tormenta_verano: () => ({
+    start: '2026-01-20T20',
     models: [
-      { model: 'GFS', assessment: windowAssessment('2026-01-20', 20, range(1, 4, 'storm')) },
-      { model: 'ECMWF', assessment: windowAssessment('2026-01-20', 20, {}) },
+      { model: 'GFS', pattern: range(1, 4, 'storm') },
+      { model: 'ECMWF', pattern: {} },
     ],
-    window: TODAY,
   }),
   atento: () => ({
+    start: '2026-08-20T08',
     models: [
-      { model: 'GFS', assessment: windowAssessment('2026-08-20', 8, range(8, 10, 'watch')) },
-      { model: 'ECMWF', assessment: windowAssessment('2026-08-20', 8, range(8, 11, 'watch')) },
+      { model: 'GFS', pattern: range(8, 10, 'watch') },
+      { model: 'ECMWF', pattern: range(8, 11, 'watch') },
     ],
-    window: TODAY,
   }),
   atento_divididos: () => ({
+    start: '2026-08-20T08',
     models: [
-      { model: 'GFS', assessment: windowAssessment('2026-08-20', 8, { ...range(6, 9, 'watch'), 7: 'strong', 8: 'strong' }) },
-      { model: 'ECMWF', assessment: windowAssessment('2026-08-20', 8, {}) },
+      { model: 'GFS', pattern: { ...range(6, 9, 'watch'), 7: 'strong', 8: 'strong' } },
+      { model: 'ECMWF', pattern: {} },
     ],
-    window: TODAY,
   }),
+  // La piedra cae en el segundo tramo de 12 h (para probar que el gráfico abre ahí).
   protegelo: () => ({
+    start: '2026-09-09T20',
     models: [
-      { model: 'GFS', assessment: windowAssessment('2026-09-10', 8, { 8: 'watch', ...range(9, 11, 'strong') }) },
-      { model: 'ECMWF', assessment: windowAssessment('2026-09-10', 8, { ...range(9, 11, 'strong') }) },
+      { model: 'GFS', pattern: { 20: 'watch', ...range(21, 23, 'strong') } },
+      { model: 'ECMWF', pattern: range(21, 23, 'strong') },
     ],
-    window: TOMORROW,
   }),
-  un_modelo: () => ({
-    models: [{ model: 'GFS', assessment: windowAssessment('2026-08-20', 8, range(7, 9, 'watch')) }],
-    window: TODAY,
-  }),
+  un_modelo: () => ({ start: '2026-08-20T08', models: [{ model: 'GFS', pattern: range(7, 9, 'watch') }] }),
 };
 
 export const DEV_SCENARIOS = Object.keys(SCENARIOS);
 
-/** El escenario con cada grado de alerta, igual que lo devuelve assessHere. */
-export function devScenario(name: string, generatedAt: string): Record<Sensitivity, ResultView> {
+/** El escenario con cada grado de alerta, igual que lo devuelve assessHere. Se consulta a los 40 minutos de `start`. */
+export function devScenario(name: string): Record<Sensitivity, ResultView> {
   const s = SCENARIOS[name]();
   const bySensitivity = Object.fromEntries(
     SENSITIVITIES.map((sens) => {
       const rules = SENSITIVITY_RULES[sens];
-      return [sens, combineModels(s.models.map((m) => ({ model: m.model, assessment: m.assessment(rules) })), rules.combine)];
+      return [sens, combineModels(s.models.map((m) => ({ model: m.model, assessment: windowAssessment(s.start, m.pattern)(rules) })), rules.combine)];
     }),
   ) as Record<Sensitivity, WindowAssessment>;
-  const hours = bySensitivity.balanced.hourly.map((h) => h.time);
-  return presentAll(bySensitivity, { ...s.window, from: hours[0], to: hours[hours.length - 1] }, generatedAt);
+  const window = { name: 'next24h', label: WINDOW_LABELS.next24h, from: hourAt(s.start, 0), to: hourAt(s.start, HOURS - 1) };
+  return presentAll(bySensitivity, window, `${s.start}:40`);
 }

@@ -86,10 +86,14 @@ a { color: var(--ink-3); }
 .shield { width: min(260px, 72vw); aspect-ratio: 1; margin: -8px 0 -18px; }
 car-shield { display: block; width: 100%; height: 100%; }
 .kicker { font-size: 12px; letter-spacing: 0.24em; text-transform: uppercase; color: var(--accent); }
-.level { margin: 0; font-size: 54px; line-height: 1; font-weight: 200; letter-spacing: -0.04em; }
+/* Los nombres son largos ("Muy pocas chances"): siempre en una línea, achicándose con el ancho de la pantalla. */
+.level { margin: 0; font-size: min(42px, 9.4vw); line-height: 1.05; font-weight: 200; letter-spacing: -0.04em; white-space: nowrap; }
 .hail {
-  margin: 2px 0 4px;
-  font-size: 15px;
+  margin: 2px auto 4px;
+  max-width: 300px;
+  font-size: 13px;
+  line-height: 1.35;
+  text-wrap: balance;
   font-weight: 600;
   letter-spacing: 0.14em;
   text-transform: uppercase;
@@ -108,22 +112,14 @@ car-shield { display: block; width: 100%; height: 100%; }
   border: 1px solid var(--accent);
 }
 .hero-text { display: flex; flex-direction: column; gap: 6px; animation: rise 0.8s both; }
-.title { margin: 0; font-size: 19px; line-height: 1.35; max-width: 300px; text-wrap: balance; animation: rise 0.8s 0.1s both; }
 
 /* ---------- Grado de alerta: botón chico en el resultado + modal ---------- */
-.bars { display: inline-flex; align-items: flex-end; gap: 2px; height: 11px; }
-.bars i { width: 3px; border-radius: 1px; background: var(--line-3); }
-.bars i:nth-child(1) { height: 5px; }
-.bars i:nth-child(2) { height: 8px; }
-.bars i:nth-child(3) { height: 11px; }
-.bars i.on { background: currentColor; }
-.sens-pill {
-  display: inline-flex; align-items: center; gap: 8px; height: 30px; padding: 0 12px;
-  border-radius: 99px; border: 1px solid var(--line-2); background: transparent;
-  color: var(--muted); font-size: 12px;
+.sens-gauge {
+  display: inline-grid; place-items: center; width: 30px; height: 30px; padding: 0;
+  border-radius: 50%; border: 1px solid var(--line-2); background: transparent; color: var(--accent);
 }
-.sens-pill .bars { color: var(--accent); }
-.sens-pill:hover { color: var(--ink); border-color: var(--line-3); }
+.sens-gauge:hover { border-color: var(--line-3); }
+.gauge { width: 20px; height: 14px; fill: none; stroke: currentColor; stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; }
 .sens-options { display: flex; flex-direction: column; gap: 8px; }
 .sens-option {
   position: relative; display: flex; flex-direction: column; gap: 4px; padding: 14px;
@@ -133,6 +129,8 @@ car-shield { display: block; width: 100%; height: 100%; }
 .sens-option:has(input:checked) { border-color: var(--ink-3); background: var(--panel-2); }
 .sens-option:has(input:focus-visible) { outline: 2px solid var(--accent); outline-offset: 2px; }
 .sens-head { display: flex; align-items: center; gap: 8px; color: var(--faint); }
+.sens-head .gauge { width: 24px; height: 16px; }
+.gauge circle { fill: currentColor; stroke: none; }
 .sens-option:has(input:checked) .sens-head { color: var(--ink); }
 .sens-name { font-size: 15px; font-weight: 600; color: var(--ink); }
 .modal .sens-summary { font-size: 13px; line-height: 1.45; color: var(--muted); }
@@ -165,17 +163,51 @@ car-shield { display: block; width: 100%; height: 100%; }
 .notice { margin: 0; font-size: 13px; line-height: 1.5; color: var(--ink-3); padding-top: 12px; border-top: 1px solid var(--line); }
 .notice strong { color: #fff; font-weight: 600; }
 .why p { margin: 0; font-size: 14px; line-height: 1.5; color: var(--ink-2); }
+.why .lead { font-size: 16px; line-height: 1.4; color: var(--ink); text-wrap: balance; }
 
-.hours { display: grid; grid-template-columns: repeat(var(--n, 12), minmax(0, 1fr)); align-items: start; min-height: 36px; }
-.hour { display: grid; grid-template-rows: 16px auto; justify-items: center; align-items: center; row-gap: 6px; }
+/* Horas: tira que se desliza (unas 8 a la vista y la siguiente asoma), barrita de posición y texto. */
+.strip-wrap { position: relative; margin: 0 -18px; }
+.strip {
+  display: grid; grid-auto-flow: column; grid-auto-columns: calc((100% - 18px) / 8.5);
+  padding: 6px 0 4px 18px; overflow-x: auto; overscroll-behavior-x: contain;
+  scroll-snap-type: x mandatory; scroll-padding-left: 18px; scrollbar-width: none;
+  /* Difuminado en el borde donde hay más horas. */
+  --fade-l: 0px; --fade-r: 48px;
+  mask-image: linear-gradient(to right, transparent, #000 var(--fade-l), #000 calc(100% - var(--fade-r)), transparent);
+  -webkit-mask-image: linear-gradient(to right, transparent, #000 var(--fade-l), #000 calc(100% - var(--fade-r)), transparent);
+}
+.strip::-webkit-scrollbar { display: none; }
+.strip:not(.at-start) { --fade-l: 32px; }
+.strip.at-end { --fade-r: 0px; }
+.hour { display: grid; grid-template-rows: 12px 16px auto; justify-items: center; align-items: center; row-gap: 6px; scroll-snap-align: start; }
 .hour i { display: block; width: 5px; height: 5px; border-radius: 50%; background: var(--dot-off); }
 .hour.l1 i { width: 11px; height: 11px; background: var(--c-watch); box-shadow: 0 0 12px var(--c-watch); }
 .hour.l2 i { width: 16px; height: 16px; background: var(--c-protect); box-shadow: 0 0 12px var(--c-protect); }
 .hour span { font-size: 9px; color: var(--faint); opacity: 0.6; white-space: nowrap; }
 .hour.l1 span, .hour.l2 span { opacity: 1; }
-/* 24 h o más: puntos más chicos para que no se pisen. */
-.hours.dense .hour.l1 i { width: 8px; height: 8px; }
-.hours.dense .hour.l2 i { width: 11px; height: 11px; }
+.hour:first-child span:last-child { color: var(--ink); opacity: 1; }
+/* Cambio de día: el nombre arriba y una línea fina a la izquierda. */
+.hour .day { opacity: 1; color: var(--muted); }
+.hour.newday { box-shadow: inset 1px 0 0 var(--line-2); }
+/* Barrita: las 36 h; la parte clara es lo que se ve y las marcas, las horas de riesgo. */
+.track { position: relative; height: 4px; border-radius: 99px; background: var(--line); }
+.track-thumb { position: absolute; top: 0; bottom: 0; left: 0; width: 25%; border-radius: 99px; background: var(--line-3); transition: left 0.1s linear; }
+.track-mark { position: absolute; top: -1px; bottom: -1px; min-width: 3px; border-radius: 99px; z-index: 1; }
+.track-mark.watch { background: var(--c-watch); }
+.track-mark.protect { background: var(--c-protect); }
+/* Flechas: solo con mouse (al pasar por la tarjeta) o con teclado (al enfocarlas). */
+.strip-arrow {
+  position: absolute; top: 50%; transform: translateY(-50%); width: 30px; height: 30px; padding: 0;
+  border-radius: 50%; border: 1px solid var(--line-2); background: var(--panel); color: var(--ink); font-size: 16px; line-height: 1;
+  opacity: 0; pointer-events: none; transition: opacity 0.2s;
+}
+.strip-arrow.prev { left: 6px; }
+.strip-arrow.next { right: 6px; }
+.strip-arrow[hidden] { display: none; }
+.strip-arrow:focus-visible { opacity: 1; pointer-events: auto; }
+@media (hover: hover) {
+  .hours-card:hover .strip-arrow { opacity: 1; pointer-events: auto; }
+}
 .watch-text { margin: 0; font-size: 14px; }
 
 .tech { padding: 0; gap: 0; background: transparent; animation-delay: 0.3s; }
@@ -276,22 +308,9 @@ car-shield { display: block; width: 100%; height: 100%; }
 .add-form input { flex: 1; height: 50px; padding: 0 18px; border-radius: 99px; border: 1px solid var(--line-3); background: var(--panel); color: var(--ink); }
 .status { margin: 0; font-size: 13px; color: var(--muted); text-align: center; }
 
-/* ---------- Abajo: ventana / acciones ---------- */
+/* ---------- Abajo: acciones ---------- */
 .bottom { position: fixed; left: 0; right: 0; bottom: 0; padding: 0 16px max(26px, env(safe-area-inset-bottom)); pointer-events: none; z-index: 6; }
 .bottom > * { max-width: 408px; margin: 0 auto; pointer-events: auto; }
-.when {
-  position: relative; display: flex; padding: 5px; border-radius: 99px;
-  background: rgba(30, 26, 38, 0.72); border: 1px solid var(--line-2);
-  backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
-}
-.when .thumb {
-  position: absolute; top: 5px; bottom: 5px; left: 5px; width: calc((100% - 10px) / 2);
-  border-radius: 99px; background: var(--ink);
-  transition: transform 0.5s cubic-bezier(0.3, 1.5, 0.5, 1);
-}
-.when button { position: relative; flex: 1; height: 52px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 1px; line-height: 1.15; border: 0; background: transparent; color: var(--muted); font-size: 14px; font-weight: 500; transition: color 0.3s; }
-.when button[aria-checked='true'] { color: #000; }
-.when .day { font-size: 10px; font-weight: 400; letter-spacing: 0.02em; opacity: 0.75; }
 .ctas { display: flex; flex-direction: column; gap: 8px; }
 .cta { width: 100%; height: 58px; border-radius: 99px; border: 0; background: var(--ink); color: #000; font-size: 16px; font-weight: 600; }
 .cta.secondary { height: 48px; border: 1px solid var(--line-2); background: #000; color: var(--ink); font-size: 15px; font-weight: 400; }

@@ -1,24 +1,24 @@
 // Ventanas de tiempo en hora de Uruguay (UTC−3 fijo, sin horario de verano desde 2015).
 import { addHours, atHour, fmtLocal, nowLocal } from './cli/args.ts';
 
-export type WindowName = 'tonight' | 'today' | 'tomorrow' | 'next12h';
+export type WindowName = 'tonight' | 'today' | 'tomorrow' | 'next12h' | 'next24h';
 
-export const WINDOW_NAMES: WindowName[] = ['tonight', 'today', 'tomorrow', 'next12h'];
+export const WINDOW_NAMES: WindowName[] = ['tonight', 'today', 'tomorrow', 'next12h', 'next24h'];
 
 export const WINDOW_LABELS: Record<WindowName, string> = {
   tonight: 'Esta noche (20 a 8 h)',
   today: 'Hoy (hasta mañana a las 8 h)',
   tomorrow: 'Mañana (8 a 8 h)',
   next12h: 'Próximas 12 horas',
+  next24h: 'Próximas 24 h',
 };
 
 /**
  * Devuelve la ventana en hora local "YYYY-MM-DDTHH:MM", truncada a la hora para coincidir con datos horarios.
- * La app usa "today" y "tomorrow", y cada día incluye su noche (el auto queda afuera de noche):
+ * La app usa "next24h": desde la hora actual, 24 horas (`to` es la última hora incluida).
  * - today: desde ahora hasta las 8 de la mañana siguiente. De madrugada "hoy" ya es el día nuevo, así que también
  *   va hasta las 8 del día siguiente (hasta ~30 h).
  * - tomorrow: de 8 a 8, empezando mañana.
- * "tonight" y "next12h" quedan para la consola.
  */
 export function resolveWindow(name: WindowName, now: Date = nowLocal()): { from: string; to: string } {
   const hour = now.getUTCHours();
@@ -35,6 +35,10 @@ export function resolveWindow(name: WindowName, now: Date = nowLocal()): { from:
       to = atHour(addHours(t, 24), 8);
       break;
     }
+    case 'next24h':
+      from = atHour(now, hour);
+      to = addHours(from, 23);
+      break;
     case 'next12h':
       from = now;
       to = addHours(now, 12);
@@ -51,3 +55,4 @@ export function resolveWindow(name: WindowName, now: Date = nowLocal()): { from:
   }
   return { from: fmtLocal(from).slice(0, 13) + ':00', to: fmtLocal(to) };
 }
+

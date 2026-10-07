@@ -35,4 +35,4 @@ export const SEASON_NOTE: Record<Season, string> = {
 };
 
 export const DISCLAIMER =
-  'Habla de una zona de ~40 km, no de tu techo. "Tranquilo" no significa imposible. Mirá siempre las alertas oficiales de INUMET.';
+  'Habla de una zona de ~40 km, no de tu techo. "Muy pocas chances" no significa imposible. Mirá siempre las alertas oficiales de INUMET.';

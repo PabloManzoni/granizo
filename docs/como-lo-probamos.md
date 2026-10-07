@@ -1,13 +1,13 @@
 # Cómo funciona Cubierto y cómo lo probamos
 
-Cubierto responde una pregunta concreta: **¿conviene proteger el auto del granizo hoy o mañana?** Cada día incluye su noche: "Hoy" va desde ahora hasta las 8 de la mañana siguiente y "Mañana", de 8 a 8. Este documento explica qué mira el motor, cómo se decidieron sus reglas, qué tan bien funcionan y dónde fallan. Describe la versión 0.2 del motor.
+Cubierto responde una pregunta concreta: **¿conviene proteger el auto del granizo en las próximas 24 horas?** El resultado vale para todo ese lapso, desde la hora actual, y las horas de riesgo se muestran hora por hora en una tira que se desliza. No va más lejos porque con más anticipación el pronóstico pierde calidad (ver más abajo). Este documento explica qué mira el motor, cómo se decidieron sus reglas, qué tan bien funcionan y dónde fallan. Describe la versión 0.2 del motor.
 
 ## En pocas palabras
 
 - El motor es un **conjunto de reglas meteorológicas legibles**, no un modelo de inteligencia artificial. Dos reglas y un umbral por nivel; cualquiera puede revisarlas en `src/engine/config.ts`.
 - Mira el pronóstico de **dos modelos globales** (GFS y ECMWF) sobre una zona de unos 40 km alrededor del lugar elegido.
-- Distingue tres niveles: **Tranquilo**, **Atento** y **Protegelo**. Un cuarto estado, **Tormenta**, avisa de lluvia fuerte sin ambiente de granizo.
-- Fue probado contra **140 casos históricos** de Uruguay (2021–2026). El nivel "Protegelo" avisó en alrededor de **4 de cada 10 granizadas** y se equivocó en alrededor de **15 de cada 100 días de tormenta sin granizo**.
+- Distingue tres niveles, según las chances de granizo: **Muy pocas chances**, **Algunas chances** y **Chances reales**. Si hay tormenta sin ambiente de granizo, el nivel es "Muy pocas chances" y la app avisa la tormenta aparte.
+- Fue probado contra **140 casos históricos** de Uruguay (2021–2026). El nivel "Chances reales" avisó en alrededor de **4 de cada 10 granizadas** y se equivocó en alrededor de **15 de cada 100 días de tormenta sin granizo**.
 - Es una herramienta de **decisión orientativa**. No reemplaza los avisos oficiales de INUMET.
 
 ## Qué datos usa
@@ -37,9 +37,9 @@ Las reglas se aplican a cada punto y a cada hora; el resultado de la ventana es 
 
 | Nivel | Condición en un modelo |
 |---|---|
-| **Protegelo** | Gradiente ≥ 6,5 °C/km **y** WMAXSHEAR ≥ 1200 m²/s², y además el modelo forma tormentas en la zona. |
-| **Atento** | Gradiente ≥ 6,5 °C/km y WMAXSHEAR ≥ 900 m²/s² (o ambiente fuerte, pero sin tormentas en el modelo). |
-| **Tranquilo** | Todo lo demás. |
+| **Chances reales** | Gradiente ≥ 6,5 °C/km **y** WMAXSHEAR ≥ 1200 m²/s², y además el modelo forma tormentas en la zona. |
+| **Algunas chances** | Gradiente ≥ 6,5 °C/km y WMAXSHEAR ≥ 900 m²/s² (o ambiente fuerte, pero sin tormentas en el modelo). |
+| **Muy pocas chances** | Todo lo demás. |
 
 Los números de la tabla salen de la calibración, no de la bibliografía de otras regiones. En Uruguay la CAPE sola y la cizalladura sola separaron poco las tormentas con granizo de las comunes: la cizalladura es alta casi siempre, y el umbral usual de 20 m/s no discrimina. Lo que sí separó fue el gradiente 700–500 hPa y la combinación de energía con viento.
 
@@ -47,21 +47,21 @@ Los números de la tabla salen de la calibración, no de la bibliografía de otr
 
 Cada modelo se evalúa por separado y después se combinan:
 
-- **Protegelo** solo si **los dos** dicen Protegelo.
-- **Atento** si alguno dice Protegelo, o si los dos dicen al menos Atento.
-- **Tranquilo** en el resto de los casos.
+- **Chances reales** solo si **los dos** dicen Chances reales.
+- **Algunas chances** si alguno dice Chances reales, o si los dos dicen al menos Algunas chances.
+- **Muy pocas chances** en el resto de los casos.
 
 Los modelos difieren bastante entre sí caso a caso (la correlación del gradiente entre ambos es de 0,58 y la de WMAXSHEAR, de 0,81). Pedir que coincidan baja las falsas alarmas. Si ECMWF no responde, el motor sigue con GFS solo y lo indica.
 
-### Estado "Tormenta"
+### Tormenta sin granizo
 
-Cuando el ambiente no es de granizo pero el modelo pronostica lluvia convectiva (≥ 0,5 mm/h) o precipitación total (≥ 2 mm/h) en la zona, la app muestra **Tormenta**: lluvia fuerte, rayos o viento, sin señales de piedra.
+Cuando el ambiente no es de granizo pero el modelo pronostica lluvia convectiva (≥ 0,5 mm/h) o precipitación total (≥ 2 mm/h) en la zona, la app muestra **Muy pocas chances** con el aviso **"Tormenta, sin señales de granizo"**: puede haber lluvia fuerte, rayos o viento, pero no piedra.
 
 ### Grado de alerta
 
-Cada persona elige en la app cuánta señal hace falta para que suba el nivel. Los datos y los ingredientes son los mismos; cambian el umbral de Atento y cuántos modelos tienen que coincidir. Se guarda solo en el teléfono.
+Cada persona elige en la app cuánta señal hace falta para que suba el nivel. Los datos y los ingredientes son los mismos; cambian el umbral de Algunas chances y cuántos modelos tienen que coincidir. Se guarda solo en el teléfono.
 
-| Grado | Atento | Protegelo | Modelos |
+| Grado | Algunas chances | Chances reales | Modelos |
 |---|---|---|---|
 | **Cualquier señal** | WMAXSHEAR ≥ 400 | ≥ 1200 y tormentas | alcanza con uno |
 | **Equilibrado** (por defecto) | WMAXSHEAR ≥ 900 | ≥ 1200 y tormentas | la regla de arriba |
@@ -69,7 +69,7 @@ Cada persona elige en la app cuánta señal hace falta para que suba el nivel. L
 
 Medidos sobre los mismos casos (`node scripts/sweep-sensitivity.ts`), en 2025–2026 y en días de tormenta:
 
-| Grado | Atento o más: detección / falsas alarmas | Protegelo: detección / falsas alarmas |
+| Grado | Algunas chances o más: detección / falsas alarmas | Chances reales: detección / falsas alarmas |
 |---|---|---|
 | Cualquier señal | 96% / 79% | 68% / 29% |
 | Equilibrado | 82% / 38% | 43% / 15% |
@@ -105,15 +105,15 @@ La pregunta de la prueba no fue "¿hay tormenta?", sino **si el motor distingue 
 
 | Nivel | Detección de granizadas | Falsas alarmas |
 |---|---|---|
-| **Protegelo** (GFS + ECMWF) | **43%** | **15%** |
-| Protegelo, abril–septiembre | 57% | 19% |
-| Protegelo, octubre–marzo | 0% (de 7 casos) | 11% |
-| Atento o más | 82% | 38% |
+| **Chances reales** (GFS + ECMWF) | **43%** | **15%** |
+| Chances reales, abril–septiembre | 57% | 19% |
+| Chances reales, octubre–marzo | 0% (de 7 casos) | 11% |
+| Algunas chances o más | 82% | 38% |
 
 - **Detección** es el porcentaje de granizadas que el nivel avisó. **Falsas alarmas** es el porcentaje de tormentas sin granizo en las que el nivel se activó igual.
-- **Protegelo** es el nivel útil para decidir. Estas cifras describen cómo se comporta el motor *dentro de días de tormenta*; no son la probabilidad de granizo cuando el nivel se activa. Esa probabilidad depende de cuántas tormentas reales traen granizo, y en la muestra de prueba el granizo está sobrerrepresentado (cerca de la mitad de los casos), mientras que en la vida real es una minoría de los días de tormenta. Con una frecuencia real de granizo del 2% al 10% de los días de tormenta, un "Protegelo" acierta entre ~5% y ~25% de las veces. Sigue siendo mucho más que el promedio, pero conviene leerlo como "el riesgo es varias veces mayor que lo normal", no como "va a granizar".
-- **Atento** avisa de ocho de cada diez granizadas y se activa en cerca de 4 de cada 10 días de tormenta sin granizo. Funciona como un "tené pensado dónde guardarlo", no como una orden de actuar. Su umbral se subió en la versión 0.2.1: con el valor anterior (400) detectaba el 93%, pero se activaba en el 65% de los días de tormenta, casi sin información.
-- El puntaje TSS de Protegelo fue de 0,28 en la validación, contra 0,58 en la calibración. La caída a la mitad es esperable con una muestra de unos 25 casos por grupo, y es la razón por la que los umbrales se consideran provisorios.
+- **Chances reales** es el nivel útil para decidir. Estas cifras describen cómo se comporta el motor *dentro de días de tormenta*; no son la probabilidad de granizo cuando el nivel se activa. Esa probabilidad depende de cuántas tormentas reales traen granizo, y en la muestra de prueba el granizo está sobrerrepresentado (cerca de la mitad de los casos), mientras que en la vida real es una minoría de los días de tormenta. Con una frecuencia real de granizo del 2% al 10% de los días de tormenta, cuando dice "Chances reales" acierta entre ~5% y ~25% de las veces. Sigue siendo mucho más que el promedio, pero conviene leerlo como "el riesgo es varias veces mayor que lo normal", no como "va a granizar".
+- **Algunas chances** avisa de ocho de cada diez granizadas y se activa en cerca de 4 de cada 10 días de tormenta sin granizo. Funciona como un "tené pensado dónde guardarlo", no como una orden de actuar. Su umbral se subió en la versión 0.2.1: con el valor anterior (400) detectaba el 93%, pero se activaba en el 65% de los días de tormenta, casi sin información.
+- El puntaje TSS de Chances reales fue de 0,28 en la validación, contra 0,58 en la calibración. La caída a la mitad es esperable con una muestra de unos 25 casos por grupo, y es la razón por la que los umbrales se consideran provisorios.
 
 ### Qué aporta frente a una alerta oficial
 
@@ -122,9 +122,9 @@ En días de tormenta de abril a septiembre, el motor puede indicar "hoy no es de
 ## Limitaciones conocidas
 
 - **Verano sin habilidad.** De octubre a marzo, el ambiente que ven los modelos globales es casi idéntico en tormentas con y sin granizo. Por eso la confianza es siempre baja en esos meses y la app lo advierte. Para esa época habría que sumar observaciones en tiempo real (rayos, radar, satélite).
-- **Muestra chica.** Hay 17 granizadas en la estación cálida y unos 25 casos por grupo en la validación. Los intervalos de confianza son amplios: el TSS de Protegelo en la validación tiene un intervalo del 90% de 0,10 a 0,48. Las diferencias entre combinaciones de modelos están dentro del ruido; elegir "los dos modelos" fue una decisión de producto (que el nivel máximo alarme poco), no un ganador estadístico.
+- **Muestra chica.** Hay 17 granizadas en la estación cálida y unos 25 casos por grupo en la validación. Los intervalos de confianza son amplios: el TSS de Chances reales en la validación tiene un intervalo del 90% de 0,10 a 0,48. Las diferencias entre combinaciones de modelos están dentro del ruido; elegir "los dos modelos" fue una decisión de producto (que el nivel máximo alarme poco), no un ganador estadístico.
 - **Datos casi de análisis.** La prueba usó el archivo histórico de los modelos, que es mejor que cualquier pronóstico real. Se espera que el desempeño con un pronóstico emitido el día anterior sea algo menor. Una medición indirecta indica que el ambiente termodinámico pronosticado un día antes se mantiene muy parecido al real (correlación de 0,91 en CAPE de superficie), mientras que el disparo de la lluvia convectiva se degrada más (0,65). A dos días de anticipación se pierde bastante.
-- **Resolución espacial.** El motor habla de una zona de unos 40 km, no de una calle. El granizo puede caer en una franja de pocos kilómetros: "Tranquilo" no significa imposible y "Protegelo" no garantiza que caiga sobre el auto.
+- **Resolución espacial.** El motor habla de una zona de unos 40 km, no de una calle. El granizo puede caer en una franja de pocos kilómetros: "Muy pocas chances" no significa imposible y "Chances reales" no garantiza que caiga sobre el auto.
 - **Sesgo de reporte.** Se informa más granizo donde hay más gente, y más desde 2024. Los controles de aeropuerto son tormentas más débiles que los de prensa, lo que puede hacer parecer mejor el desempeño.
 - **Solo Uruguay.** Los umbrales no deben extrapolarse a otras regiones: los valores habituales en otros países no separan bien en el Río de la Plata.
 - **Depende de un servicio externo.** Open-Meteo tiene un cupo gratuito por hora y por día. Si se agota, la app lo informa y no puede mostrar un veredicto hasta que se renueve.

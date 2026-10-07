@@ -13,21 +13,26 @@ import {
 import { DISCLAIMER, REASONS } from './engine/messages.ts';
 import type { RiskLevel, WindowAssessment } from './engine/types.ts';
 
-/** Lo que se muestra: los tres niveles de granizo más "tormenta" (tranquilo para granizo, pero con tormentas). */
+/**
+ * Lo que se muestra: los tres niveles de granizo más "tormenta" (tranquilo para granizo, pero con tormentas).
+ * El nombre habla solo de las chances de granizo: con tormenta y sin granizo, "Muy pocas chances"; la tormenta
+ * se dice en la línea de abajo y se ve en el dibujo.
+ */
 export type ViewLevel = RiskLevel | 'storm';
 
 export const LEVEL_NAMES: Record<ViewLevel, string> = {
-  calm: 'Tranquilo',
-  storm: 'Tormenta',
-  watch: 'Atento',
-  protect: 'Protegelo',
+  calm: 'Muy pocas chances',
+  storm: 'Muy pocas chances',
+  watch: 'Algunas chances',
+  protect: 'Chances reales',
 };
 
 /** La palabra "granizo" siempre visible junto al nivel: la app es solo para granizo. */
 export const HAIL_STATUS: Record<ViewLevel, string> = {
   calm: 'Sin señales de granizo',
-  storm: 'Lluvia fuerte, sin piedra',
-  watch: 'Posible granizo',
+  storm: 'Tormenta, sin señales de granizo',
+  // Condiciones, no pronóstico: muchas veces no cae nada (ver SENSITIVITY_STATS).
+  watch: 'Condiciones para granizo',
   protect: 'Peligro de granizo',
 };
 
@@ -44,7 +49,7 @@ const SENSITIVITY_SUMMARY: Record<Sensitivity, string> = {
 };
 const COMBINE_RULE: Record<SensitivityRules['combine'], string> = {
   either: 'alcanza con que un modelo lo vea, vale el nivel más alto',
-  both: 'protegelo solo si los dos dicen protegelo; atento si alguno dice protegelo o los dos dicen al menos atento',
+  both: 'chances reales solo si los dos lo ven; algunas chances si uno ve chances reales o los dos ven al menos algunas',
   'both-strict': 'los dos modelos lo tienen que ver, vale el nivel más bajo',
 };
 
@@ -86,8 +91,12 @@ export interface ResultView {
   notices: { strong: string; text: string }[];
   why: string[];
   window: WindowInfo;
-  /** 0 = nada, 1 = vigilar, 2 = fuerte. */
-  hours: { time: string; label: string; level: 0 | 1 | 2 }[];
+  /**
+   * Hora por hora. `label`: "Ahora" la primera, después "11", "12"…; `day`: el día ("mié") en la primera hora de
+   * cada día nuevo; `level`: 0 = nada, 1 = vigilar, 2 = fuerte.
+   */
+  hours: { time: string; label: string; day: string | null; level: 0 | 1 | 2 }[];
+  /** "Posible granizo esta tarde." — por momento del día, sin prometer la hora exacta. */
   watchText: string | null;
   tech: { k: string; v: string }[];
   /** Cómo se llegó al nivel: reglas, umbrales y valores de cada modelo. */
@@ -115,7 +124,7 @@ const outOfTen = (x: number, almostAll = 'casi todas las') => (x >= 0.95 ? almos
 const approxOutOfTen = (x: number) => (x >= 0.95 ? outOfTen(x) : `~${outOfTen(x)}`);
 const pct = (x: number) => `${Math.round(x * 100)}%`;
 const viewLevelOf = (r: WindowAssessment): ViewLevel => (r.storm ? 'storm' : r.level);
-/** "Atento" sale seguido en días de tormenta sin granizo con este grado (no es una señal rara). */
+/** "Algunas chances" sale seguido en días de tormenta sin granizo con este grado (no es una señal rara). */
 const watchIsCommon = (s: Sensitivity) => SENSITIVITY_STATS[s].watch.falseAlarm >= 0.3;
 
 function titleFor(level: ViewLevel, lowConfidence: boolean, agree: boolean, weakSignals: boolean): string {
@@ -134,13 +143,49 @@ function noteFor(level: ViewLevel, lowConfidence: boolean, agree: boolean, singl
   return null;
 }
 
-function watchTextFor(hours: ResultView['hours']): string | null {
-  const flagged = hours.filter((h) => h.level > 0);
-  if (!flagged.length) return null;
-  const first = hh(flagged[0].time);
-  if (flagged.length === 1) return `Alrededor de las ${first} h.`;
-  const lastHour = (Number(hh(flagged[flagged.length - 1].time)) + 1) % 24;
-  return `Entre las ${first} y las ${String(lastHour).padStart(2, '0')} h.`;
+const WEEKDAYS = ['domingo', 'lunes', 'martes', 'miércoles', 'jueves', 'viernes', 'sábado'];
+const SHORT_DAYS = ['dom', 'lun', 'mar', 'mié', 'jue', 'vie', 'sáb'];
+const dayIndex = (time: string) => Date.parse(`${time.slice(0, 10)}T00:00:00Z`) / 86_400_000;
+const weekday = (time: string) => new Date(`${time.slice(0, 10)}T00:00:00Z`).getUTCDay();
+const partOfDay = (hour: number) => (hour < 6 ? 'madrugada' : hour < 12 ? 'mañana' : hour < 20 ? 'tarde' : 'noche');
+
+/** "esta tarde", "mañana de noche", "el jueves de madrugada": el momento del día, contado desde la consulta. */
+export function momentOf(time: string, consultedAt: string): string {
+  const part = partOfDay(Number(hh(time)));
+  const days = dayIndex(time) - dayIndex(consultedAt);
+  if (days <= 0) return `esta ${part}`;
+  if (days === 1) return `mañana de ${part}`;
+  return `el ${WEEKDAYS[weekday(time)]} de ${part}`;
+}
+
+/**
+ * Solo lo más grave de las 24 h, por momento del día: si hay horas fuertes, "Peligro de granizo esta noche." aunque
+ * antes haya condiciones; si no, "Condiciones para granizo esta tarde." La tira muestra todo, con sus colores.
+ * No se promete la hora exacta: los modelos no la aciertan. Como mucho dos momentos.
+ */
+export function watchTextFor(hours: { time: string; level: number }[], consultedAt: string): string | null {
+  const worst = Math.max(0, ...hours.map((h) => h.level));
+  if (worst === 0) return null;
+  // Tramos seguidos de horas con el nivel más grave.
+  const runs: { from: number; to: number }[] = [];
+  hours.forEach((h, i) => {
+    if (h.level < worst) return;
+    const last = runs[runs.length - 1];
+    if (last && last.to === i - 1) last.to = i;
+    else runs.push({ from: i, to: i });
+  });
+  const moments: string[] = [];
+  const add = (m: string) => moments.includes(m) || moments.push(m);
+  for (const run of runs) {
+    if (moments.length >= 2) break;
+    // Si ya empezó, "ahora"; si sigue en otro momento del día, también ese ("esta tarde y esta noche").
+    add(run.from === 0 ? 'ahora' : momentOf(hours[run.from].time, consultedAt));
+    if (moments.length < 2 && run.to > run.from) {
+      const end = momentOf(hours[run.to].time, consultedAt);
+      if (end !== momentOf(hours[run.from].time, consultedAt)) add(end);
+    }
+  }
+  return `${worst === 2 ? 'Peligro de granizo' : 'Condiciones para granizo'} ${moments.join(' y ')}.`;
 }
 
 /** Presenta el resultado de cada grado de alerta ("solo señales fuertes" mira al equilibrado para avisar señales débiles). */
@@ -168,7 +213,7 @@ export function present(
   // "Solo señales fuertes" dice tranquilo, pero con el grado equilibrado ya habría aviso: se dice, sin subir el nivel.
   const balanced = bySensitivity?.balanced;
   const weakSignals = sensitivity === 'strict' && r.level === 'calm' && !!balanced && balanced.level !== 'calm';
-  // Cada modelo con el mismo criterio: tranquilo para granizo pero formando tormentas → "Tormenta".
+  // Cada modelo con el mismo criterio: tranquilo para granizo pero formando tormentas → "storm".
   const models = (r.models ?? []).map((m) => {
     const lv: ViewLevel = m.level === 'calm' && m.check?.triggerPresent ? 'storm' : m.level;
     return { model: m.model, level: lv, levelName: LEVEL_NAMES[lv] };
@@ -202,9 +247,10 @@ export function present(
     .filter((c) => c !== 'WARM_SEASON' && c !== 'MODELS_DISAGREE' && c !== 'MODELS_AGREE')
     .map((c) => sentence(REASONS[c]));
 
-  const hours = r.hourly.map((h) => ({
+  const hours = r.hourly.map((h, i, all) => ({
     time: h.time,
-    label: hh(h.time),
+    label: i === 0 ? 'Ahora' : hh(h.time),
+    day: i > 0 && h.time.slice(0, 10) !== all[i - 1].time.slice(0, 10) ? SHORT_DAYS[weekday(h.time)] : null,
     level: (h.environment === 'strong' ? 2 : h.environment === 'supportive' ? 1 : 0) as 0 | 1 | 2,
   }));
 
@@ -240,11 +286,11 @@ export function present(
       rule: 'Energía × viento (WMAXSHEAR)',
       threshold:
         rules.wmaxshearWatch < rules.wmaxshearProtect
-          ? `≥ ${fmt(rules.wmaxshearWatch)} atento · ≥ ${fmt(rules.wmaxshearProtect)} protegelo`
-          : `≥ ${fmt(rules.wmaxshearProtect)} atento y protegelo`,
+          ? `≥ ${fmt(rules.wmaxshearWatch)} algunas · ≥ ${fmt(rules.wmaxshearProtect)} reales`
+          : `≥ ${fmt(rules.wmaxshearProtect)} algunas y reales`,
       values: verdicts.map((m) => {
         const w = m.check!.wmaxshearM2s2 ?? 0;
-        // ✓✓ supera el umbral de "protegelo"; ✓ solo el de "atento".
+        // ✓✓ supera el umbral de "chances reales"; ✓ solo el de "algunas chances".
         return { model: m.model, text: n(m.check!.wmaxshearM2s2, 0), pass: w >= rules.wmaxshearWatch, mark: w >= rules.wmaxshearProtect ? '✓✓' : w >= rules.wmaxshearWatch ? '✓' : '✗' };
       }),
     },
@@ -255,7 +301,7 @@ export function present(
     },
   ];
   const perModel = verdicts.map((m) => `${m.model}: ${LEVEL_NAMES[m.level].toLowerCase()}`).join(' · ');
-  const stormRule = r.storm ? ' Sin ambiente de granizo, pero el modelo forma tormentas en la zona → Tormenta.' : '';
+  const stormRule = r.storm ? ' Sin ambiente de granizo, pero el modelo forma tormentas en la zona: se avisa la tormenta.' : '';
   const combination = (singleModel
     ? `Un solo modelo disponible (${perModel}): su nivel es el resultado.`
     : `${perModel}. Regla de «${name}»: ${COMBINE_RULE[rules.combine]}. → ${LEVEL_NAMES[r.level]}.`) + stormRule;
@@ -278,7 +324,7 @@ export function present(
       combination,
       confidenceWhy,
       validation:
-        `Reglas calibradas con granizadas y días de tormenta de Uruguay 2021–2024 y probadas en 2025–2026. Con «${name}», "Protegelo" avisó en ${approxOutOfTen(stats.protect.hit)} granizadas, con ~${pct(stats.protect.falseAlarm)} de falsas alarmas en días de tormenta; "Atento o más", en ${approxOutOfTen(stats.watch.hit)} granizadas, con ~${pct(stats.watch.falseAlarm)}. Es un motor de reglas, sin IA.`,
+        `Reglas calibradas con granizadas y días de tormenta de Uruguay 2021–2024 y probadas en 2025–2026. Con «${name}», "Chances reales" avisó en ${approxOutOfTen(stats.protect.hit)} granizadas, con ~${pct(stats.protect.falseAlarm)} de falsas alarmas en días de tormenta; "Algunas chances" o más, en ${approxOutOfTen(stats.watch.hit)} granizadas, con ~${pct(stats.watch.falseAlarm)}. Es un motor de reglas, sin IA.`,
       moreUrl: 'https://github.com/PabloManzoni/granizo/blob/main/docs/como-lo-probamos.md',
     },
     level,
@@ -297,7 +343,7 @@ export function present(
     why,
     window,
     hours,
-    watchText: watchTextFor(hours),
+    watchText: watchTextFor(hours, generatedAt),
     tech,
     generatedAt,
     engineVersion: r.engineVersion,

@@ -56,13 +56,13 @@ npm run typecheck
 6. **Confianza**: baja en oct–mar (en el test el ambiente no distinguió granizo de lluvia en verano); en abr–sep, media si los modelos coinciden y baja si no.
 7. **Razones y textos** desde plantillas (`src/engine/messages.ts`). Los nombres visibles de los niveles están a definir en diseño.
 
-Habilidad estimada **fuera de muestra** (2025–2026, en días de tormenta): "protegelo" detecta el **43%** de las granizadas con **15%** de falsas alarmas (57% y 19% en abr–sep; nada en oct–mar). "Atento o más" detecta el 82% con 38% de falsas alarmas (con el umbral anterior, 93% y 65%). Son datos casi de análisis: el pronóstico real del día anterior va a rendir algo menos. Detalle en [`docs/como-lo-probamos.md`](docs/como-lo-probamos.md).
+Habilidad estimada **fuera de muestra** (2025–2026, en días de tormenta): "Chances reales" detecta el **43%** de las granizadas con **15%** de falsas alarmas (57% y 19% en abr–sep; nada en oct–mar). "Algunas chances" o más detecta el 82% con 38% de falsas alarmas (con el umbral anterior, 93% y 65%). Son datos casi de análisis: el pronóstico real del día anterior va a rendir algo menos. Detalle en [`docs/como-lo-probamos.md`](docs/como-lo-probamos.md).
 
 **Rayos (prototipo, `scripts/glm/`)**: el GLM del GOES llega con < 30 s de latencia. Avisa bien "tormenta fuerte cerca, ahora", pero en la muestra no distinguió granizo de tormenta fuerte sin granizo. Sirve como capa de nowcasting de 0–1 h, no como detector de granizo.
 
 ## Interfaz (PWA "Cubierto")
 
-Logo animado `<car-shield>` (`public/car-shield.js`): un auto bajo un domo de panal, con un estado por nivel (Tranquilo, Tormenta, Atento, Protegelo). Mientras carga o busca el GPS, el logo late; en los errores aparece apagado con el símbolo del problema. Abre directo con el resultado para "Mi ubicación" o el último lugar.
+Logo animado `<car-shield>` (`public/car-shield.js`): un auto bajo un domo de panal, con un estado por nivel (muy pocas chances, tormenta sin granizo, algunas chances, chances reales). Mientras carga o busca el GPS, el logo late; en los errores aparece apagado con el símbolo del problema. Abre directo con el resultado para "Mi ubicación" o el último lugar.
 
 - `src/presenter.ts` convierte el resultado del motor en lo que muestra la interfaz: título, nota, avisos, porqué, horas y "Algoritmo". Son plantillas, sin IA.
 - **Botonera de desarrollo** (`public/dev.js`): **solo en localhost** y no se publica. Fuerza cada estado:

@@ -1,5 +1,4 @@
 // Cubierto — PWA. Abre directo con un resultado (donde estás o el último lugar), sin pasos previos.
-import { dayLabels } from '/day-labels.js';
 const $ = (sel) => document.querySelector(sel);
 const esc = (s) => String(s ?? '').replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[c]);
 
@@ -24,15 +23,12 @@ const store = {
 const K = { places: 'hg.places', useGps: 'hg.useGps', lastPlace: 'hg.lastPlace', installed: 'hg.installed', sensitivity: 'hg.sensitivity' };
 
 // ---------- Estado ----------
-// Cada día incluye su noche: "Hoy" va hasta mañana a las 8 (ver src/windows.ts).
-const WHENS = [
-  { id: 'today', label: 'Hoy' },
-  { id: 'tomorrow', label: 'Mañana' },
-];
+// El resultado vale para las próximas 24 h (ver src/windows.ts); las horas se ven en una tira que se desliza.
 
 // Grado de alerta: cuánta señal hace falta para avisar. El motor calcula los tres; acá se elige cuál mostrar.
 const SENSITIVITIES = ['sensitive', 'balanced', 'strict'];
-const SENSITIVITY_BARS = { sensitive: 3, balanced: 2, strict: 1 };
+/** Hacia dónde apunta la aguja del ícono: a la derecha, más sensible (avisa más). */
+const SENSITIVITY_NEEDLE = { sensitive: 'M12 14L17.2 11', balanced: 'M12 14V8', strict: 'M12 14L6.8 11' };
 const sensitivity = () => {
   const s = store.get(K.sensitivity, 'balanced');
   return SENSITIVITIES.includes(s) ? s : 'balanced';
@@ -41,7 +37,7 @@ const sensitivity = () => {
 const state = {
   view: 'loading', // result | loading | locating | error | places
   placeId: null,
-  when: 'today',
+  stripX: 0, // cuánto se deslizó la tira de horas (se conserva al redibujar)
   result: null, // { sensitive, balanced, strict }: el mismo pronóstico con cada grado
   error: null,
   techOpen: false,
@@ -86,6 +82,7 @@ export async function consult() {
   const place = currentPlace();
   const id = ++requestId;
   state.techOpen = false;
+  state.stripX = 0;
   if (!place) {
     state.view = 'places';
     state.placesStatus = 'Agregá un lugar o activá tu ubicación para empezar.';
@@ -109,7 +106,7 @@ export async function consult() {
   try {
     if (devFlags.offline || !navigator.onLine) throw { code: 'offline' };
     const engine = await loadEngine();
-    const views = await engine.assessHere(coords.lat, coords.lon, state.when);
+    const views = await engine.assessHere(coords.lat, coords.lon, 'next24h');
     if (id !== requestId) return;
     showResult(views);
   } catch (err) {
@@ -126,9 +123,7 @@ export function showResult(views) {
   if (views?.level) views = { balanced: views };
   state.view = 'result';
   state.result = views;
-  // El selector de abajo siempre refleja la ventana del resultado que se muestra.
-  const name = views.balanced?.window?.name;
-  if (WHENS.some((w) => w.id === name)) state.when = name;
+  state.stripX = 0;
   render();
 }
 const currentResult = () => state.result?.[sensitivity()] ?? state.result?.balanced ?? null;
@@ -165,8 +160,9 @@ function errorCopy(kind) {
 }
 
 // ---------- Render ----------
-const WHEN_SHORT = { today: 'Hoy', tomorrow: 'Mañana' };
-const bars = (n) => `<span class="bars" aria-hidden="true">${[1, 2, 3].map((i) => `<i class="${i <= n ? 'on' : ''}"></i>`).join('')}</span>`;
+// Ícono del grado de alerta: un medidor con la aguja según el grado (no una campana: no es una notificación).
+const gauge = (sens) =>
+  `<svg class="gauge" viewBox="0 0 24 16" aria-hidden="true"><path d="M3 14a9 9 0 0 1 18 0"/><path d="${SENSITIVITY_NEEDLE[sens]}"/><circle cx="12" cy="14" r="1.4"/></svg>`;
 
 function renderPlacesBar() {
   const bar = $('#places-bar');
@@ -183,9 +179,6 @@ function renderPlacesBar() {
 function renderResult(r) {
   document.body.dataset.level = r.level;
   document.title = `${r.levelName} · ${r.hailStatus} — Cubierto`;
-  const days = dayLabels()[r.window.name];
-  // Con ventanas de 24 h o más, los números de hora van cada 3 para que entren.
-  const dense = r.hours.length > 16;
   const models = r.models
     .map((m) => `<span class="conf-model"><span class="mini-orb ${m.level}"></span><span class="mono">${esc(m.model)}</span> ${esc(m.levelName)}</span>`)
     .join('');
@@ -193,30 +186,17 @@ function renderResult(r) {
     <section class="hero" aria-label="Resultado">
       <div class="shield" aria-hidden="true"><car-shield level="${esc(r.level)}"></car-shield></div>
       <div class="hero-text">
-        <div class="kicker">${esc(WHEN_SHORT[r.window.name] ?? r.window.label)}${days ? ` · ${esc(days)}` : ''}</div>
+        <div class="kicker">${esc(r.window.label)}</div>
         <h1 class="level">${esc(r.levelName)}</h1>
         <p class="hail">${esc(r.hailStatus)}</p>
         <div class="chips">
           ${r.note ? `<span class="note">${esc(r.note)}</span>` : ''}
-          ${r.sensitivityOptions ? `<button type="button" class="sens-pill" data-open="sensitivity" aria-haspopup="dialog" aria-label="Grado de alerta: ${esc(r.sensitivityName)}. Cambiar">${bars(SENSITIVITY_BARS[r.sensitivity])}<span>${esc(r.sensitivityName)}</span></button>` : ''}
+          ${r.sensitivityOptions ? `<button type="button" class="sens-gauge" data-open="sensitivity" aria-haspopup="dialog" aria-label="Grado de alerta: ${esc(r.sensitivityName)}. Cambiar" title="${esc(r.sensitivityName)}">${gauge(r.sensitivity)}</button>` : ''}
         </div>
       </div>
-      <p class="title">${esc(r.title)}</p>
     </section>
 
-    <section class="card why">
-      <h2 class="eyebrow">Por qué</h2>
-      ${r.why.map((y) => `<p>${esc(y)}</p>`).join('')}
-      ${r.notices.map((x) => `<p class="notice"><strong>${esc(x.strong)}</strong> ${esc(x.text)}</p>`).join('')}
-    </section>
-
-    <section class="card">
-      <h2 class="eyebrow">Horas a vigilar</h2>
-      <div class="hours${dense ? ' dense' : ''}" style="--n:${r.hours.length}" aria-hidden="true">
-        ${r.hours.map((h) => `<div class="hour l${h.level}"><i></i><span class="mono">${!dense || Number(h.label) % 3 === 0 ? esc(h.label) : ''}</span></div>`).join('')}
-      </div>
-      ${r.watchText ? `<p class="watch-text">${esc(r.watchText)}</p>` : ''}
-    </section>
+    ${renderHours(r)}
 
     <section class="conf" aria-label="${esc(r.confidenceLabel)}">
       <div class="conf-row">
@@ -225,6 +205,13 @@ function renderResult(r) {
       </div>
       ${models ? `<div class="conf-models">${models}</div>` : ''}
       ${r.confidenceReason ? `<p class="conf-reason">${esc(r.confidenceReason)}</p>` : ''}
+    </section>
+
+    <section class="card why">
+      <h2 class="eyebrow">Explicación</h2>
+      <p class="lead">${esc(r.title)}</p>
+      ${r.why.map((y) => `<p>${esc(y)}</p>`).join('')}
+      ${r.notices.map((x) => `<p class="notice"><strong>${esc(x.strong)}</strong> ${esc(x.text)}</p>`).join('')}
     </section>
 
     <section class="card tech">
@@ -238,6 +225,70 @@ function renderResult(r) {
     Pronósticos GFS (NOAA) y ECMWF vía Open-Meteo (CC BY 4.0). Contiene datos de ECMWF.</p>
     <p class="fine contact"><a href="mailto:pablo.j.manzoni@gmail.com?subject=Cubierto">¿Ideas o dudas? Escribime</a></p>`;
 }
+
+// ---------- Horas: una tira que se desliza ----------
+// Se ven unas 8 horas y la siguiente asoma cortada. Abajo, una barrita con las 24 h: la parte clara es lo que se ve
+// y las marcas de color, las horas de riesgo (se ven aunque nadie deslice). Con mouse o teclado, flechas a los costados.
+function renderHours(r) {
+  const n = r.hours.length;
+  // Horas marcadas seguidas, para dibujarlas en la barrita.
+  const runs = [];
+  r.hours.forEach((h, i) => {
+    if (!h.level) return;
+    const last = runs[runs.length - 1];
+    if (last && last.to === i - 1) {
+      last.to = i;
+      last.level = Math.max(last.level, h.level);
+    } else runs.push({ from: i, to: i, level: h.level });
+  });
+  const pct = (x) => `${((x / n) * 100).toFixed(2)}%`;
+  return `
+    <section class="card hours-card" aria-label="Horas a vigilar">
+      <div class="strip-wrap">
+        <div class="strip" aria-hidden="true">
+          ${r.hours.map((h) => `<div class="hour l${h.level}${h.day ? ' newday' : ''}"><span class="day mono">${esc(h.day ?? '')}</span><i></i><span class="mono">${esc(h.label)}</span></div>`).join('')}
+        </div>
+        <button type="button" class="strip-arrow prev" data-strip="-1" aria-label="Horas anteriores">‹</button>
+        <button type="button" class="strip-arrow next" data-strip="1" aria-label="Horas siguientes">›</button>
+      </div>
+      <div class="track" aria-hidden="true">
+        ${runs.map((x) => `<span class="track-mark ${x.level === 2 ? 'protect' : 'watch'}" style="left:${pct(x.from)};width:${pct(x.to - x.from + 1)}"></span>`).join('')}
+        <span class="track-thumb"></span>
+      </div>
+      ${r.watchText ? `<p class="watch-text">${esc(r.watchText)}</p>` : ''}
+    </section>`;
+}
+
+/** Acomoda la barrita, los difuminados y las flechas a lo que se ve de la tira. */
+function updateStrip() {
+  const strip = document.querySelector('.strip');
+  if (!strip) return;
+  const { scrollLeft: x, scrollWidth: w, clientWidth: v } = strip;
+  const atStart = x <= 1;
+  const atEnd = x + v >= w - 1;
+  strip.classList.toggle('at-start', atStart);
+  strip.classList.toggle('at-end', atEnd);
+  const thumb = document.querySelector('.track-thumb');
+  if (thumb) {
+    thumb.style.left = `${(x / w) * 100}%`;
+    thumb.style.width = `${(v / w) * 100}%`;
+  }
+  const prev = document.querySelector('.strip-arrow.prev');
+  const next = document.querySelector('.strip-arrow.next');
+  if (prev) prev.hidden = atStart;
+  if (next) next.hidden = atEnd;
+}
+
+// "scroll" no burbujea: se escucha en captura. Se guarda cuánto se deslizó para no perderlo al redibujar.
+document.addEventListener(
+  'scroll',
+  (ev) => {
+    if (!ev.target.classList?.contains('strip')) return;
+    state.stripX = ev.target.scrollLeft;
+    updateStrip();
+  },
+  true,
+);
 
 function renderTech(r) {
   const a = r.algorithm;
@@ -311,15 +362,7 @@ function renderPlaces() {
 
 function renderBottom() {
   const bottom = $('#bottom');
-  if (['result', 'loading'].includes(state.view)) {
-    const idx = WHENS.findIndex((w) => w.id === state.when);
-    const days = dayLabels();
-    bottom.innerHTML = `
-      <div class="when" role="radiogroup" aria-label="Cuándo">
-        <div class="thumb" style="transform:translateX(${idx * 100}%)"></div>
-        ${WHENS.map((w) => `<button type="button" role="radio" aria-checked="${w.id === state.when}" aria-label="${w.label}, ${days[w.id]}" data-when="${w.id}">${w.label}<span class="day mono" aria-hidden="true">${days[w.id]}</span></button>`).join('')}
-      </div>`;
-  } else if (state.view === 'error' || state.view === 'locating') {
+  if (state.view === 'error' || state.view === 'locating') {
     const e = errorCopy(state.view === 'locating' ? 'locating' : state.error);
     if (!e.cta) return void (bottom.innerHTML = '');
     bottom.innerHTML = `<div class="ctas">
@@ -334,7 +377,12 @@ function renderBottom() {
 export function render() {
   renderPlacesBar();
   const screen = $('#screen');
-  if (state.view === 'result' && state.result) screen.innerHTML = renderResult(currentResult());
+  if (state.view === 'result' && state.result) {
+    screen.innerHTML = renderResult(currentResult());
+    const strip = screen.querySelector('.strip');
+    if (strip) strip.scrollLeft = state.stripX;
+    updateStrip();
+  }
   else if (state.view === 'loading') screen.innerHTML = `<div class="loading" role="status"><div class="shield pulse" aria-hidden="true"><car-shield level="calm"></car-shield></div><p>Consultando el pronóstico…</p></div>`;
   else if (state.view === 'locating') screen.innerHTML = renderError('locating');
   else if (state.view === 'error') screen.innerHTML = renderError(state.error);
@@ -462,7 +510,7 @@ export function openSensitivityModal() {
           <label class="sens-option">
             <input type="radio" name="sensitivity" value="${esc(o.id)}"${o.id === r.sensitivity ? ' checked' : ''} />
             <span class="sens-head">
-              ${bars(SENSITIVITY_BARS[o.id])}
+              ${gauge(o.id)}
               <span class="sens-name">${esc(o.name)}</span>
             </span>
             <span class="sens-summary">${esc(o.summary)}</span>
@@ -496,9 +544,11 @@ document.addEventListener('click', async (ev) => {
   const t = ev.target.closest('button');
   if (!t) return;
   if (t.dataset.place) return selectPlace(t.dataset.place);
-  if (t.dataset.when) {
-    state.when = t.dataset.when;
-    return consult();
+  if (t.dataset.strip) {
+    const strip = document.querySelector('.strip');
+    const smooth = !window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    strip?.scrollBy({ left: Number(t.dataset.strip) * strip.clientWidth * 0.75, behavior: smooth ? 'smooth' : 'auto' });
+    return;
   }
   if (t.dataset.go === 'places') return showView('places');
   if (t.dataset.go === 'back') {
