@@ -279,6 +279,23 @@ function updateStrip() {
   if (next) next.hidden = atEnd;
 }
 
+/** Avanza (1) o retrocede (-1) casi una pantalla de horas, animado para que se note que se movió. */
+function stepStrip(dir) {
+  const strip = document.querySelector('.strip');
+  if (!strip) return;
+  const smooth = !window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  strip.scrollBy({ left: dir * strip.clientWidth * 0.85, behavior: smooth ? 'smooth' : 'auto' });
+}
+
+// Tocar la tira: mitad derecha avanza, mitad izquierda retrocede. Arrastrar sigue deslizando como siempre:
+// el navegador no manda "click" después de un arrastre, así que acá solo llegan los toques.
+document.addEventListener('click', (ev) => {
+  const strip = ev.target.closest?.('.strip');
+  if (!strip) return;
+  const { left, width } = strip.getBoundingClientRect();
+  stepStrip(ev.clientX < left + width / 2 ? -1 : 1);
+});
+
 // "scroll" no burbujea: se escucha en captura. Se guarda cuánto se deslizó para no perderlo al redibujar.
 document.addEventListener(
   'scroll',
@@ -544,12 +561,7 @@ document.addEventListener('click', async (ev) => {
   const t = ev.target.closest('button');
   if (!t) return;
   if (t.dataset.place) return selectPlace(t.dataset.place);
-  if (t.dataset.strip) {
-    const strip = document.querySelector('.strip');
-    const smooth = !window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    strip?.scrollBy({ left: Number(t.dataset.strip) * strip.clientWidth * 0.75, behavior: smooth ? 'smooth' : 'auto' });
-    return;
-  }
+  if (t.dataset.strip) return stepStrip(Number(t.dataset.strip));
   if (t.dataset.go === 'places') return showView('places');
   if (t.dataset.go === 'back') {
     state.adding = null;

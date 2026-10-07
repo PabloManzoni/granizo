@@ -171,6 +171,8 @@ car-shield { display: block; width: 100%; height: 100%; }
   display: grid; grid-auto-flow: column; grid-auto-columns: calc((100% - 18px) / 8.5);
   padding: 6px 0 4px 18px; overflow-x: auto; overscroll-behavior-x: contain;
   scroll-snap-type: x mandatory; scroll-padding-left: 18px; scrollbar-width: none;
+  /* Se toca para avanzar o retroceder: sin selección de texto ni destello gris al tocar. */
+  user-select: none; -webkit-user-select: none; -webkit-tap-highlight-color: transparent; cursor: pointer;
   /* Difuminado en el borde donde hay más horas. */
   --fade-l: 0px; --fade-r: 48px;
   mask-image: linear-gradient(to right, transparent, #000 var(--fade-l), #000 calc(100% - var(--fade-r)), transparent);
