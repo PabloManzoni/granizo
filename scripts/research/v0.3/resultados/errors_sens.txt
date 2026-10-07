@@ -1,0 +1,114 @@
+# 1. Errores de v0.2 combinado ("protegelo" oficial), 124 casos (52 granizo dañino/sin dato, 72 controles)
+Total: POD=0.52 POFD=0.10 TSS=+0.42
+  estación=cold: n=35/26 POD=0.66 POFD=0.12 TSS=+0.54
+  estación=warm: n=17/46 POD=0.24 POFD=0.09 TSS=+0.15
+  prueba 2025–26=False: n=24/38 POD=0.62 POFD=0.05 TSS=+0.57
+  prueba 2025–26=True: n=28/34 POD=0.43 POFD=0.15 TSS=+0.28
+  con ECMWF=False: n=12/26 POD=0.67 POFD=0.08 TSS=+0.59
+  con ECMWF=True: n=40/46 POD=0.47 POFD=0.11 TSS=+0.37
+  norte (lat > −32,5)=False: n=26/43 POD=0.46 POFD=0.12 TSS=+0.35
+  norte (lat > −32,5)=True: n=26/29 POD=0.58 POFD=0.07 TSS=+0.51
+  con hora, nocturno=False: n=9/35 POD=0.33 POFD=0.00 TSS=+0.33
+  con hora, nocturno=True: n=4/28 POD=0.75 POFD=0.21 TSS=+0.54
+  sin hora: n=39/9 POD=0.54 POFD=0.11 TSS=+0.43
+  falsas alarmas en controles metar: 4/52 protegelo; 27/52 atento+
+  falsas alarmas en controles prensa: 3/20 protegelo; 16/20 atento+
+  granizo chico (excluido): 5/16 protegelo
+
+## Granizadas perdidas (no "protegelo"): 25/52
+  2022-12-28-salto                              warm unknown  hora=None GFS=1 ECMWF=nan HR=0.60 → GFS:WMAX<1200 (máx 457)
+  2024-02-04-rivera                             warm unknown  hora=None GFS=1 ECMWF=nan HR=0.57 → GFS:WMAX<1200 (máx 925)
+  2024-02-23-lascano                            warm unknown  hora=None GFS=0 ECMWF=nan HR=0.67 → GFS:gradiente<6,5 (máx 6.04)
+  2024-02-23-tranqueras                         warm unknown  hora=None GFS=0 ECMWF=nan HR=0.71 → GFS:WMAX<1200 (máx 488)
+  2024-07-24-carmelo                            cold unknown  hora=None GFS=1 ECMWF=1.0 HR=0.76 → GFS:WMAX<1200 (máx 632); ECMWF:WMAX<1200 (máx 837)
+  2024-08-06-salto-aeropuerto                   cold unknown  hora=09:00 GFS=2 ECMWF=1.0 HR=0.86 → GFS:protegelo; ECMWF:WMAX<1200 (máx 1171)
+  2024-09-09-el-pinar-ciudad-de-la-costa        cold damaging hora=16:24 GFS=2 ECMWF=1.0 HR=0.80 → GFS:protegelo; ECMWF:WMAX<1200 (máx 1003)
+  2024-10-17-salto-aeropuerto                   warm unknown  hora=14:00 GFS=0 ECMWF=0.0 HR=0.85 → GFS:WMAX<1200 (máx 444); ECMWF:WMAX<1200 (máx 180)
+  2024-12-01-isidoro-noblia                     warm damaging hora=None GFS=1 ECMWF=2.0 HR=0.82 → GFS:gradiente y WMAX no coinciden en el mismo punto-hora; ECMWF:protegelo
+  2025-01-01-montevideo                         warm unknown  hora=16:50 GFS=2 ECMWF=1.0 HR=0.66 → GFS:protegelo; ECMWF:gradiente y WMAX no coinciden en el mismo punto-hora
+  2025-02-14-young-zona-rural-rio-negro         warm damaging hora=None GFS=0 ECMWF=0.0 HR=0.61 → GFS:gradiente<6,5 (máx 6.38); ECMWF:gradiente<6,5 (máx 6.43)
+  2025-02-22-juan-lacaze                        warm damaging hora=None GFS=2 ECMWF=1.0 HR=0.53 → GFS:protegelo; ECMWF:sin disparo
+  2025-03-03-clara                              warm unknown  hora=None GFS=0 ECMWF=2.0 HR=0.62 → GFS:gradiente<6,5 (máx 6.07); ECMWF:protegelo
+  2025-03-28-piriapolis                         warm unknown  hora=None GFS=1 ECMWF=0.0 HR=0.79 → GFS:WMAX<1200 (máx 1097); ECMWF:gradiente<6,5 (máx 6.47)
+  2025-04-17-villa-25-de-agosto                 cold damaging hora=None GFS=1 ECMWF=2.0 HR=0.94 → GFS:WMAX<1200 (máx 1177); ECMWF:protegelo
+  2025-05-17-paysandu                           cold unknown  hora=None GFS=1 ECMWF=2.0 HR=0.79 → GFS:WMAX<1200 (máx 904); ECMWF:protegelo
+  2025-06-16-rivera                             cold damaging hora=19:00 GFS=1 ECMWF=1.0 HR=0.93 → GFS:WMAX<1200 (máx 733); ECMWF:WMAX<1200 (máx 712)
+  2025-07-26-termas-del-arapey                  cold unknown  hora=None GFS=1 ECMWF=1.0 HR=0.80 → GFS:WMAX<1200 (máx 1034); ECMWF:WMAX<1200 (máx 849)
+  2025-09-22-minas                              cold unknown  hora=13:30 GFS=1 ECMWF=1.0 HR=0.62 → GFS:WMAX<1200 (máx 508); ECMWF:WMAX<1200 (máx 598)
+  2025-11-20-trinidad                           warm unknown  hora=None GFS=1 ECMWF=1.0 HR=0.90 → GFS:WMAX<1200 (máx 1142); ECMWF:gradiente y WMAX no coinciden en el mismo punto-hora
+  2026-02-11-cebollati                          warm damaging hora=None GFS=1 ECMWF=1.0 HR=0.48 → GFS:WMAX<1200 (máx 1194); ECMWF:gradiente y WMAX no coinciden en el mismo punto-hora
+  2026-05-05-san-javier-y-tres-quintas          cold unknown  hora=None GFS=1 ECMWF=2.0 HR=0.66 → GFS:gradiente y WMAX no coinciden en el mismo punto-hora; ECMWF:protegelo
+  2026-08-06-mercedes                           cold unknown  hora=None GFS=1 ECMWF=2.0 HR=0.88 → GFS:WMAX<1200 (máx 1176); ECMWF:protegelo
+  2026-08-16-nico-perez                         cold unknown  hora=None GFS=1 ECMWF=1.0 HR=0.93 → GFS:WMAX<1200 (máx 1193); ECMWF:WMAX<1200 (máx 1008)
+  2026-08-17-rivera-aeropuerto                  cold unknown  hora=01:00 GFS=1 ECMWF=1.0 HR=0.84 → GFS:gradiente y WMAX no coinciden en el mismo punto-hora; ECMWF:gradiente y WMAX no coinciden en el mismo punto-hora
+  Resumen de causas (por modelo): {'WMAX<1200': 23, 'protegelo': 10, 'gradiente y WMAX no coinciden en el mismo punto-hora': 7, 'gradiente<6,5': 5, 'sin disparo': 1}
+
+## Falsas alarmas "protegelo": 7/72
+  ctl-2023-10-11-sumu                           warm metar  hora=01:30 lapse_g=7.37 wmax_g=1347 HR=0.87
+  2024-03-09-fray-bentos                        warm prensa hora=00:30 lapse_g=7.50 wmax_g=1601 HR=0.72
+  ctl-2025-05-08-sumu                           cold metar  hora=00:04 lapse_g=7.24 wmax_g=1458 HR=0.86
+  2025-10-05-carmelo                            warm prensa hora=None lapse_g=8.30 wmax_g=1471 HR=0.86
+  2025-10-05-paysandu                           warm prensa hora=06:10 lapse_g=7.66 wmax_g=1845 HR=0.67
+  ctl-2026-05-07-suls                           cold metar  hora=02:49 lapse_g=7.02 wmax_g=1784 HR=0.79
+  ctl-2026-05-07-suso                           cold metar  hora=07:00 lapse_g=8.41 wmax_g=1528 HR=0.88
+  (solo GFS: 12 falsas alarmas; AND las baja a 7)
+
+# 2. Disparo (lluvia convectiva del modelo): "protegelo" con y sin exigirlo (GFS, todos los casos; y prueba)
+  todos         con disparo: POD=0.60 POFD=0.17 TSS=+0.43 | sin disparo: POD=0.60 POFD=0.18 TSS=+0.42
+  entrenamiento con disparo: POD=0.71 POFD=0.13 TSS=+0.58 | sin disparo: POD=0.71 POFD=0.13 TSS=+0.58
+  prueba        con disparo: POD=0.50 POFD=0.21 TSS=+0.29 | sin disparo: POD=0.50 POFD=0.24 TSS=+0.26
+  fría          con disparo: POD=0.71 POFD=0.15 TSS=+0.56 | sin disparo: POD=0.71 POFD=0.15 TSS=+0.56
+  cálida        con disparo: POD=0.35 POFD=0.17 TSS=+0.18 | sin disparo: POD=0.35 POFD=0.20 TSS=+0.16
+  granizadas con ambiente fuerte en GFS pero sin disparo: 0; controles: 1
+  AUC de la lluvia convectiva máx. (GFS) por estación: fría 0.72, cálida 0.37
+
+# 3. Radio: v0.2 con solo el punto de grilla más cercano vs los 9 puntos (~40 km)
+  todos: GFS 9 pts protegelo POD=0.60 POFD=0.17 TSS=+0.43 | GFS centro POD=0.38 POFD=0.12 TSS=+0.26 | combinado 9 POD=0.52 POFD=0.10 TSS=+0.42 | combinado centro POD=0.25 POFD=0.06 TSS=+0.19
+  todos: atento+  GFS 9 POD=0.90 POFD=0.67 TSS=+0.24 | GFS centro POD=0.81 POFD=0.57 TSS=+0.24
+  prueba: GFS 9 pts protegelo POD=0.50 POFD=0.21 TSS=+0.29 | GFS centro POD=0.39 POFD=0.15 TSS=+0.25 | combinado 9 POD=0.43 POFD=0.15 TSS=+0.28 | combinado centro POD=0.25 POFD=0.09 TSS=+0.16
+  prueba: atento+  GFS 9 POD=0.93 POFD=0.71 TSS=+0.22 | GFS centro POD=0.89 POFD=0.56 TSS=+0.33
+  AUC centro vs 9 puntos (GFS): ver univariate_gfs.csv (ctr_* vs max_*)
+
+# 4. Ventana temporal (solo casos con hora conocida). GFS, nivel protegelo / atento+
+  n = 13 granizo / 63 controles con hora
+  ventana [-18 h, +5 h]: protegelo POD=0.69 POFD=0.16 TSS=+0.53 | atento+ POD=0.92 POFD=0.65 TSS=+0.27
+  ventana [-6 h, +3 h]: protegelo POD=0.54 POFD=0.16 TSS=+0.38 | atento+ POD=0.92 POFD=0.62 TSS=+0.30
+  ventana [-3 h, +2 h]: protegelo POD=0.54 POFD=0.11 TSS=+0.43 | atento+ POD=0.92 POFD=0.51 TSS=+0.42
+  ventana [-12 h, +0 h]: protegelo POD=0.38 POFD=0.13 TSS=+0.26 | atento+ POD=0.77 POFD=0.57 TSS=+0.20
+  ventana [-24 h, +12 h]: protegelo POD=0.69 POFD=0.17 TSS=+0.52 | atento+ POD=0.92 POFD=0.70 TSS=+0.22
+
+# 5. Combinación de modelos (casos con ECMWF; y solo prueba 2025–26)
+  con ECMWF (2024-06→): n=40/46
+     GFS      POD=0.57 POFD=0.22 TSS=+0.36 [+0.19,+0.52]
+     ECMWF    POD=0.62 POFD=0.17 TSS=+0.45 [+0.29,+0.61]
+     AND      POD=0.47 POFD=0.11 TSS=+0.37 [+0.22,+0.52]
+     OR       POD=0.72 POFD=0.28 TSS=+0.44 [+0.28,+0.60]
+     promedio POD=0.62 POFD=0.22 TSS=+0.41 [+0.24,+0.57]  (WMAX co-ubicado con gradiente ≥ 6,5, promediado entre modelos)
+  prueba: n=28/34
+     GFS      POD=0.50 POFD=0.21 TSS=+0.29 [+0.10,+0.49]
+     ECMWF    POD=0.61 POFD=0.24 TSS=+0.37 [+0.18,+0.56]
+     AND      POD=0.43 POFD=0.15 TSS=+0.28 [+0.10,+0.45]
+     OR       POD=0.68 POFD=0.29 TSS=+0.38 [+0.19,+0.58]
+     promedio POD=0.57 POFD=0.21 TSS=+0.37 [+0.17,+0.55]  (WMAX co-ubicado con gradiente ≥ 6,5, promediado entre modelos)
+  prueba fría: n=21/16
+     GFS      POD=0.57 POFD=0.25 TSS=+0.32 [+0.07,+0.57]
+     ECMWF    POD=0.76 POFD=0.25 TSS=+0.51 [+0.27,+0.75]
+     AND      POD=0.57 POFD=0.19 TSS=+0.38 [+0.13,+0.60]
+     OR       POD=0.76 POFD=0.31 TSS=+0.45 [+0.21,+0.68]
+     promedio POD=0.67 POFD=0.19 TSS=+0.48 [+0.24,+0.70]  (WMAX co-ubicado con gradiente ≥ 6,5, promediado entre modelos)
+  prueba cálida: n=7/18
+     GFS      POD=0.29 POFD=0.17 TSS=+0.12 [-0.19,+0.46]
+     ECMWF    POD=0.14 POFD=0.22 TSS=-0.08 [-0.33,+0.21]
+     AND      POD=0.00 POFD=0.11 TSS=-0.11 [-0.22,+0.00]
+     OR       POD=0.43 POFD=0.28 TSS=+0.15 [-0.19,+0.52]
+     promedio POD=0.29 POFD=0.22 TSS=+0.06 [-0.25,+0.37]  (WMAX co-ubicado con gradiente ≥ 6,5, promediado entre modelos)
+
+# 6. Regla candidata v0.3: en la estación cálida, "protegelo"/"atento" solo si HR 850–500 (p90 de la zona-ventana, GFS) < umbral
+  umbral elegido en entrenamiento cálido 2021–24: HR < 0.85 (TSS train +0.57)
+  cálida train: n=10/28 | HR sola POD=1.00 POFD=0.43 TSS=+0.57 | v0.2 atento+ POD=0.70 POFD=0.71 TSS=-0.01 | atento+ ∧ HR POD=0.70 POFD=0.39 TSS=+0.31
+  cálida prueba: n=7/18 | HR sola POD=0.86 POFD=0.61 TSS=+0.25 | v0.2 atento+ POD=0.71 POFD=0.61 TSS=+0.10 | atento+ ∧ HR POD=0.57 POFD=0.33 TSS=+0.24
+  cálida todas: n=17/46 | HR sola POD=0.94 POFD=0.50 TSS=+0.44 | v0.2 atento+ POD=0.71 POFD=0.67 TSS=+0.03 | atento+ ∧ HR POD=0.65 POFD=0.37 TSS=+0.28
+  fría todas: protegelo POD=0.66 POFD=0.12 TSS=+0.54 | protegelo ∧ HR<0.85 POD=0.57 POFD=0.04 TSS=+0.53
+  fría prueba: protegelo POD=0.57 POFD=0.19 TSS=+0.38 | protegelo ∧ HR<0.85 POD=0.43 POFD=0.06 TSS=+0.37
+  HR p90 mediana: granizo cálido 0.71, control cálido 0.85; granizo frío 0.80, control frío 0.88
+  Correlación de Spearman (GFS, casos) HR vs gradiente: -0.11; HR vs WMAX: -0.22; HR vs lluvia conv.: 0.33

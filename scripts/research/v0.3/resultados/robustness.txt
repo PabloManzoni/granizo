@@ -1,0 +1,40 @@
+# (a) Ventana uniforme = día calendario del evento (00–23 h), GFS
+Coincidencia del nivel v0.2 GFS con la ventana oficial: 92%
+  p90_lapse_x_wmax     all 0.77 [0.67–0.86] | cold 0.94 [0.87–0.98] | warm 0.50 [0.35–0.67]
+  p90_wmax             all 0.75 [0.65–0.84] | cold 0.88 [0.77–0.97] | warm 0.56 [0.41–0.73]
+  p90_lapse75          all 0.72 [0.62–0.81] | cold 0.91 [0.83–0.96] | warm 0.43 [0.27–0.59]
+  p90_rh85_50          all 0.23 [0.16–0.31] | cold 0.18 [0.09–0.29] | warm 0.18 [0.10–0.28]
+  max_rh85_50          all 0.28 [0.20–0.36] | cold 0.18 [0.08–0.30] | warm 0.26 [0.15–0.39]
+  pk_lcl_agl           all 0.51 [0.42–0.61] | cold 0.55 [0.42–0.69] | warm 0.75 [0.64–0.86]
+  max_wspd850          all 0.46 [0.36–0.57] | cold 0.42 [0.25–0.63] | warm 0.21 [0.09–0.33]
+  p90_showers          all 0.51 [0.39–0.62] | cold 0.68 [0.51–0.84] | warm 0.22 [0.11–0.35]
+  pk_hgz_depth         all 0.26 [0.18–0.36] | cold 0.37 [0.23–0.51] | warm 0.22 [0.11–0.34]
+  max_cape_above_m10   all 0.65 [0.55–0.75] | cold 0.77 [0.62–0.92] | warm 0.59 [0.44–0.73]
+  v0.2 GFS protegelo con ventana día: POD=0.60 POFD=0.18 TSS=+0.42
+  v0.2 GFS atento+ con ventana día: POD=0.90 POFD=0.72 TSS=+0.18
+  HR p90 (ventana oficial) en controles METAR con hora: mediana 0.88; en granizo sin hora: 0.79; en granizo con hora: 0.80
+
+# (b) Barrido de WMAX y co-ubicación (GFS, ventana oficial, con disparo) — umbral elegido mirando SOLO entrenamiento
+  co-ubicado=True  WMAX≥800: train TSS=+0.33 (POD 0.75/POFD 0.42) | prueba GFS TSS=+0.38 (POD 0.82/POFD 0.44) | prueba AND TSS=+0.39 (POD 0.71/POFD 0.32)
+  co-ubicado=True  WMAX≥900: train TSS=+0.38 (POD 0.75/POFD 0.37) | prueba GFS TSS=+0.49 (POD 0.79/POFD 0.29) | prueba AND TSS=+0.41 (POD 0.64/POFD 0.24)
+  co-ubicado=True  WMAX≥1000: train TSS=+0.46 (POD 0.75/POFD 0.29) | prueba GFS TSS=+0.41 (POD 0.68/POFD 0.26) | prueba AND TSS=+0.33 (POD 0.54/POFD 0.21)
+  co-ubicado=True  WMAX≥1100: train TSS=+0.51 (POD 0.75/POFD 0.24) | prueba GFS TSS=+0.40 (POD 0.61/POFD 0.21) | prueba AND TSS=+0.35 (POD 0.50/POFD 0.15)
+  co-ubicado=True  WMAX≥1200: train TSS=+0.58 (POD 0.71/POFD 0.13) | prueba GFS TSS=+0.29 (POD 0.50/POFD 0.21) | prueba AND TSS=+0.28 (POD 0.43/POFD 0.15)
+  co-ubicado=True  WMAX≥1300: train TSS=+0.48 (POD 0.58/POFD 0.11) | prueba GFS TSS=+0.35 (POD 0.50/POFD 0.15) | prueba AND TSS=+0.21 (POD 0.36/POFD 0.15)
+  co-ubicado=False WMAX≥800: train TSS=+0.32 (POD 0.79/POFD 0.47) | prueba GFS TSS=+0.14 (POD 0.82/POFD 0.68) | prueba AND TSS=+0.27 (POD 0.71/POFD 0.44)
+  co-ubicado=False WMAX≥900: train TSS=+0.37 (POD 0.79/POFD 0.42) | prueba GFS TSS=+0.17 (POD 0.82/POFD 0.65) | prueba AND TSS=+0.30 (POD 0.68/POFD 0.38)
+  co-ubicado=False WMAX≥1000: train TSS=+0.38 (POD 0.75/POFD 0.37) | prueba GFS TSS=+0.29 (POD 0.79/POFD 0.50) | prueba AND TSS=+0.32 (POD 0.64/POFD 0.32)
+  co-ubicado=False WMAX≥1100: train TSS=+0.41 (POD 0.75/POFD 0.34) | prueba GFS TSS=+0.39 (POD 0.71/POFD 0.32) | prueba AND TSS=+0.43 (POD 0.61/POFD 0.18)
+  co-ubicado=False WMAX≥1200: train TSS=+0.49 (POD 0.75/POFD 0.26) | prueba GFS TSS=+0.25 (POD 0.57/POFD 0.32) | prueba AND TSS=+0.32 (POD 0.50/POFD 0.18)
+  co-ubicado=False WMAX≥1300: train TSS=+0.41 (POD 0.62/POFD 0.21) | prueba GFS TSS=+0.39 (POD 0.54/POFD 0.15) | prueba AND TSS=+0.25 (POD 0.39/POFD 0.15)
+
+# (c) HR 850–500 (p90) por modelo, estación cálida y fría, casos con ECMWF
+  GFS (todos)      cold: n=35/26 AUC=0.27 [0.17–0.37]  (1−AUC=0.73)
+  GFS (todos)      warm: n=17/46 AUC=0.21 [0.12–0.33]  (1−AUC=0.79)
+  GFS (con ECMWF)  cold: n=31/20 AUC=0.31 [0.19–0.42]  (1−AUC=0.69)
+  GFS (con ECMWF)  warm: n=9/26 AUC=0.24 [0.10–0.41]  (1−AUC=0.76)
+  ECMWF            cold: n=31/20 AUC=0.31 [0.20–0.45]  (1−AUC=0.69)
+  ECMWF            warm: n=9/26 AUC=0.16 [0.05–0.32]  (1−AUC=0.84)
+  Correlación GFS vs ECMWF de p90 HR850–500 (mismos casos): 0.81
+
+# AUC de "es estación fría" sola (artefacto del diseño): 0.66

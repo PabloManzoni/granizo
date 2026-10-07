@@ -1,0 +1,7 @@
+cold train n=14/10 RH p90 0.10 v0.2 GFS ord 1.00 v0.2 comb ord 0.99 lxw 1.00 hgz 0.26 lcl 0.61
+cold test n=21/16 RH p90 0.39 v0.2 GFS ord 0.71 v0.2 comb ord 0.76 lxw 0.84 hgz 0.48 lcl 0.36
+warm train n=10/28 RH p90 0.17 v0.2 GFS ord 0.54 v0.2 comb ord 0.61 lxw 0.47 hgz 0.23 lcl 0.72
+warm test n=7/18 RH p90 0.25 v0.2 GFS ord 0.56 v0.2 comb ord 0.51 lxw 0.56 hgz 0.35 lcl 0.70
+cold dañino n=11 RH 0.31 lxw 0.91 wmax 0.88 lapse 0.88
+warm dañino n=5 RH 0.14 lxw 0.67 wmax 0.69 lapse 0.54
+spearman hgz_depth vs rh 0.1904035047874886 hgz vs lapse -0.18747846173962662 lcl vs rh -0.3701468018271572
