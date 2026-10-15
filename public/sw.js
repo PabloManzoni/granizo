@@ -1,6 +1,6 @@
 // Service worker mínimo: cachea la "cáscara" de la app. El veredicto NUNCA se sirve desde caché
 // (un pronóstico viejo podría engañar): /api y Open-Meteo siempre van a la red.
-const CACHE = 'hg-shell-v17';
+const CACHE = 'hg-shell-v18';
 const SHELL = [
   '/', '/index.html', '/app.js', '/i18n.js', '/engine.js', '/styles.css', '/car-shield.js', '/manifest.webmanifest',
   '/icon.svg', '/icon-192.png', '/icon-512.png', '/favicon.ico', '/apple-touch-icon.png',
@@ -14,8 +14,9 @@ self.addEventListener('fetch', (e) => {
   // Solo la interfaz propia; los datos (Open-Meteo, otro dominio) y /api van siempre a la red.
   if (e.request.method !== 'GET' || url.origin !== location.origin || url.pathname.startsWith('/api/')) return;
   // Red primero; con red, se guarda la copia nueva para que sin conexión abra la última versión.
+  // "no-cache": GitHub Pages deja cachear 10 minutos y, sin esto, se mezclaría un index.html nuevo con un app.js viejo.
   e.respondWith(
-    fetch(e.request)
+    fetch(e.request, { cache: 'no-cache' })
       .then((res) => {
         if (res.ok && SHELL.includes(url.pathname)) {
           const copy = res.clone();
