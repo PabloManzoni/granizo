@@ -4,7 +4,7 @@
 import { assessPointHour, assessWindow, combineModels } from './engine/classify.ts';
 import { SENSITIVITIES, SENSITIVITY_RULES, type Sensitivity, type SensitivityRules } from './engine/config.ts';
 import type { Ingredients, WindowAssessment } from './engine/types.ts';
-import { presentAll, type ResultView } from './presenter.ts';
+import { presentAll, presentAllLangs, type Lang, type ResultView } from './presenter.ts';
 import { WINDOW_LABELS } from './windows.ts';
 
 type Env = 'weak' | 'storm' | 'watch' | 'strong';
@@ -90,8 +90,7 @@ const SCENARIOS: Record<string, () => Scenario> = {
 
 export const DEV_SCENARIOS = Object.keys(SCENARIOS);
 
-/** El escenario con cada grado de alerta, igual que lo devuelve assessHere. Se consulta a los 40 minutos de `start`. */
-export function devScenario(name: string): Record<Sensitivity, ResultView> {
+function scenarioInputs(name: string) {
   const s = SCENARIOS[name]();
   const bySensitivity = Object.fromEntries(
     SENSITIVITIES.map((sens) => {
@@ -100,5 +99,17 @@ export function devScenario(name: string): Record<Sensitivity, ResultView> {
     }),
   ) as Record<Sensitivity, WindowAssessment>;
   const window = { name: 'next24h', label: WINDOW_LABELS.next24h, from: hourAt(s.start, 0), to: hourAt(s.start, HOURS - 1) };
-  return presentAll(bySensitivity, window, `${s.start}:40`);
+  return { bySensitivity, window, generatedAt: `${s.start}:40` };
+}
+
+/** El escenario con cada grado de alerta, en un idioma. Se consulta a los 40 minutos de `start`. */
+export function devScenario(name: string, lang: Lang = 'es'): Record<Sensitivity, ResultView> {
+  const { bySensitivity, window, generatedAt } = scenarioInputs(name);
+  return presentAll(bySensitivity, window, generatedAt, lang);
+}
+
+/** Igual que lo devuelve assessHere: en todos los idiomas. */
+export function devScenarioAll(name: string): Record<Lang, Record<Sensitivity, ResultView>> {
+  const { bySensitivity, window, generatedAt } = scenarioInputs(name);
+  return presentAllLangs(bySensitivity, window, generatedAt);
 }

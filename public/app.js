@@ -1,4 +1,6 @@
 // Cubierto — PWA. Abre directo con un resultado (donde estás o el último lugar), sin pasos previos.
+import { LANGS, UI } from './i18n.js';
+
 const $ = (sel) => document.querySelector(sel);
 const esc = (s) => String(s ?? '').replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[c]);
 
@@ -20,7 +22,7 @@ const store = {
     }
   },
 };
-const K = { places: 'hg.places', useGps: 'hg.useGps', lastPlace: 'hg.lastPlace', installed: 'hg.installed', sensitivity: 'hg.sensitivity' };
+const K = { places: 'hg.places', useGps: 'hg.useGps', lastPlace: 'hg.lastPlace', installed: 'hg.installed', sensitivity: 'hg.sensitivity', lang: 'hg.lang' };
 
 // ---------- Estado ----------
 // El resultado vale para las próximas 24 h (ver src/windows.ts); las horas se ven en una tira que se desliza.
@@ -35,6 +37,14 @@ const sensitivity = () => {
   return SENSITIVITIES.includes(s) ? s : 'balanced';
 };
 
+// Idioma: español (el original), inglés y suajili (Kenia). Los textos del resultado vienen del motor en los tres idiomas,
+// así que cambiar de idioma no vuelve a consultar el pronóstico.
+const lang = () => {
+  const l = store.get(K.lang, 'es');
+  return UI[l] ? l : 'es';
+};
+const ui = () => UI[lang()];
+
 const state = {
   view: 'loading', // result | loading | locating | error | places
   placeId: null,
@@ -43,7 +53,7 @@ const state = {
   error: null,
   techOpen: false,
   adding: null, // null | { lat, lon } mientras se nombra un lugar nuevo
-  placesStatus: '',
+  placesStatus: '', // clave de ui().status
 };
 
 /** Banderas de desarrollo (las activa la botonera de dev.js, solo en local). */
@@ -53,7 +63,7 @@ export const devFlags = { offline: false, denyLocation: false };
 const savedPlaces = () => store.get(K.places, []).map((p) => (p.id ? p : { ...p, id: `p-${p.name}` }));
 const useGps = () => store.get(K.useGps, true);
 function allPlaces() {
-  const list = useGps() ? [{ id: 'gps', name: 'Mi ubicación', short: 'Mi ubicación' }] : [];
+  const list = useGps() ? [{ id: 'gps', name: ui().myLocation, short: ui().myLocation }] : [];
   return [...list, ...savedPlaces().map((p) => ({ ...p, short: p.name }))];
 }
 function currentPlace() {
@@ -86,7 +96,7 @@ export async function consult() {
   state.stripX = 0;
   if (!place) {
     state.view = 'places';
-    state.placesStatus = 'Agregá un lugar o activá tu ubicación para empezar.';
+    state.placesStatus = 'addPlace';
     return render();
   }
   store.set(K.lastPlace, place.id);
@@ -117,17 +127,21 @@ export async function consult() {
   }
 }
 
-/** `views`: el resultado con cada grado de alerta ({ sensitive, balanced, strict }). */
+/** `views`: el resultado en cada idioma y con cada grado de alerta ({ es: { sensitive, balanced, strict }, en, sw }). */
 export function showResult(views) {
-  // Justo después de publicar, el navegador puede tener un engine.js viejo en caché que devuelve un solo resultado
-  // (el equilibrado): se muestra ese, sin selector, en vez de romper la pantalla.
-  if (views?.level) views = { balanced: views };
+  // Justo después de publicar, el navegador puede tener un engine.js viejo en caché que devuelve solo español
+  // (con grados, o un solo resultado sin selector): se muestra ese en vez de romper la pantalla.
+  if (views?.level) views = { es: { balanced: views } };
+  else if (views && !views.es) views = { es: views };
   state.view = 'result';
   state.result = views;
   state.stripX = 0;
   render();
 }
-const currentResult = () => state.result?.[sensitivity()] ?? state.result?.balanced ?? null;
+const currentResult = () => {
+  const byLang = state.result?.[lang()] ?? state.result?.es;
+  return byLang?.[sensitivity()] ?? byLang?.balanced ?? null;
+};
 export function showError(kind) {
   state.view = 'error';
   state.error = kind;
@@ -140,25 +154,25 @@ export function showView(view) {
 
 // ---------- Errores ----------
 function errorCopy(kind) {
+  const u = ui();
   const first = savedPlaces()[0];
-  const usePlace = first ? { label: `Usar ${first.name}`, action: () => selectPlace(first.id) } : null;
-  const retry = { label: 'Reintentar', action: consult };
-  const E = {
-    offline: { mark: '–', cat: 'Conexión', title: 'Sin conexión', body: 'No pudimos consultar el pronóstico. Revisá la conexión y probá de nuevo.', cta: retry },
-    denied: {
-      mark: '?', cat: 'Ubicación', title: 'No tenemos tu ubicación',
-      body: first ? 'Está bien. Te contestamos para tus lugares guardados.' : 'Activá el permiso de ubicación del navegador para ver tu zona.',
-      cta: usePlace ?? retry, cta2: { label: 'Lugares', action: () => showView('places') },
-    },
-    nolocation: { mark: '?', cat: 'Ubicación', title: 'No pudimos ubicarte', body: 'El GPS tardó demasiado. Probá de nuevo o elegí un lugar guardado.', cta: retry, cta2: usePlace },
-    outside: { mark: '×', cat: 'Cobertura', title: 'Por ahora, solo Uruguay', body: 'Ese lugar queda fuera de la zona que miramos. Probá con un punto dentro del país.', cta: { label: 'Elegir otro lugar', action: () => showView('places') } },
-    limit: { mark: '~', cat: 'Servicio', title: 'Mucha demanda', body: 'La fuente de datos llegó a su límite gratuito por ahora. Probá en un rato.', cta: retry },
-    slow: { mark: '–', cat: 'Servicio', title: 'El pronóstico no responde', body: 'Open-Meteo, de donde sacamos los datos, está tardando demasiado. Probá de nuevo en un rato.', cta: retry },
-    server: { mark: '!', cat: 'Servicio', title: 'No pudimos consultar', body: 'El problema es nuestro, no tuyo. Probá de nuevo en un rato.', cta: retry },
+  const usePlace = first ? { label: u.use(first.name), action: () => selectPlace(first.id) } : null;
+  const retry = { label: u.retry, action: consult };
+  const marks = { offline: '–', denied: '?', nolocation: '?', outside: '×', limit: '~', slow: '–', server: '!', locating: '…' };
+  const ctas = {
+    offline: { cta: retry },
+    denied: { cta: usePlace ?? retry, cta2: { label: u.places, action: () => showView('places') } },
+    nolocation: { cta: retry, cta2: usePlace },
+    outside: { cta: { label: u.chooseOther, action: () => showView('places') } },
+    limit: { cta: retry },
+    slow: { cta: retry },
+    server: { cta: retry },
     // No es un error, pero comparte el molde: mientras el GPS responde.
-    locating: { mark: '…', cat: 'Ubicación', title: 'Buscando dónde estás', body: first ? `Tarda unos segundos. Si preferís, mirá ${first.name}.` : 'Tarda unos segundos.', cta: usePlace },
+    locating: { cta: usePlace },
   };
-  return E[kind] ?? E.server;
+  const k = u.err[kind] ? kind : 'server';
+  const { cat, title, body } = u.err[k];
+  return { mark: marks[k], cat, title, body: typeof body === 'function' ? body(first?.name) : body, ...ctas[k] };
 }
 
 // ---------- Render ----------
@@ -168,6 +182,7 @@ const gauge = (sens) =>
 
 function renderPlacesBar() {
   const bar = $('#places-bar');
+  bar.setAttribute('aria-label', ui().placeNav);
   const show = ['result', 'loading', 'locating'].includes(state.view) && allPlaces().length > 0;
   bar.hidden = !show;
   if (!show) return;
@@ -175,17 +190,18 @@ function renderPlacesBar() {
   bar.innerHTML =
     allPlaces()
       .map((p) => `<button type="button" data-place="${esc(p.id)}" aria-pressed="${p.id === current?.id}">${esc(p.short)}</button>`)
-      .join('') + `<button type="button" class="more" data-go="places" aria-label="Lugares">⋯</button>`;
+      .join('') + `<button type="button" class="more" data-go="places" aria-label="${esc(ui().places)}">⋯</button>`;
 }
 
 function renderResult(r) {
+  const u = ui();
   document.body.dataset.level = r.level;
   document.title = `${r.levelName} · ${r.hailStatus} — Cubierto`;
   const models = r.models
     .map((m) => `<span class="conf-model"><span class="mini-orb ${m.level}"></span><span class="mono">${esc(m.model)}</span> ${esc(m.levelName)}</span>`)
     .join('');
   return `
-    <section class="hero" aria-label="Resultado">
+    <section class="hero" aria-label="${esc(u.result)}">
       <div class="shield" aria-hidden="true"><car-shield level="${esc(r.level)}"></car-shield></div>
       <div class="hero-text">
         <div class="kicker">${esc(r.window.label)}</div>
@@ -193,7 +209,7 @@ function renderResult(r) {
         <p class="hail">${esc(r.hailStatus)}</p>
         <div class="chips">
           ${r.note ? `<span class="note">${esc(r.note)}</span>` : ''}
-          ${r.sensitivityOptions ? `<button type="button" class="sens-gauge" data-open="sensitivity" aria-haspopup="dialog" aria-label="Grado de alerta: ${esc(r.sensitivityName)}. Cambiar" title="${esc(r.sensitivityName)}">${gauge(r.sensitivity)}</button>` : ''}
+          ${r.sensitivityOptions ? `<button type="button" class="sens-gauge" data-open="sensitivity" aria-haspopup="dialog" aria-label="${esc(u.alertDegree)}: ${esc(r.sensitivityName)}. ${esc(u.change)}" title="${esc(r.sensitivityName)}">${gauge(r.sensitivity)}</button>` : ''}
         </div>
       </div>
     </section>
@@ -210,22 +226,22 @@ function renderResult(r) {
     </section>
 
     <section class="card why">
-      <h2 class="eyebrow">Explicación</h2>
+      <h2 class="eyebrow">${esc(u.explanation)}</h2>
       <p class="lead">${esc(r.title)}</p>
       ${r.why.map((y) => `<p>${esc(y)}</p>`).join('')}
       ${r.notices.map((x) => `<p class="notice"><strong>${esc(x.strong)}</strong> ${esc(x.text)}</p>`).join('')}
     </section>
 
     <section class="card tech">
-      <button type="button" data-toggle="tech" aria-expanded="${state.techOpen}"><span>Algoritmo</span><span>${state.techOpen ? '−' : '+'}</span></button>
+      <button type="button" data-toggle="tech" aria-expanded="${state.techOpen}"><span>${esc(u.algorithm)}</span><span>${state.techOpen ? '−' : '+'}</span></button>
       ${state.techOpen ? renderTech(r) : ''}
     </section>
 
-    ${isInstalled() ? '' : `<button type="button" class="install" data-install><span>Instalar aplicación</span><span aria-hidden="true">↓</span></button>`}
+    ${isInstalled() ? '' : `<button type="button" class="install" data-install><span>${esc(u.install)}</span><span aria-hidden="true">↓</span></button>`}
 
-    <p class="fine">Zona de ~40 km, no tu techo · No reemplaza a <a href="https://www.inumet.gub.uy/alerta" target="_blank" rel="noopener">INUMET</a><br />
-    Pronósticos GFS (NOAA) y ECMWF vía Open-Meteo (CC BY 4.0). Contiene datos de ECMWF.</p>
-    <p class="fine contact"><a href="mailto:pablo.j.manzoni@gmail.com?subject=Cubierto">¿Ideas o dudas? Escribime</a></p>`;
+    <p class="fine">${esc(u.fine1)} <a href="https://www.inumet.gub.uy/alerta" target="_blank" rel="noopener">INUMET</a><br />
+    ${esc(u.fine2)}</p>
+    <p class="fine contact"><a href="mailto:pablo.j.manzoni@gmail.com?subject=Cubierto">${esc(u.contact)}</a></p>`;
 }
 
 // ---------- Horas: una tira que se desliza ----------
@@ -244,14 +260,15 @@ function renderHours(r) {
     } else runs.push({ from: i, to: i, level: h.level });
   });
   const pct = (x) => `${((x / n) * 100).toFixed(2)}%`;
+  const u = ui();
   return `
-    <section class="card hours-card" aria-label="Horas a vigilar">
+    <section class="card hours-card" aria-label="${esc(u.hoursToWatch)}">
       <div class="strip-wrap">
         <div class="strip" aria-hidden="true">
           ${r.hours.map((h) => `<div class="hour l${h.level}${h.day ? ' newday' : ''}"><span class="day mono">${esc(h.day ?? '')}</span><i></i><span class="mono">${esc(h.label)}</span></div>`).join('')}
         </div>
-        <button type="button" class="strip-arrow prev" data-strip="-1" aria-label="Horas anteriores">‹</button>
-        <button type="button" class="strip-arrow next" data-strip="1" aria-label="Horas siguientes">›</button>
+        <button type="button" class="strip-arrow prev" data-strip="-1" aria-label="${esc(u.hoursPrev)}">‹</button>
+        <button type="button" class="strip-arrow next" data-strip="1" aria-label="${esc(u.hoursNext)}">›</button>
       </div>
       <div class="track" aria-hidden="true">
         ${runs.map((x) => `<span class="track-mark ${x.level === 2 ? 'protect' : 'watch'}" style="left:${pct(x.from)};width:${pct(x.to - x.from + 1)}"></span>`).join('')}
@@ -310,6 +327,7 @@ document.addEventListener(
 );
 
 function renderTech(r) {
+  const u = ui();
   const a = r.algorithm;
   const rules = a.rows
     .map(
@@ -317,21 +335,21 @@ function renderTech(r) {
       <div class="rule">
         <div class="rule-head"><span>${esc(row.rule)}</span><span class="mono thr">${esc(row.threshold)}</span></div>
         <div class="rule-vals">${row.values
-          .map((v) => `<span class="val mono ${v.pass ? 'pass' : 'fail'}">${esc(v.model)} ${esc(v.text)} <b aria-label="${v.pass ? 'cumple' : 'no cumple'}">${esc(v.mark)}</b></span>`)
+          .map((v) => `<span class="val mono ${v.pass ? 'pass' : 'fail'}">${esc(v.model)} ${esc(v.text)} <b aria-label="${v.pass ? u.pass : u.fail}">${esc(v.mark)}</b></span>`)
           .join('')}</div>
       </div>`,
     )
     .join('');
   return `
     <div class="tech-body">
-      <h3 class="eyebrow">Cómo se decidió</h3>
-      <p class="algo-note">Miramos 9 puntos en ~40 km, hora por hora, con cada modelo. En el momento más favorable:</p>
+      <h3 class="eyebrow">${esc(u.howDecided)}</h3>
+      <p class="algo-note">${esc(u.algoIntro)}</p>
       ${rules}
-      <p class="algo-note"><strong>Combinación.</strong> ${esc(a.combination)}</p>
-      <p class="algo-note"><strong>Confianza.</strong> ${esc(a.confidenceWhy)}</p>
-      <h3 class="eyebrow">Datos del momento más favorable</h3>
+      <p class="algo-note"><strong>${esc(u.combination)}</strong> ${esc(a.combination)}</p>
+      <p class="algo-note"><strong>${esc(u.confidence)}</strong> ${esc(a.confidenceWhy)}</p>
+      <h3 class="eyebrow">${esc(u.peakData)}</h3>
       <dl class="mono">${r.tech.map((t) => `<div><dt>${esc(t.k)}</dt><dd>${esc(t.v)}</dd></div>`).join('')}</dl>
-      <p class="algo-note">${esc(a.validation)} <a href="${esc(a.moreUrl)}" target="_blank" rel="noopener">Ver cómo lo probamos</a></p>
+      <p class="algo-note">${esc(a.validation)} <a href="${esc(a.moreUrl)}" target="_blank" rel="noopener">${esc(u.seeHow)}</a></p>
     </div>`;
 }
 
@@ -352,30 +370,31 @@ function renderError(kind) {
 
 function renderPlaces() {
   // "Mi ubicación" es un solo componente: el switch prende o apaga el GPS ahí mismo.
+  const u = ui();
   const gpsOn = useGps();
   const gps = `
     <div class="place${gpsOn ? '' : ' off'}">
       <span class="mini-orb"></span>
-      <div class="info"><span class="name" id="gps-label">Mi ubicación</span><span class="addr mono">${gpsOn ? 'Donde estés, aproximada' : 'Apagada'}</span></div>
+      <div class="info"><span class="name" id="gps-label">${esc(u.myLocation)}</span><span class="addr mono">${esc(gpsOn ? u.gpsOn : u.gpsOff)}</span></div>
       <button type="button" class="switch" role="switch" aria-labelledby="gps-label" aria-checked="${gpsOn}" data-toggle="gps"></button>
     </div>`;
   const list = savedPlaces()
     .map(
-      (p) => `<div class="place"><span class="mini-orb"></span><div class="info"><span class="name">${esc(p.name)}</span><span class="addr mono">${esc(`${p.lat.toFixed(2)}, ${p.lon.toFixed(2)} · aproximada`)}</span></div><button type="button" class="del" data-delete="${esc(p.id)}" aria-label="Borrar ${esc(p.name)}">×</button></div>`,
+      (p) => `<div class="place"><span class="mini-orb"></span><div class="info"><span class="name">${esc(p.name)}</span><span class="addr mono">${esc(`${p.lat.toFixed(2)}, ${p.lon.toFixed(2)} · ${u.approx}`)}</span></div><button type="button" class="del" data-delete="${esc(p.id)}" aria-label="${esc(u.del(p.name))}">×</button></div>`,
     )
     .join('');
   const add = state.adding
-    ? `<form class="add-form" data-form="add"><input name="name" placeholder="Casa, Trabajo…" maxlength="24" required autofocus aria-label="Nombre del lugar" /><button type="submit" class="cta" style="width:auto;height:50px;padding:0 22px;font-size:15px">Guardar</button></form>`
-    : `<button type="button" class="add" data-add>+ Guardar dónde estoy</button>`;
+    ? `<form class="add-form" data-form="add"><input name="name" placeholder="${esc(u.placeholder)}" maxlength="24" required autofocus aria-label="${esc(u.placeName)}" /><button type="submit" class="cta" style="width:auto;height:50px;padding:0 22px;font-size:15px">${esc(u.save)}</button></form>`
+    : `<button type="button" class="add" data-add>${esc(u.addHere)}</button>`;
   return `
     <section class="places">
-      <button type="button" class="back" data-go="back">‹ Volver</button>
-      <h1>Lugares</h1>
+      <button type="button" class="back" data-go="back">${esc(u.back)}</button>
+      <h1>${esc(u.places)}</h1>
       ${gps}
       ${list}
       ${add}
-      ${state.placesStatus ? `<p class="status">${esc(state.placesStatus)}</p>` : ''}
-      <p class="fine">Los lugares se guardan solo en este teléfono, redondeados a ~1 km.</p>
+      ${state.placesStatus ? `<p class="status">${esc(u.status[state.placesStatus])}</p>` : ''}
+      <p class="fine">${esc(u.placesFine)}</p>
     </section>`;
 }
 
@@ -394,7 +413,9 @@ function renderBottom() {
 }
 
 export function render() {
+  document.documentElement.lang = ui().htmlLang;
   renderPlacesBar();
+  renderLangBar();
   const screen = $('#screen');
   if (state.view === 'result' && state.result) {
     screen.innerHTML = renderResult(currentResult());
@@ -402,7 +423,7 @@ export function render() {
     if (strip) strip.scrollLeft = state.stripX;
     updateStrip();
   }
-  else if (state.view === 'loading') screen.innerHTML = `<div class="loading" role="status"><div class="shield pulse" aria-hidden="true"><car-shield level="calm"></car-shield></div><p>Consultando el pronóstico…</p></div>`;
+  else if (state.view === 'loading') screen.innerHTML = `<div class="loading" role="status"><div class="shield pulse" aria-hidden="true"><car-shield level="calm"></car-shield></div><p>${esc(ui().loading)}</p></div>`;
   else if (state.view === 'locating') screen.innerHTML = renderError('locating');
   else if (state.view === 'error') screen.innerHTML = renderError(state.error);
   else if (state.view === 'places') screen.innerHTML = renderPlaces();
@@ -438,40 +459,22 @@ function isInstalled() {
 }
 
 function installSteps() {
+  const m = ui().modal;
   const ua = navigator.userAgent;
   const iOS = /iPad|iPhone|iPod/.test(ua) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
   const android = /Android/.test(ua);
   const firefox = /Firefox|FxiOS/.test(ua);
   const safari = /Safari/.test(ua) && !/Chrome|CriOS|FxiOS|EdgiOS|Edg\/|Android/.test(ua);
-  if (iOS) {
-    return {
-      intro: 'En iPhone se instala desde el menú Compartir.',
-      steps: ['Tocá Compartir (el cuadrado con la flecha hacia arriba).', 'Elegí "Agregar a inicio".', 'Confirmá con "Agregar".'],
-      note: safari ? '' : 'Si no ves la opción, abrí esta página en Safari.',
-    };
-  }
-  if (android) {
-    return {
-      intro: 'Tu navegador no ofrece instalarla directo, pero se puede desde su menú.',
-      steps: ['Abrí el menú del navegador (⋮).', 'Elegí "Instalar app" o "Agregar a pantalla principal".'],
-      note: '',
-    };
-  }
-  if (safari) {
-    return { intro: 'En Mac, Safari la agrega al Dock.', steps: ['En la barra de menú: Archivo → "Agregar al Dock".'], note: '' };
-  }
-  if (firefox) {
-    return { intro: 'Firefox en computadora no instala aplicaciones web.', steps: ['Abrí esta página en Chrome, Edge o Safari y volvé a tocar "Instalar aplicación".'], note: '' };
-  }
-  return {
-    intro: 'Tu navegador no ofrece instalarla directo desde acá.',
-    steps: ['Buscá el ícono de instalar a la derecha de la barra de direcciones.', 'O abrí el menú del navegador y elegí "Instalar Cubierto".'],
-    note: '',
-  };
+  if (iOS) return { intro: m.iosIntro, steps: m.iosSteps, note: safari ? '' : m.iosNote };
+  if (android) return { intro: m.androidIntro, steps: m.androidSteps, note: '' };
+  if (safari) return { intro: m.safariIntro, steps: m.safariSteps, note: '' };
+  if (firefox) return { intro: m.firefoxIntro, steps: m.firefoxSteps, note: '' };
+  return { intro: m.otherIntro, steps: m.otherSteps, note: '' };
 }
 
 export function openInstallModal() {
   const s = installSteps();
+  const m = ui().modal;
   let dlg = document.getElementById('install-dialog');
   if (!dlg) {
     dlg = document.createElement('dialog');
@@ -486,12 +489,12 @@ export function openInstallModal() {
   dlg.innerHTML = `
     <div class="modal-body">
       <div class="modal-logo" aria-hidden="true"><car-shield level="calm"></car-shield></div>
-      <h2 id="install-title">Instalar Cubierto</h2>
-      <p>Queda en tu pantalla de inicio y se abre como una app, sin la barra del navegador.</p>
+      <h2 id="install-title">${esc(m.title)}</h2>
+      <p>${esc(m.lead)}</p>
       <p class="modal-intro">${esc(s.intro)}</p>
       <ol>${s.steps.map((x) => `<li>${esc(x)}</li>`).join('')}</ol>
       ${s.note ? `<p class="modal-note">${esc(s.note)}</p>` : ''}
-      <button type="button" class="cta" data-close>Entendido</button>
+      <button type="button" class="cta" data-close>${esc(m.ok)}</button>
     </div>`;
   dlg.showModal();
 }
@@ -521,7 +524,7 @@ export function openSensitivityModal() {
   }
   dlg.innerHTML = `
     <form class="modal-body" method="dialog">
-      <h2 id="sensitivity-title">Grado de alerta</h2>
+      <h2 id="sensitivity-title">${esc(ui().alertDegree)}</h2>
       <div class="sens-options" role="radiogroup" aria-labelledby="sensitivity-title">
         ${r.sensitivityOptions
           .map(
@@ -537,7 +540,7 @@ export function openSensitivityModal() {
           )
           .join('')}
       </div>
-      <button type="submit" class="cta">Listo</button>
+      <button type="submit" class="cta">${esc(ui().done)}</button>
     </form>`;
   dlg.showModal();
 }
@@ -553,6 +556,26 @@ async function install() {
   openInstallModal();
 }
 
+// ---------- Idioma ----------
+// Selector discreto al pie. Los resultados ya vienen en los tres idiomas: se redibuja sin volver a consultar.
+function renderLangBar() {
+  const bar = $('#lang-bar');
+  bar.setAttribute('aria-label', ui().languageLabel);
+  const current = lang();
+  bar.innerHTML = LANGS.map(
+    ([id, name]) => `<button type="button" lang="${id}" data-lang="${id}" aria-pressed="${id === current}">${esc(name)}</button>`,
+  ).join('');
+}
+
+function setLang(id) {
+  if (!UI[id] || id === lang()) return;
+  store.set(K.lang, id);
+  // Los diálogos abiertos se arman al abrirlos: se cierran para no quedar en el idioma anterior.
+  document.querySelectorAll('dialog[open]').forEach((d) => d.close());
+  document.querySelectorAll('dialog').forEach((d) => d.remove());
+  render();
+}
+
 // ---------- Acciones ----------
 function selectPlace(id) {
   state.placeId = id;
@@ -562,6 +585,7 @@ function selectPlace(id) {
 document.addEventListener('click', async (ev) => {
   const t = ev.target.closest('button');
   if (!t) return;
+  if (t.dataset.lang) return setLang(t.dataset.lang);
   if (t.dataset.place) return selectPlace(t.dataset.place);
   if (t.dataset.strip) return stepStrip(Number(t.dataset.strip));
   if (t.dataset.go === 'places') return showView('places');
@@ -584,7 +608,7 @@ document.addEventListener('click', async (ev) => {
       return render();
     }
     // Al prender, pedimos la ubicación ya: si el navegador no la tiene, muestra el permiso.
-    state.placesStatus = 'Pidiendo tu ubicación…';
+    state.placesStatus = 'asking';
     render();
     try {
       await getPosition();
@@ -592,7 +616,7 @@ document.addEventListener('click', async (ev) => {
       state.placeId = 'gps';
       state.placesStatus = '';
     } catch (err) {
-      state.placesStatus = err?.code === 1 ? 'Sin permiso de ubicación: activalo en el navegador para usarla.' : 'No pudimos ubicarte. Probá de nuevo.';
+      state.placesStatus = err?.code === 1 ? 'deniedGps' : 'noLocation';
     }
     return render();
   }
@@ -602,14 +626,14 @@ document.addEventListener('click', async (ev) => {
     return render();
   }
   if (t.hasAttribute('data-add')) {
-    state.placesStatus = 'Buscando dónde estás…';
+    state.placesStatus = 'searching';
     render();
     try {
       const pos = await getPosition();
       state.adding = { lat: Math.round(pos.lat * 100) / 100, lon: Math.round(pos.lon * 100) / 100 };
-      state.placesStatus = '¿Cómo le ponemos a este lugar?';
+      state.placesStatus = 'naming';
     } catch (err) {
-      state.placesStatus = err?.code === 1 ? 'Sin permiso de ubicación: activalo en el navegador para guardar dónde estás.' : 'No pudimos ubicarte. Probá de nuevo.';
+      state.placesStatus = err?.code === 1 ? 'deniedAdd' : 'noLocation';
     }
     return render();
   }

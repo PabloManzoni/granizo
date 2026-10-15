@@ -5,10 +5,10 @@ import { assessBySensitivity } from './assess.ts';
 import { fmtLocal, nowLocal } from './cli/args.ts';
 import { configureOpenMeteo, NetworkError, RateLimitError, SlowError, type CacheStore } from './data/openMeteo.ts';
 import type { Sensitivity } from './engine/config.ts';
-import { presentAll, type ResultView } from './presenter.ts';
+import { presentAllLangs, type Lang, type ResultView } from './presenter.ts';
 import { resolveWindow, WINDOW_LABELS, WINDOW_NAMES, type WindowName } from './windows.ts';
 
-export { DEV_SCENARIOS, devScenario } from './dev-scenarios.ts';
+export { DEV_SCENARIOS, devScenario, devScenarioAll } from './dev-scenarios.ts';
 
 // Caché de la sesión: evita volver a descargar si cambiás de ventana o de lugar y volvés.
 const memory = new Map<string, { at: number; data: unknown }>();
@@ -51,10 +51,10 @@ export class AssessError extends Error {
 }
 
 /**
- * El resultado con cada grado de alerta: la app muestra el que eligió la persona y cambia sin volver a consultar.
+ * El resultado en cada idioma y con cada grado de alerta: la app muestra el que eligió la persona y cambia sin volver a consultar.
  * La app pide las próximas 24 h; las otras ventanas quedan para la consola.
  */
-export async function assessHere(latIn: number, lonIn: number, windowName: WindowName = 'next24h'): Promise<Record<Sensitivity, ResultView>> {
+export async function assessHere(latIn: number, lonIn: number, windowName: WindowName = 'next24h'): Promise<Record<Lang, Record<Sensitivity, ResultView>>> {
   // Redondeo a ~1 km: alcanza para una zona de 40 km.
   const lat = Math.round(latIn * 100) / 100;
   const lon = Math.round(lonIn * 100) / 100;
@@ -65,7 +65,7 @@ export async function assessHere(latIn: number, lonIn: number, windowName: Windo
   const { from, to } = resolveWindow(name);
   try {
     const r = await assessBySensitivity({ center: { lat, lon }, from, to, source: 'forecast' });
-    return presentAll(r, { name, label: WINDOW_LABELS[name], from, to }, fmtLocal(nowLocal()));
+    return presentAllLangs(r, { name, label: WINDOW_LABELS[name], from, to }, fmtLocal(nowLocal()));
   } catch (err) {
     if (err instanceof RateLimitError) throw new AssessError('limit', err.message);
     if (err instanceof SlowError) throw new AssessError('slow', err.message);

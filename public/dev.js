@@ -70,7 +70,7 @@ root.addEventListener('click', async (ev) => {
     mark(b);
     showView('loading');
     const engine = await import('/engine.js');
-    if (active === b) showResult(engine.devScenario(b.dataset.sc));
+    if (active === b) showResult(engine.devScenarioAll(b.dataset.sc));
   } else if (b.dataset.st) {
     mark(b);
     STATES.find(([id]) => id === b.dataset.st)[2]();
