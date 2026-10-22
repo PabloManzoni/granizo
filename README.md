@@ -15,6 +15,16 @@ Asistente de decisión sobre granizo para el auto: *¿lo puedo dejar afuera o co
 
 La única forma de saber cuánto rinde el motor con pronósticos reales (y no con casi-análisis) es guardarlos todos los días y cruzarlos después con las granizadas. El workflow [`registro-pronosticos.yml`](.github/workflows/registro-pronosticos.yml) corre a diario a las 16:30 (hora de Uruguay), guarda la corrida de las 12 UTC de GFS y ECMWF para 16 ciudades y 4 ventanas (esta noche, mañana, mañana a la noche y pasado mañana) y reconstruye de a poco los días desde abril de 2026, que es cuando la Single Runs API de Open-Meteo empezó a archivar GFS. Los datos quedan en `data/forecast-log/runs/AAAA-MM.jsonl`; cada línea trae el nivel, la anticipación en horas y los ingredientes de cada modelo. Los commits de datos no vuelven a publicar el sitio.
 
+## Ahora: rayos, lluvia y radar
+
+El workflow [`nowcast.yml`](.github/workflows/nowcast.yml) corre cada 10 minutos y publica `latest.json` en la rama `nowcast` (un solo commit que se reemplaza), para que la app estática lo lea de `https://raw.githubusercontent.com/<dueño>/granizo/nowcast/latest.json`. Junta lo que está pasando en Uruguay y ~80 km alrededor:
+
+- **Rayos** del GOES-19 (GLM) en los últimos 30 min: por celda de 0,1° en tramos de 10 min y, por ciudad, a ≤ 30 y ≤ 50 km, con el "lightning jump".
+- **Lluvia estimada por satélite** (NOAA RRQPE): máximo en mm/h por celda y por ciudad. No es radar: ve los núcleos de tormenta, no la lluvia débil.
+- **Radar** de REDEMET (Brasil), Santiago y Canguçu: ven el norte y el noreste del país. Necesita el secreto `REDEMET_API_KEY`; las imágenes son públicas y la app las carga directo. Si el radar no tiene imágenes de la última hora, el JSON lo marca como `sin datos`.
+
+`python3 scripts/nowcast/build.py salida.json` lo arma a mano (`pip install -r scripts/nowcast/requirements.txt`).
+
 ## Principio
 
 Meteorología primero, IA después. El riesgo lo decide un motor determinístico; la redacción viene de plantillas (o de un LLM más adelante), y la redacción nunca cambia el nivel.
@@ -87,7 +97,7 @@ src/cli/        check, backtest, calibrate, log-forecast
 src/browser.ts  motor para el navegador (se empaqueta en public/engine.js)
 src/server.ts   servidor local: estáticos de la PWA + /api/assess (solo desarrollo)
 public/         PWA: interfaz, logo, íconos, service worker
-scripts/        controles METAR y rayos GLM (Python)
+scripts/        controles METAR, rayos GLM y "ahora" (nowcast) en Python
 data/           eventos, fechas de granizo de INUMET, registro de pronósticos
 docs/           brief, análisis, resultados, bitácora
 reports/        salidas del test histórico
