@@ -140,7 +140,10 @@ export function assessWindow(pointHours: PointHourAssessment[], rules: Sensitivi
     const prev = byHour.get(p.time);
     if (!prev || ENV_ORDER.indexOf(p.environment) > ENV_ORDER.indexOf(prev)) byHour.set(p.time, p.environment);
   }
-  const hourly = [...byHour.entries()].sort(([a], [b]) => a.localeCompare(b)).map(([time, environment]) => ({ time, environment }));
+  // Ninguna hora por encima del nivel: ambiente fuerte sin tormentas en el modelo es "watch", también en la tira.
+  const hourly = [...byHour.entries()]
+    .sort(([a], [b]) => a.localeCompare(b))
+    .map(([time, environment]) => ({ time, environment: capAt(environment, level) }));
 
   return {
     level,
@@ -163,6 +166,11 @@ export function assessWindow(pointHours: PointHourAssessment[], rules: Sensitivi
 
 const LEVEL_RANK: Record<RiskLevel, number> = { calm: 0, watch: 1, protect: 2 };
 const LEVEL_ORDER: RiskLevel[] = ['calm', 'watch', 'protect'];
+
+/** El ambiente de una hora, sin pasar del que corresponde al nivel (calm → weak, watch → supportive). */
+function capAt(environment: Environment, level: RiskLevel): Environment {
+  return ENV_ORDER[Math.min(ENV_ORDER.indexOf(environment), LEVEL_RANK[level])];
+}
 
 /**
  * Combina el veredicto de dos modelos (GFS y ECMWF). Con `combine = 'both'` (equilibrado, validado en 2025–2026):
@@ -209,20 +217,13 @@ export function combineModels(
   // El punto-hora que se muestra sale del modelo más alarmado (a igualdad, el primero).
   const lead = LEVEL_RANK[b.level] > LEVEL_RANK[a.level] ? b : a;
   const confidence: Confidence = lead.season === 'warm' || !agree ? 'low' : 'medium';
-  // Hora por hora, con el mismo criterio que el nivel: con 'both', "strong" solo si los dos modelos lo ven.
+  // Hora por hora: lo que ve cualquiera de los dos modelos, sin pasar del nivel combinado. Así la tira nunca muestra
+  // más que el título (con 'both', un solo modelo en "watch" no pinta horas) y su hora más alta coincide con el nivel.
   const envOf = (x: WindowAssessment, time: string) => x.hourly.find((h) => h.time === time)?.environment ?? 'weak';
   const times = [...new Set([...a.hourly, ...b.hourly].map((h) => h.time))].sort();
   const hourly = times.map((time) => {
-    const ea = envOf(a, time);
-    const eb = envOf(b, time);
-    const er = [ENV_ORDER.indexOf(ea), ENV_ORDER.indexOf(eb)];
-    const environment: Environment =
-      combine === 'either'
-        ? ENV_ORDER[Math.max(...er)]
-        : combine === 'both-strict'
-          ? ENV_ORDER[Math.min(...er)]
-          : ea === 'strong' && eb === 'strong' ? 'strong' : ea !== 'weak' || eb !== 'weak' ? 'supportive' : 'weak';
-    return { time, environment };
+    const seen = ENV_ORDER[Math.max(ENV_ORDER.indexOf(envOf(a, time)), ENV_ORDER.indexOf(envOf(b, time)))];
+    return { time, environment: capAt(seen, level) };
   });
 
   return {

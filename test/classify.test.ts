@@ -112,11 +112,38 @@ test('dos modelos: protect solo si los dos dicen protect', async () => {
   assert.equal(split.models?.[1].check?.lapse700500CKm, 5);
 });
 
-test('dos modelos: uno "watch" y otro "calm" → calm', async () => {
+test('dos modelos: uno "watch" y otro "calm" → calm, y la tira de horas tampoco marca nada', async () => {
   const { combineModels } = await import('../src/engine/classify.ts');
-  const watch = assessWindow([assessPointHour('2024-09-09T16:00', -34.8, -55.9, { ...base, wmaxshearM2s2: 600 })]);
+  const watch = assessWindow([assessPointHour('2024-09-09T16:00', -34.8, -55.9, { ...base, wmaxshearM2s2: 1000 })]);
   const calm = assessWindow([assessPointHour('2024-09-09T16:00', -34.8, -55.9, { ...base, lapse700500CKm: 5 })]);
+  assert.equal(watch.level, 'watch');
   const combined = combineModels([{ model: 'GFS', assessment: watch }, { model: 'ECMWF', assessment: calm }]);
   assert.equal(combined.level, 'calm');
   assert.equal(combined.storm, true); // tranquilo para granizo, pero los modelos forman tormentas
+  assert.deepEqual(combined.hourly, [{ time: '2024-09-09T16:00', environment: 'weak' }]);
+});
+
+test('la tira de horas no pasa del nivel: ambiente fuerte sin tormentas en el modelo es "watch" también por hora', async () => {
+  const { combineModels } = await import('../src/engine/classify.ts');
+  const dry = assessWindow([assessPointHour('2024-09-09T16:00', -34.8, -55.9, { ...base, showersMm: 0, precipitationMm: 0 })]);
+  assert.equal(dry.level, 'watch');
+  assert.deepEqual(dry.hourly, [{ time: '2024-09-09T16:00', environment: 'supportive' }]);
+  const combined = combineModels([{ model: 'GFS', assessment: dry }, { model: 'ECMWF', assessment: dry }]);
+  assert.equal(combined.level, 'watch');
+  assert.deepEqual(combined.hourly, [{ time: '2024-09-09T16:00', environment: 'supportive' }]);
+});
+
+test('la hora más alta de la tira coincide con el nivel aunque cada modelo vea el máximo a otra hora', async () => {
+  const { combineModels } = await import('../src/engine/classify.ts');
+  const early = assessWindow([
+    assessPointHour('2024-09-09T15:00', -34.8, -55.9, base),
+    assessPointHour('2024-09-09T18:00', -34.8, -55.9, { ...base, wmaxshearM2s2: 100 }),
+  ]);
+  const late = assessWindow([
+    assessPointHour('2024-09-09T15:00', -34.8, -55.9, { ...base, wmaxshearM2s2: 100 }),
+    assessPointHour('2024-09-09T18:00', -34.8, -55.9, base),
+  ]);
+  const combined = combineModels([{ model: 'GFS', assessment: early }, { model: 'ECMWF', assessment: late }]);
+  assert.equal(combined.level, 'protect');
+  assert.deepEqual(combined.hourly.map((h) => h.environment), ['strong', 'strong']);
 });
