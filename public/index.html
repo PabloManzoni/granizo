@@ -50,5 +50,7 @@
       // Botonera de desarrollo: solo en local, nunca en producción.
       if (['localhost', '127.0.0.1', '[::1]'].includes(location.hostname)) import('/dev.js');
     </script>
+    <!-- Contador de visitas (panel.tuggsy.com): sin cookies ni datos personales. -->
+    <script>try{navigator.sendBeacon("https://panel.tuggsy.com/v","")}catch(e){}</script>
   </body>
 </html>
